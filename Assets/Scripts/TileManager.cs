@@ -248,11 +248,20 @@ public class TileManager : Singleton<TileManager>
         var input = Input.mousePosition;
         input.z = 10.0f;
         var mousePos = Camera.main.ScreenToWorldPoint(input);
+        
+        int x = (int) mousePos.x;
+        int y = (int) mousePos.y;
+        int z = (int) mousePos.z;
 
-
-        var floored = new Vector3Int((int) (mousePos.x - mousePos.x % 4), (int) (mousePos.y - mousePos.y % 4), (int) mousePos.z);
-        highLight.transform.position = floored - new Vector3(2,2);
-        // highLight.transform.position = floored;
+        x = x - x % 4;
+        y = y - y % 4;
+        
+        if (x <= 0) x += -4;
+        if (y <= 0) y += -4;
+        
+        var floored = new Vector3Int(x, y, z);
+        highLight.transform.position = floored + new Vector3(2,2);
+        //highLight.transform.position = floored;
 
         if (Input.GetMouseButtonDown(0))
         {

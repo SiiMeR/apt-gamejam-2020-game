@@ -117,6 +117,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundPollution: 0.2
   airPollution: 0.1
-  grass: 100
+  grass: 2000
   rabbits: 100
-  foxes: 100
+  foxes: 10
