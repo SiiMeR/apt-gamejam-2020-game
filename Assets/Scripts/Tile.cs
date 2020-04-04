@@ -1,7 +1,5 @@
 public class Tile
 {
-    public const int monthLength = 30;
-    
     private bool isRiver;
     private bool isRoad;
 

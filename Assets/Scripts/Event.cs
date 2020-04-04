@@ -12,6 +12,9 @@ public class Event : MonoBehaviour
 
     private GameObject dialog;
     
+    public Slider slider;
+    private bool exists = true;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -27,12 +30,22 @@ public class Event : MonoBehaviour
 
         this.dialog = this.transform.Find("Dialog").gameObject;
         this.dialog.SetActive(false);
+        
+        slider.value = 0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (slider.value <= 100f)
+        {
+            slider.value += 0.1f;
+        }
+        if (slider.value >= 100f && exists)
+        {
+            exists = false;
+            EventManager.Instance.RemoveEvent(EventDto);
+        }
     }
 
     public void OpenEventModal()
