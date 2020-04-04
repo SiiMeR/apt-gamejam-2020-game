@@ -33,7 +33,10 @@ public class EventManager : Singleton<EventManager>
     {
         foreach (Transform child in this.transform)
         {
-            Destroy(child.gameObject);
+            if (child.name == "Event")
+            {
+                Destroy(child.gameObject);
+            }
         }
     }
 
