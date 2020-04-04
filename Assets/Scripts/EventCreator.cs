@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DTO;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class EventCreator : MonoBehaviour
 {
+    private List<EventDTO> events = new List<EventDTO>();
+    private List<int> eventWeights = new List<int>();
+
 
     public Sprite pold;
     
@@ -14,17 +14,39 @@ public class EventCreator : MonoBehaviour
     private void Awake()
     {
         DayChangeEvent.dayChangeEvent += OnDayEvent;
+        
+        events.Add(null);
+        eventWeights.Add(10);
+        events.Add(TekstiiliTehas());
+        eventWeights.Add(1);
     }
 
     private void OnDayEvent(int currentDay)
     {
         // TODO: add randomness for event creation
-        if (currentDay % 4 == 0)
+
+        
+        
+        if (currentDay % 1 == 0)
         {
-            // do smth
-            // return;
-            Debug.Log("AddEvent");
-            EventManager.Instance.AddEvent(TekstiiliTehas());
+            int sum = 0;
+            foreach (int weight in eventWeights)
+            {
+                sum += weight;
+            }
+
+            int seek = UnityEngine.Random.Range(1, sum+1);
+
+            sum = 0;
+            for (int i = 0; i < eventWeights.Count; i++)
+            {
+                sum += eventWeights[i];
+                if (sum >= seek)
+                {
+                    if (events[i] != null) EventManager.Instance.AddEvent(events[i]);
+                    break;
+                }
+            }
         }
     }
 
@@ -34,6 +56,7 @@ public class EventCreator : MonoBehaviour
         // Add its coordinates to EventDTO
         // get river tiles nearby
         OurTile ourTile = TileManager.Instance.GetRandomTileByType(TileType.GRASS);
+        Debug.Log(ourTile.positionInTilemap);
         
         return new EventDTO(
             "Teksiilitehas", 
@@ -42,11 +65,11 @@ public class EventCreator : MonoBehaviour
             "Keela ehitus",
             () =>
             {
-                CountyProperties.Instance.SetPopulation((int) (CountyProperties.Instance.population * 1.1));
+                CountyProperties.Instance.SetPopulation((int)(CountyProperties.Instance.population * 1.1));
                 // TODO add pollution to nearby river
             },
             () => {
-                CountyProperties.Instance.SetPopulation((int) (CountyProperties.Instance.population * 0.9));
+                CountyProperties.Instance.SetPopulation((int)(CountyProperties.Instance.population * 0.9));
                 // TODO remove pollution to nearby river
 
                 var tile = TileManager.Instance.GetTileFromTilemap(ourTile.positionInTilemap);
@@ -73,11 +96,11 @@ public class EventCreator : MonoBehaviour
             "Keela tee-ehitus",
             () =>
             {
-               // CountyProperties.Instance.wellness += 5;
+                CountyProperties.Instance.SetWellness(CountyProperties.Instance.wellness + 5);
             },
             () =>
             {
-               // CountyProperties.Instance.wellness -= 5;
+                CountyProperties.Instance.SetWellness(CountyProperties.Instance.wellness - 5);
             },
             tile.positionInTilemap);
     }
