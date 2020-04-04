@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DTO;
 using TMPro;
 using UnityEngine;
 
@@ -52,12 +53,14 @@ public class CountyProperties : MonoBehaviour
         {
             if (currentDay < 13)
             {
-                EventManager.Instance.AddEvent(EventManager.CreateEventDto($"Event {currentDay}", 
+                EventManager.Instance.AddEvent(new EventDTO($"Event {currentDay}", 
                     "tekst mida näeb modalis", 
                     "nupp mida näeb modalis", 
                     "nupp mida näeb modalis", 
                     () => Debug.Log("Nõustun ja muudan mingeid parameetreid"),
-                    () => Debug.Log("Keeldun ja muudan mingeid parameetreid")));   
+                    () => Debug.Log("Keeldun ja muudan mingeid parameetreid"),
+                    new Vector3Int(0, 0, 0)
+                ));   
             }
         }
     }

@@ -74,12 +74,7 @@ public class EventManager : Singleton<EventManager>
             Destroy(eventToGameObject[eventDto]);
         }
     }
-
-    public static EventDTO CreateEventDto(string name, string text, string acceptText, string declineText, Action acceptFunction, Action declineFunction)
-    {
-        return new EventDTO(name, text, acceptText, declineText, acceptFunction, declineFunction);
-    }
-
+    
     private void InsertEvent(EventDTO eventDto)
     {
         var eventObject = Instantiate(eventPrefab, new Vector3(0, 0, 0), Quaternion.identity);
