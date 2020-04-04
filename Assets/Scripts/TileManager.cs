@@ -43,7 +43,7 @@ public class TileManager : Singleton<TileManager>
             ourTile.type = SpriteNameToEnum(GetTileFromTilemap(tile.Key).sprite);
 
             ourTile.positionInTilemap = tile.Key;
-                        
+            ourTile.tile = tile.Value;            
             roadTilemap.GetTile<Tile>(tile.Key).gameObject = road;
         }  
         foreach (var tile in riverTilemap.GetTiles<Tile>())
@@ -52,7 +52,7 @@ public class TileManager : Singleton<TileManager>
             var ourTile = road.GetComponent<OurTile>();
             ourTile.SetData(true, false, 0.0f, 0,0,0, TileType.RIVER);
             ourTile.positionInTilemap = tile.Key;
-
+            ourTile.tile = tile.Value;     
             riverTilemap.GetTile<Tile>(tile.Key).gameObject = road;
         }
                 
@@ -62,7 +62,7 @@ public class TileManager : Singleton<TileManager>
             var ourTile = road.GetComponent<OurTile>();
             ourTile.SetData(false, false, 0.0f, 100,10,10, TileType.GRASS);
             ourTile.positionInTilemap = tile.Key;
-
+            ourTile.tile = tile.Value;     
             bgTilemap.GetTile<Tile>(tile.Key).gameObject = road;
         }
                 
@@ -72,7 +72,7 @@ public class TileManager : Singleton<TileManager>
             var ourTile = road.GetComponent<OurTile>();
             ourTile.SetData(false, false, 0.0f, 100,100,100, TileType.GRASS);
             ourTile.positionInTilemap = tile.Key;
-       
+            ourTile.tile = tile.Value;     
             ourTile.type = SpriteNameToEnum(GetTileFromTilemap(tile.Key).sprite);
             landTilemap.GetTile<Tile>(tile.Key).gameObject = road;
         }

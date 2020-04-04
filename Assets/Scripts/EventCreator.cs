@@ -15,10 +15,14 @@ public class EventCreator : MonoBehaviour
     private void OnDayEvent(int currentDay)
     {
         // TODO: add randomness for event creation
-        if (currentDay % 4 == 0)
+        Debug.Log("fdkoi");
+        Debug.Log(currentDay);
+        if (currentDay % 2 == 0)
         {
             // do smth
             // return;
+            Debug.Log(TekstiiliTehas());
+            EventManager.Instance.AddEvent(TekstiiliTehas());
         }
     }
 
@@ -27,8 +31,8 @@ public class EventCreator : MonoBehaviour
         // TODO: get random river tile
         // Add its coordinates to EventDTO
         // get river tiles nearby
-        OurTile tile = TileManager.Instance.GetRandomTileByType(TileType.RIVER);
-        Debug.Log(tile.positionInTilemap);
+        OurTile ourTile = TileManager.Instance.GetRandomTileByType(TileType.RIVER);
+        Debug.Log(ourTile.positionInTilemap);
         
         return new EventDTO(
             "Teksiilitehas", 
@@ -38,13 +42,15 @@ public class EventCreator : MonoBehaviour
             () =>
             {
                 CountyProperties.Instance.population += (int) (CountyProperties.Instance.population * 0.1);
+                ourTile.tile.sprite = Sprite.Create(null, new Rect(), new Vector2());
                 // TODO add pollution to nearby river
             },
             () => {
                 CountyProperties.Instance.population -= (int) (CountyProperties.Instance.population * 0.1);
+                ourTile.tile.sprite = Sprite.Create(null, new Rect(), new Vector2());
                 // TODO remove pollution to nearby river
             },
-            tile.positionInTilemap);
+            ourTile.positionInTilemap);
     }
     
     private EventDTO LinnadevahelineTee()

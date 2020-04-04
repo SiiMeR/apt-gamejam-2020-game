@@ -391,6 +391,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1046452927}
     m_Modifications:
+    - target: {fileID: 338945887649831424, guid: 7183b50bd011105429c0674832cbe5a6,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 338945887649831424, guid: 7183b50bd011105429c0674832cbe5a6,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 338945887649831424, guid: 7183b50bd011105429c0674832cbe5a6,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1295785631537263150, guid: 7183b50bd011105429c0674832cbe5a6,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -409,6 +424,66 @@ PrefabInstance:
     - target: {fileID: 1295785631537263150, guid: 7183b50bd011105429c0674832cbe5a6,
         type: 3}
       propertyPath: m_textInfo.pageCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2462603815345301401, guid: 7183b50bd011105429c0674832cbe5a6,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2462603815345301401, guid: 7183b50bd011105429c0674832cbe5a6,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2462603815345301401, guid: 7183b50bd011105429c0674832cbe5a6,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4278429219720366075, guid: 7183b50bd011105429c0674832cbe5a6,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4278429219720366075, guid: 7183b50bd011105429c0674832cbe5a6,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4278429219720366075, guid: 7183b50bd011105429c0674832cbe5a6,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5199605763694853195, guid: 7183b50bd011105429c0674832cbe5a6,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5199605763694853195, guid: 7183b50bd011105429c0674832cbe5a6,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5199605763694853195, guid: 7183b50bd011105429c0674832cbe5a6,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5264020437333811862, guid: 7183b50bd011105429c0674832cbe5a6,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5264020437333811862, guid: 7183b50bd011105429c0674832cbe5a6,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5264020437333811862, guid: 7183b50bd011105429c0674832cbe5a6,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5644739032311751890, guid: 7183b50bd011105429c0674832cbe5a6,
@@ -514,6 +589,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2041510470}
   - component: {fileID: 2041510469}
+  - component: {fileID: 2041510471}
   m_Layer: 0
   m_Name: DayChange
   m_TagString: Untagged
@@ -548,6 +624,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2041510471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2041510468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0db3e4830fcd0474b988f39a083380df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7591722755958745317
 PrefabInstance:
   m_ObjectHideFlags: 0
