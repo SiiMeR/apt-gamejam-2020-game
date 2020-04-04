@@ -44,7 +44,7 @@ public class Event : MonoBehaviour
                 EventModal.Instance.SetEventDTO(null);
                 EventModal.Instance.gameObject.SetActive(false);
             }
-            EventManager.Instance.RemoveEvent(EventDto);
+            EventManager.Instance.RemoveEvent(EventDto, true);
         }
     }
 

@@ -60,12 +60,14 @@ public class EventManager : Singleton<EventManager>
         InsertEvent(eventDto);
     }
 
-    public void RemoveEvent(EventDTO eventDto)
+    public void RemoveEvent(EventDTO eventDto, bool invokeDeclineAction)
     {
         if (eventToGameObject.ContainsKey(eventDto))
         {
-            Debug.Log("RemoveEvent");
-            eventDto.declineAction?.Invoke();
+            if (invokeDeclineAction)
+            {
+                eventDto.declineAction?.Invoke();   
+            }
             Destroy(eventToGameObject[eventDto]);
             eventToGameObject.Remove(eventDto);
         }
@@ -73,14 +75,14 @@ public class EventManager : Singleton<EventManager>
     
     private void InsertEvent(EventDTO eventDto)
     {
-        var eventObject = Instantiate(eventPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-        eventObject.transform.SetParent(this.transform);
-        eventObject.transform.localScale = new Vector3(1, 1, 1);
-        var eventScript = eventObject.GetComponent<Event>();
-        eventScript.EventDto = eventDto;
-        eventScript.SetOnClickListener(this.OpenEventModal);
         if (!eventToGameObject.ContainsKey(eventDto))
         {
+            var eventObject = Instantiate(eventPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            eventObject.transform.SetParent(this.transform);
+            eventObject.transform.localScale = new Vector3(1, 1, 1);
+            var eventScript = eventObject.GetComponent<Event>();
+            eventScript.EventDto = eventDto;
+            eventScript.SetOnClickListener(this.OpenEventModal);
             eventToGameObject.Add(eventDto, eventObject);
         }
     }
