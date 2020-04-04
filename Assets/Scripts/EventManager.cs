@@ -80,7 +80,10 @@ public class EventManager : Singleton<EventManager>
         var eventScript = eventObject.GetComponent<Event>();
         eventScript.EventDto = eventDto;
         eventScript.SetOnClickListener(this.OpenEventModal);
-        eventToGameObject.Add(eventDto, eventObject);
+        if (!eventToGameObject[eventDto])
+        {
+            eventToGameObject.Add(eventDto, eventObject);
+        }
     }
 
     private void OpenEventModal(EventDTO dto)
