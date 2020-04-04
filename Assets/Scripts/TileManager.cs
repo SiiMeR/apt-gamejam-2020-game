@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using TMPro;
 using UnityEngine;
@@ -112,6 +113,40 @@ public class TileManager : Singleton<TileManager>
         {
                 return GetTileFromTilemap(cellPos).gameObject.GetComponent<OurTile>();
         }
+
+        public List<OurTile> GetTilesByType(params TileType[] tileTypes)
+        {
+                return GetAllTilesFromTileMap()
+                        .Select(t => t.gameObject.GetComponent<OurTile>())
+                        .Where(tile => tileTypes.Contains(tile.type))
+                        .ToList();
+        }
+
+        public List<Tile> GetAllTilesFromTileMap()
+        {
+               return bgTilemap.GetTiles<Tile>().Select(p => p.Value).ToList();
+        }
+        
+        public Tilemap GetBGTilemap()
+        {
+                return bgTilemap;
+        }
+
+        public Tilemap GetLandTilemap()
+        {
+                return landTilemap;
+        }
+
+        public Tilemap GetRoadTilemap()
+        {
+                return roadTilemap;
+        }
+
+        public Tilemap GetRiverTilemap()
+        {
+                return riverTilemap;
+        }
+        
         public Tile GetTileFromTilemap(Vector3Int cellPos)
         {
                 var roadTile = roadTilemap.GetTile<Tile>(cellPos);
