@@ -28,6 +28,8 @@ public class TileManager : Singleton<TileManager>
                 
     private List<Tile> _tiles;
 
+    public List<Sprite> riverSprites;
+
     private void Awake()
     { 
         FillTilemap();
