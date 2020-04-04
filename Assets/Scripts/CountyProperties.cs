@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class CountyProperties : MonoBehaviour
 {
-    public TextMeshProUGUI _countyName;
-    public TextMeshProUGUI _population;
-    public TextMeshProUGUI _wellness;
-    public TextMeshProUGUI _food;
-    public TextMeshProUGUI _wood;
-    public TextMeshProUGUI _coal;
+    public TextMeshProUGUI countyNameMesh;
+    public TextMeshProUGUI populationMesh;
+    public TextMeshProUGUI wellnessMesh;
+    public TextMeshProUGUI foodMesh;
+    public TextMeshProUGUI woodMesh;
+    public TextMeshProUGUI coalMesh;
 
     private int population = 420;
     private int wellness = 69;
@@ -25,17 +25,17 @@ public class CountyProperties : MonoBehaviour
     
     private void setInitialTexts()
     {
-        _population.text = $"Elanike arv: {population}";
-        _wellness.text = $"Heaolu: {wellness}%";
-        _food.text = $"Söök: {food}";
-        _wood.text = $"Puit: {wood}";
-        _coal.text = $"Süsi: {coal}";
+        populationMesh.text = $"Elanike arv: {population}";
+        wellnessMesh.text = $"Heaolu: {wellness}%";
+        foodMesh.text = $"Söök: {food}";
+        woodMesh.text = $"Puit: {wood}";
+        coalMesh.text = $"Süsi: {coal}";
     }
     
     void onDayEvent(int currentDay)
     {
         // TODO: Kas küla nime saab kasutaja ise määrata? Kui jah, siis lugeda see kuskilt sisse.
-        _countyName.text = $"Vald 69 | Päev: {currentDay}";
+        countyNameMesh.text = $"Vald 69 | Päev: {currentDay}";
         if (currentDay % 14 == 0)
         {
             // do smth
