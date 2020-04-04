@@ -98,9 +98,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundPollution: 0.2
   airPollution: 0.1
-  grass: 100
-  rabbits: 100
-  foxes: 100
+  grass: 1500
+  rabbits: 50
+  foxes: 5
   horizontalSprite: {fileID: -1716379815802706236, guid: 6ed19a1fa84a36d44a8444b490635730,
     type: 3}
   verticalSprite: {fileID: 3381497911007915542, guid: c0bcaaf1f14fa7540949ae1800b3d5d4,

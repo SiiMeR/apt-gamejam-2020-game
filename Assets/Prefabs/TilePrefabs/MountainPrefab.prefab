@@ -96,10 +96,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundPollution: 0.2
   airPollution: 0.1
-  grass: 100
-  rabbits: 100
-  foxes: 100
-  shapedMountain:
+  grass: 250
+  rabbits: 25
+  foxes: 10
+shapedMountain:
   - {fileID: 4828939939129666585, guid: 535743cda323bf1469606a5044578dd9, type: 3}
   - {fileID: 5710453119897473134, guid: 535743cda323bf1469606a5044578dd9, type: 3}
   - {fileID: 763690025488029536, guid: 535743cda323bf1469606a5044578dd9, type: 3}

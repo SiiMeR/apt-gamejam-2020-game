@@ -98,9 +98,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundPollution: 0.2
   airPollution: 0.1
-  grass: 100
+  grass: 1000
   rabbits: 100
-  foxes: 100
+  foxes: 10
 --- !u!95 &9079787047833584593
 Animator:
   serializedVersion: 3
