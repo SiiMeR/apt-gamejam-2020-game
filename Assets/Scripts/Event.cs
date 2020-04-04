@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DTO;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class Event : MonoBehaviour
@@ -25,9 +26,6 @@ public class Event : MonoBehaviour
         // var questionButtonComponent = questionObject.GetComponent<Button>();
         // questionButtonComponent.onClick.AddListener(this.OpenEventModel);
 
-        var buttonComponent = this.GetComponent<Button>();
-        buttonComponent.onClick.AddListener(this.OpenEventModal);
-
         slider.value = 100f;
     }
 
@@ -45,8 +43,12 @@ public class Event : MonoBehaviour
         }
     }
 
-    public void OpenEventModal()
+    public delegate void OnClickHandler(EventDTO eventDto);
+
+    public void SetOnClickListener(OnClickHandler handler)
     {
-        Debug.Log(EventDto.name);
+        var buttonComponent = this.GetComponent<Button>();
+        buttonComponent.onClick.RemoveAllListeners();
+        buttonComponent.onClick.AddListener(() => { handler(this.EventDto); });
     }
 }

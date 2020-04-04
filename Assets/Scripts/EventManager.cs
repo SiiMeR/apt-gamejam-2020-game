@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class EventManager : Singleton<EventManager>
 {
     public GameObject eventPrefab;
+    public GameObject eventModal;
 
     public List<EventDTO> events = new List<EventDTO>{
         new EventDTO("Event 1"), 
@@ -86,6 +87,18 @@ public class EventManager : Singleton<EventManager>
         eventObject.transform.localScale = new Vector3(1, 1, 1);
         var eventScript = eventObject.GetComponent<Event>();
         eventScript.EventDto = eventDto;
+        eventScript.SetOnClickListener(this.OpenEventModal);
         eventToGameObject.Add(eventDto, eventObject);
     }
+
+    private void OpenEventModal(EventDTO dto)
+    {
+        this.eventModal.SetActive(true);
+    }
+
+    private void CloseEventModal()
+    {
+        this.eventModal.SetActive(false);
+    }
+        
 }

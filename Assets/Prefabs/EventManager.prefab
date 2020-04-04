@@ -114,3 +114,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventPrefab: {fileID: 131143675441155498, guid: 67cde18f682931a498eaa74dd52842a9,
     type: 3}
+  eventModalPrefab: {fileID: 6261708360288138820, guid: 9d1eaa7a838f5764aaa3b4d54b21f3a1,
+    type: 3}
