@@ -99,7 +99,7 @@ MonoBehaviour:
   grass: 250
   rabbits: 25
   foxes: 10
-shapedMountain:
+  shapedMountain:
   - {fileID: 4828939939129666585, guid: 535743cda323bf1469606a5044578dd9, type: 3}
   - {fileID: 5710453119897473134, guid: 535743cda323bf1469606a5044578dd9, type: 3}
   - {fileID: 763690025488029536, guid: 535743cda323bf1469606a5044578dd9, type: 3}
@@ -109,3 +109,4 @@ shapedMountain:
   - {fileID: -5472546076179869478, guid: 535743cda323bf1469606a5044578dd9, type: 3}
   - {fileID: -5807522260660533849, guid: 535743cda323bf1469606a5044578dd9, type: 3}
   - {fileID: -4474215469176702196, guid: 535743cda323bf1469606a5044578dd9, type: 3}
+  originalSpriteName: 
