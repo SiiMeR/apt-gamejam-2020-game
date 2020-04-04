@@ -63,7 +63,7 @@ public class EventModal : Singleton<EventModal>
         {
             call();
             this.gameObject.SetActive(false);
-            EventManager.Instance.RemoveEvent(this._eventDto);
+            EventManager.Instance.RemoveEvent(this._eventDto, false);
         });
     }
 
@@ -81,7 +81,7 @@ public class EventModal : Singleton<EventModal>
         {
             call();
             this.gameObject.SetActive(false);
-            EventManager.Instance.RemoveEvent(this._eventDto);
+            EventManager.Instance.RemoveEvent(this._eventDto, false);
         });
     }
 
