@@ -326,9 +326,65 @@ public class TileManager : Singleton<TileManager>
             : null;
     }
     
-    public GameObject GetTileByPosition2(Vector3Int position)
+    public GameObject GetGameObjectByPosition(Vector3Int position)
     {
-        Vector3Int pos = _tiles.Keys.FirstOrDefault(k => k.Equals(position));
-        return pos == default ? null : _tiles[pos].Last();
+        return (from values in _tiles.Values 
+            where values != null 
+                  && values.Any() 
+                  && values.Last().transform.position.x.Equals(position.x) 
+                  && values.Last().transform.position.y.Equals(position.y) 
+            select values.Last()).FirstOrDefault();
+    }
+    
+    public AbstractTile GetGameObjectByPosition(Vector3Int position, List<AbstractTile> values)
+    {
+        return values.FirstOrDefault(v =>
+            transform.position.x.Equals(position.x) && v.transform.position.y.Equals(position.y));
+    }
+    
+    public AbstractTile GetRandomTileSidingWithGrassByType(params TileType[] tileTypes)
+    {
+        var shuffledByType = GetTilesByType(tileTypes).OrderBy( x => Random.value).ToList();
+        var grass = GetTilesByType(TileType.GRASS);
+
+        foreach (var g in grass)
+        {
+            //print(g.transform.position.ToVector3Int());
+        }
+        
+        foreach (var tile in shuffledByType)
+        {
+            var pos = tile.transform.position.ToVector3Int() * 4;
+            pos.x -= 1;
+            var at = GetGameObjectByPosition(pos, grass);
+            
+            if (at != null && at.TypeOfTile.Equals(TileType.GRASS))
+            {
+                return at.GetComponent<AbstractTile>();
+            }
+
+            pos.x += 2;
+            at = GetGameObjectByPosition(pos, grass);
+            if (at != null && at.TypeOfTile.Equals(TileType.GRASS))
+            {
+                return at.GetComponent<AbstractTile>();
+            }
+
+            pos.x -= 1;
+            pos.y += 1;
+            at = GetGameObjectByPosition(pos, grass);
+            if (at != null && at.TypeOfTile.Equals(TileType.GRASS))
+            {
+                return at.GetComponent<AbstractTile>();
+            }
+            pos.y -= 2;
+            at = GetGameObjectByPosition(pos, grass);
+            if (at != null && at.TypeOfTile.Equals(TileType.GRASS))
+            {
+                return at.GetComponent<AbstractTile>();
+            }
+        }
+
+        return null;
     }
 }

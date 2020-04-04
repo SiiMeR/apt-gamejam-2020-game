@@ -60,8 +60,6 @@ public class EventCreator : MonoBehaviour
 
     private EventDTO TekstiiliTehas()
     {
-        var riverTile = TileManager.Instance.GetRandomTileByType(TileType.RIVER);
-
         return new EventDTO(
             "Tekstiilitehas", 
             "Ärimees tahab jõele ehitada tekstiilitehast. Kuidas toimid?",
@@ -69,14 +67,19 @@ public class EventCreator : MonoBehaviour
             "Keela ehitus",
             () =>
             {
+                var grassTile = TileManager.Instance.GetRandomTileSidingWithGrassByType(TileType.RIVER);
                 CountyProperties.Instance.SetPopulation((int)(CountyProperties.Instance.population * 1.1));
                 // TODO add pollution to nearby river
-                print( riverTile.transform.localPosition);
-                print( riverTile.transform.position);
-                print(TileManager.Instance.GetTileByPosition2(riverTile.transform.position.ToVector3Int()));
-                riverTile.GetComponent<Animator>().enabled = false;  
-                riverTile.GetComponent<SpriteRenderer>().sprite = SpriteFactory.Instance.factory.GetComponent<SpriteRenderer>().sprite;
-                print(riverTile.GetComponent<SpriteRenderer>().sprite.name);
+                //print( riverTile.transform.localPosition);
+                //print(TileManager.Instance.GetTileByGameObjectPosition(riverTile.transform.position.ToVector3Int()));
+                print("Grasstile:");
+                print(grassTile);
+                if (grassTile != null)
+                {
+                    grassTile.GetComponent<Animator>().enabled = false;  
+                    grassTile.GetComponent<SpriteRenderer>().sprite = SpriteFactory.Instance.factory.GetComponent<SpriteRenderer>().sprite;
+                }
+                //print(riverTile.GetComponent<SpriteRenderer>().sprite.name);
                 // TileManager.Instance.GetTileByPosition(riverTile.transform.position.ToVector3Int()).gameObject.GetComponent<SpriteRenderer>(); 
 
             },
