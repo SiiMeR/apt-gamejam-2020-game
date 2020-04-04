@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class EventManager : Singleton<EventManager>
 {
     public GameObject eventPrefab;
+    public GameObject eventModal;
 
     public List<EventDTO> events = new List<EventDTO>{
         new EventDTO("Event 1"), 
@@ -73,12 +74,7 @@ public class EventManager : Singleton<EventManager>
             Destroy(eventToGameObject[eventDto]);
         }
     }
-
-    public static EventDTO CreateEventDto(string name, string text, string acceptText, string declineText, Action acceptFunction, Action declineFunction)
-    {
-        return new EventDTO(name, text, acceptText, declineText, acceptFunction, declineFunction);
-    }
-
+    
     private void InsertEvent(EventDTO eventDto)
     {
         var eventObject = Instantiate(eventPrefab, new Vector3(0, 0, 0), Quaternion.identity);
@@ -86,6 +82,18 @@ public class EventManager : Singleton<EventManager>
         eventObject.transform.localScale = new Vector3(1, 1, 1);
         var eventScript = eventObject.GetComponent<Event>();
         eventScript.EventDto = eventDto;
+        eventScript.SetOnClickListener(this.OpenEventModal);
         eventToGameObject.Add(eventDto, eventObject);
     }
+
+    private void OpenEventModal(EventDTO dto)
+    {
+        this.eventModal.SetActive(true);
+    }
+
+    private void CloseEventModal()
+    {
+        this.eventModal.SetActive(false);
+    }
+        
 }
