@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public abstract class AbstractTile : MonoBehaviour
 {
@@ -10,4 +11,5 @@ public abstract class AbstractTile : MonoBehaviour
     public int foxes = 100;
 
     public virtual TileType TypeOfTile { get; set; } = TileType.UNKNOWN;
+    
 }

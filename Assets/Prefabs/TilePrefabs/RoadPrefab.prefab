@@ -104,3 +104,6 @@ MonoBehaviour:
   tJunctionSprite: {fileID: 21300000, guid: cd7c3eb13430b8f49ac3da09709f0c97, type: 3}
   curveSprite: {fileID: 21300000, guid: 6218cd2c60c77e048a9a8865c1c99fa2, type: 3}
   crossSprite: {fileID: 21300000, guid: fa9c0b9cfc23e034e8c9bc133f32fa96, type: 3}
+  bridgeSprite: {fileID: 21300000, guid: cd67454dd53bbdd42992c05deb48bac9, type: 3}
+  roadType: 0
+  angle: 0

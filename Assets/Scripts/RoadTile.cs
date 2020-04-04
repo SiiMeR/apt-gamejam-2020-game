@@ -8,6 +8,7 @@ public class RoadTile : AbstractTile
     [SerializeField] private Sprite tJunctionSprite;
     [SerializeField] private Sprite curveSprite;
     [SerializeField] private Sprite crossSprite;
+    [SerializeField] private Sprite bridgeSprite;
     
     public override TileType TypeOfTile { get; set; } = TileType.ROAD;
     public RoadType roadType;
@@ -34,6 +35,8 @@ public class RoadTile : AbstractTile
                 return crossSprite;
             case RoadType.CURVE:
                 return curveSprite;
+            case RoadType.BRIDGE:
+                return bridgeSprite;
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }
@@ -47,5 +50,6 @@ public enum RoadType
     VERTICAL,
     TJUNCTION,
     CROSS,
-    CURVE
+    CURVE,
+    BRIDGE
 }
