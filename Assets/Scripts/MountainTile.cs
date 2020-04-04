@@ -15,7 +15,6 @@ public class MountainTile : AbstractTile
     {
         var spriteRenderer = GetComponent<SpriteRenderer>();
 
-        print(spriteRenderer.sprite.name);
         if (!originalSpriteName.StartsWith("mountain 1_"))
         {
             return;

@@ -267,8 +267,6 @@ public class TileManager : Singleton<TileManager>
     
     private void Update()
     {
-                
-                
         var input = Input.mousePosition;
         input.z = 10.0f;
         var mousePos = Camera.main.ScreenToWorldPoint(input);
@@ -278,7 +276,17 @@ public class TileManager : Singleton<TileManager>
         highLight.transform.position = floored - new Vector3(2,2);
         // highLight.transform.position = floored;
 
-        if (Input.GetMouseButtonDown(0))
+        // var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        // if (Physics.Raycast(ray, out var hit)) // UI CLiek, dondc work
+        // {
+        //     print(hit.transform.gameObject.name);
+        //     if (hit.transform.GetComponent<RectTransform>() != null)
+        //     {
+        //         return;
+        //     }
+        // }
+
+        if (Input.GetMouseButtonDown(0) && Time.timeScale > 0.0f)
         {
             modal.SetActive(!modal.activeInHierarchy);
         };

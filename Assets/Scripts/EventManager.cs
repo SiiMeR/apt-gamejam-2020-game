@@ -17,6 +17,7 @@ public class EventManager : Singleton<EventManager>
     void Start()
     {
         UpdateEvents();
+        Time.timeScale = 1.0f;
     }
 
     // Update is called once per frame
@@ -92,6 +93,7 @@ public class EventManager : Singleton<EventManager>
         var eventModelScript = this.eventModal.GetComponent<EventModal>();
         eventModelScript.SetEventDTO(dto);
         this.eventModal.SetActive(true);
+        Time.timeScale = 0.0f;
     }
 
     private void CloseEventModal()
@@ -99,5 +101,6 @@ public class EventManager : Singleton<EventManager>
         var eventModelScript = this.eventModal.GetComponent<EventModal>();
         eventModelScript.SetEventDTO(null);
         this.eventModal.SetActive(false);
+        Time.timeScale = 1.0f;
     }
 }
