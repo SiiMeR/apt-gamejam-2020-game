@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DTO;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class EventCreator : MonoBehaviour
 {
@@ -50,7 +51,7 @@ public class EventCreator : MonoBehaviour
                 sum += eventWeights[i];
                 if (sum >= seek && events[i] != null)
                 {
-                    EventManager.Instance.AddEvent(events[i]);
+                    EventManager.Instance.AddEvent(TekstiiliTehas());
                     break;
                 }
             }
@@ -59,10 +60,7 @@ public class EventCreator : MonoBehaviour
 
     private EventDTO TekstiiliTehas()
     {
-        // TODO: get random river tile
-        // Add its coordinates to EventDTO
-        // get river tiles nearby
-        var ourTile = TileManager.Instance.GetRandomTileByType(TileType.GRASS);
+        var riverTile = TileManager.Instance.GetRandomTileByType(TileType.RIVER);
 
         return new EventDTO(
             "Teksiilitehas", 
@@ -73,6 +71,14 @@ public class EventCreator : MonoBehaviour
             {
                 CountyProperties.Instance.SetPopulation((int)(CountyProperties.Instance.population * 1.1));
                 // TODO add pollution to nearby river
+                print( riverTile.transform.localPosition);
+                print( riverTile.transform.position);
+                print(TileManager.Instance.GetTileByPosition2(riverTile.transform.position.ToVector3Int()));
+                riverTile.GetComponent<Animator>().enabled = false;  
+                riverTile.GetComponent<SpriteRenderer>().sprite = SpriteFactory.Instance.factory.GetComponent<SpriteRenderer>().sprite;
+                print(riverTile.GetComponent<SpriteRenderer>().sprite.name);
+                // TileManager.Instance.GetTileByPosition(riverTile.transform.position.ToVector3Int()).gameObject.GetComponent<SpriteRenderer>(); 
+
             },
             () => {
                 CountyProperties.Instance.SetPopulation((int)(CountyProperties.Instance.population * 0.9));
