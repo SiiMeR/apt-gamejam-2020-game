@@ -1,28 +1,18 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Net.Http;
-using TMPro;
-using UnityEngine;
+﻿using TMPro;
 
 public class LeftPanelName : Singleton<LeftPanelName>
 {
-    // Start is called before the first frame update
-
-    private string text = "";
-    private int day = 1;
     private TextMeshProUGUI _textField;
 
-    void Start()
+    private void Awake()
     {
         _textField = GetComponent<TextMeshProUGUI>();
-        GameLoop.loopEvent += updateDay;
-        _textField.text = $"Küla 69 | {day}";
-        
+        DayChangeEvent.dayChangeEvent += updateDay;
     }
 
-    void updateDay()
+    void updateDay(int currentDay)
     {
-        text = $"Küla 69 | {++day}";
+        // TODO: Kas küla nime saab kasutaja ise määrata? Kui jah, siis lugeda see kuskilt sisse.
+        _textField.text = $"Küla 69 | Päev: {currentDay}";
     }
 }
