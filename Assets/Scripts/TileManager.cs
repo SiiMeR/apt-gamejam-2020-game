@@ -218,5 +218,9 @@ public class TileManager : Singleton<TileManager>
                 
         return null;
     }
-        
+
+    public void fff(Vector3Int pos, Tile tile)
+    {
+        this.riverTilemap.SetTile(pos, tile);
+    }
 }

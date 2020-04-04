@@ -3,9 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using DTO;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class EventCreator : MonoBehaviour
 {
+
+    public Sprite pold;
+    
     // TODO: Variant luua list numbridest, ja need randomilt eventile määrata et mis päevadel event tuleb
     private void Awake()
     {
@@ -17,10 +21,11 @@ public class EventCreator : MonoBehaviour
         // TODO: add randomness for event creation
         Debug.Log("fdkoi");
         Debug.Log(currentDay);
-        if (currentDay % 2 == 0)
+        if (currentDay % 4 == 0)
         {
             // do smth
             // return;
+            Debug.Log("AddEvent");
             EventManager.Instance.AddEvent(TekstiiliTehas());
         }
     }
@@ -31,6 +36,7 @@ public class EventCreator : MonoBehaviour
         // Add its coordinates to EventDTO
         // get river tiles nearby
         OurTile ourTile = TileManager.Instance.GetRandomTileByType(TileType.GRASS);
+        Debug.Log("TekstiiliTehas");
         Debug.Log(ourTile.positionInTilemap);
         
         return new EventDTO(
@@ -40,12 +46,17 @@ public class EventCreator : MonoBehaviour
             "Keela ehitus",
             () =>
             {
-                CountyProperties.Instance.population += (int) (CountyProperties.Instance.population * 0.1);
+                CountyProperties.Instance.SetPopulation((int) (CountyProperties.Instance.population * 1.1));
                 // TODO add pollution to nearby river
             },
             () => {
-                CountyProperties.Instance.population -= (int) (CountyProperties.Instance.population * 0.1);
+                CountyProperties.Instance.SetPopulation((int) (CountyProperties.Instance.population * 0.9));
                 // TODO remove pollution to nearby river
+                Tile tile = Instantiate(ourTile.tile);
+                tile.sprite = pold;
+                Debug.Log("Keela ehitus");
+                Debug.Log(ourTile.positionInTilemap);
+                TileManager.Instance.fff(ourTile.positionInTilemap, tile);
             },
             ourTile.positionInTilemap);
     }
@@ -64,11 +75,11 @@ public class EventCreator : MonoBehaviour
             "Keela tee-ehitus",
             () =>
             {
-                CountyProperties.Instance.wellness += 5;
+               // CountyProperties.Instance.wellness += 5;
             },
             () =>
             {
-                CountyProperties.Instance.wellness -= 5;
+               // CountyProperties.Instance.wellness -= 5;
             },
             tile.positionInTilemap);
     }

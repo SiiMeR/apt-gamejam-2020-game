@@ -64,10 +64,13 @@ public class EventManager : Singleton<EventManager>
 
     public void RemoveEvent(EventDTO eventDto)
     {
+        Debug.Log(eventDto.name);
         if (eventToGameObject[eventDto])
         {
+            Debug.Log("RemoveEvent");
             eventDto.declineAction?.Invoke();
             Destroy(eventToGameObject[eventDto]);
+            eventToGameObject.Remove(eventDto);
         }
     }
     

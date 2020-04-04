@@ -13,11 +13,11 @@ public class CountyProperties : Singleton<CountyProperties>
     public TextMeshProUGUI woodMesh;
     public TextMeshProUGUI coalMesh;
 
-    public int population = 420;
-    public int wellness = 69;
-    public int food = 1337;
-    public int wood = 2000;
-    public int coal = 101; 
+    public int population { get; private set; } = 420;
+    public int wellness { get; private set; } = 69;
+    public int food { get; private set; } = 1337;
+    public int wood { get; private set; } = 2000;
+    public int coal { get; private set; } = 101; 
     private void Awake()
     {
         SetInitialTexts();
@@ -49,19 +49,36 @@ public class CountyProperties : Singleton<CountyProperties>
                 // EventManager.Instance.AddEvent(EventManager.CreateEventDto($"Event {currentDay}"));   
             }
         }
-        if (currentDay % 3 == 0)
-        {
-            if (currentDay < 13)
-            {
-                EventManager.Instance.AddEvent(new EventDTO($"Event {currentDay}", 
-                    "tekst mida näeb modalis", 
-                    "nupp mida näeb modalis", 
-                    "nupp mida näeb modalis", 
-                    () => Debug.Log("Nõustun ja muudan mingeid parameetreid"),
-                    () => Debug.Log("Keeldun ja muudan mingeid parameetreid"),
-                    new Vector3Int(0, 0, 0)));   
-            }
-        }
+    }
+
+    public void SetPopulation(int value)
+    {
+        this.population = value;
+        populationMesh.text = $"Elanike arv: {population}";
+    }
+    
+    public void SetWellness(int value)
+    {
+        this.wellness = value;
+        wellnessMesh.text = $"Heaolu: {wellness}%";
+    }
+    
+    public void SetFood(int value)
+    {
+        this.food = value;
+        foodMesh.text = $"Söök: {food}";
+    }
+    
+    public void SetWood(int value)
+    {
+        this.wood = value;
+        woodMesh.text = $"Puit: {wood}";
+    }
+    
+    public void SetCoal(int value)
+    {
+        this.coal = value;
+        coalMesh.text = $"Süsi: {coal}";
     }
     
 }
