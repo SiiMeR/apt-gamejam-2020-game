@@ -19,8 +19,6 @@ public class EventCreator : MonoBehaviour
     private void OnDayEvent(int currentDay)
     {
         // TODO: add randomness for event creation
-        Debug.Log("fdkoi");
-        Debug.Log(currentDay);
         if (currentDay % 4 == 0)
         {
             // do smth
@@ -36,8 +34,6 @@ public class EventCreator : MonoBehaviour
         // Add its coordinates to EventDTO
         // get river tiles nearby
         OurTile ourTile = TileManager.Instance.GetRandomTileByType(TileType.GRASS);
-        Debug.Log("TekstiiliTehas");
-        Debug.Log(ourTile.positionInTilemap);
         
         return new EventDTO(
             "Teksiilitehas", 
@@ -52,11 +48,13 @@ public class EventCreator : MonoBehaviour
             () => {
                 CountyProperties.Instance.SetPopulation((int) (CountyProperties.Instance.population * 0.9));
                 // TODO remove pollution to nearby river
-                Tile tile = Instantiate(ourTile.tile);
+
+                var tile = TileManager.Instance.GetTileFromTilemap(ourTile.positionInTilemap);
                 tile.sprite = pold;
-                Debug.Log("Keela ehitus");
-                Debug.Log(ourTile.positionInTilemap);
-                TileManager.Instance.fff(ourTile.positionInTilemap, tile);
+                print(ourTile.positionInTilemap);
+                TileManager.Instance.roadTilemap.SetTile(ourTile.positionInTilemap, tile);
+                TileManager.Instance.roadTilemap.RefreshTile(ourTile.positionInTilemap);
+                
             },
             ourTile.positionInTilemap);
     }

@@ -6,10 +6,10 @@ using UnityEngine.Tilemaps;
 
 public class TileManager : Singleton<TileManager>
 {
-    [SerializeField] private Tilemap bgTilemap;
-    [SerializeField] private Tilemap landTilemap;
-    [SerializeField] private Tilemap riverTilemap;
-    [SerializeField] private Tilemap roadTilemap;
+    public Tilemap bgTilemap;
+    public Tilemap landTilemap;
+    public  Tilemap riverTilemap;
+    public Tilemap roadTilemap;
 
     [SerializeField] private GameObject highLight;
     [SerializeField] private GameObject ourTilePrefab;
@@ -39,14 +39,16 @@ public class TileManager : Singleton<TileManager>
     {
         foreach (var tile in roadTilemap.GetTiles<Tile>())
         {
+            // bgTilemap.GetTile<Tile>(tile.Key).GetTileData();
             var road = Instantiate(ourTilePrefab, transform);
             var ourTile = road.GetComponent<OurTile>();
             ourTile.SetData(false, true, 0.0f, 100, 10, 10, TileType.ROAD);
             ourTile.type = SpriteNameToEnum(GetTileFromTilemap(tile.Key).sprite);
 
             ourTile.positionInTilemap = tile.Key;
-            ourTile.tile = tile.Value;            
-            roadTilemap.GetTile<Tile>(tile.Key).gameObject = road;
+            tile.Value.gameObject = road;
+            roadTilemap.SetTile(tile.Key, tile.Value);
+            // roadTilemap.GetTile<Tile>(tile.Key).gameObject = road;
         }  
         foreach (var tile in riverTilemap.GetTiles<Tile>())
         {
@@ -54,18 +56,19 @@ public class TileManager : Singleton<TileManager>
             var ourTile = road.GetComponent<OurTile>();
             ourTile.SetData(true, false, 0.0f, 0,0,0, TileType.RIVER);
             ourTile.positionInTilemap = tile.Key;
-            ourTile.tile = tile.Value;     
-            riverTilemap.GetTile<Tile>(tile.Key).gameObject = road;
+            tile.Value.gameObject = road;
+            riverTilemap.SetTile(tile.Key, tile.Value);
         }
                 
         foreach (var tile in bgTilemap.GetTiles<Tile>())
         {
             var road = Instantiate(ourTilePrefab, transform);
             var ourTile = road.GetComponent<OurTile>();
+            ourTile.transform.position = bgTilemap.CellToWorld(tile.Key) + new Vector3(2,2,0);
             ourTile.SetData(false, false, 0.0f, 100,10,10, TileType.GRASS);
             ourTile.positionInTilemap = tile.Key;
-            ourTile.tile = tile.Value;     
-            bgTilemap.GetTile<Tile>(tile.Key).gameObject = road;
+            tile.Value.gameObject = road;
+            bgTilemap.SetTile(tile.Key, tile.Value);
         }
                 
         foreach (var tile in landTilemap.GetTiles<Tile>())
@@ -74,9 +77,9 @@ public class TileManager : Singleton<TileManager>
             var ourTile = road.GetComponent<OurTile>();
             ourTile.SetData(false, false, 0.0f, 100,100,100, TileType.GRASS);
             ourTile.positionInTilemap = tile.Key;
-            ourTile.tile = tile.Value;     
             ourTile.type = SpriteNameToEnum(GetTileFromTilemap(tile.Key).sprite);
-            landTilemap.GetTile<Tile>(tile.Key).gameObject = road;
+            tile.Value.gameObject = road;
+            landTilemap.SetTile(tile.Key, tile.Value);
         }
     }
 
@@ -223,6 +226,7 @@ public class TileManager : Singleton<TileManager>
 
     public void fff(Vector3Int pos, Tile tile)
     {
-        this.riverTilemap.SetTile(pos, tile);
+        roadTilemap.SetTile(pos, tile);
+        roadTilemap.RefreshTile(pos);
     }
 }

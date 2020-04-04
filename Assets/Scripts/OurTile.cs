@@ -13,7 +13,6 @@ public class OurTile : MonoBehaviour
     public int rabbits = 100;
     public int foxes = 10;
     public Vector3Int positionInTilemap;
-    public Tile tile;
 
     public TileType type = TileType.GRASS;
 
