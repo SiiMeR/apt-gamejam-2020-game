@@ -63,6 +63,7 @@ public class EventModal : Singleton<EventModal>
         {
             call();
             this.gameObject.SetActive(false);
+            Time.timeScale = 1.0f;
             EventManager.Instance.RemoveEvent(this._eventDto, false);
         });
     }
@@ -81,6 +82,7 @@ public class EventModal : Singleton<EventModal>
         {
             call();
             this.gameObject.SetActive(false);
+            Time.timeScale = 1.0f;
             EventManager.Instance.RemoveEvent(this._eventDto, false);
         });
     }

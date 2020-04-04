@@ -34,7 +34,7 @@ public class Event : MonoBehaviour
     {
         if (slider.value <= 100f)
         {
-            slider.value -= 0.1f;
+            slider.value -= 10f * Time.deltaTime;
         }
         if (slider.value <= 0f && exists)
         {

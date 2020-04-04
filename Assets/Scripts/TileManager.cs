@@ -40,8 +40,29 @@ public class TileManager : Singleton<TileManager>
     public GameObject modal;
    
     private void Awake()
-    { 
+    {
         FillTilemap();
+
+        foreach (var animator in FindObjectsOfType<Animator>())
+        {
+            if (animator.GetComponent<RiverTile>())
+            {
+                animator.speed = 0.85f;
+                continue;
+            }
+            
+            if (animator.GetComponent<FarmTile>())
+            {
+                animator.speed = 0.1f;
+                var farmState = animator.GetCurrentAnimatorStateInfo(0);//could replace 0 by any other animation layer index
+                animator.Play(farmState.fullPathHash, -1, Random.Range(0f, 0.5f));
+                continue;
+            }
+            
+            animator.speed = Random.Range(0.15f, .25f);
+            var state = animator.GetCurrentAnimatorStateInfo(0);//could replace 0 by any other animation layer index
+            animator.Play(state.fullPathHash, -1, Random.Range(0f, 0.1f));
+        }
     }
 
     private void FillTilemap()
@@ -92,6 +113,10 @@ public class TileManager : Singleton<TileManager>
                 riverTile.angle = (int) tilemap.GetTransformMatrix(pos).rotation.eulerAngles.z;
                 break;
             }
+            
+            case MountainTile mountainTile:
+                mountainTile.originalSpriteName = tile.sprite.name;
+                break;
         }
         // ourTile.SetData(false, false, 0.0f, 100, 100, 100, TileType.GRASS);
         // ourTile.type = NameToEnum(tile.sprite);
@@ -138,7 +163,9 @@ public class TileManager : Singleton<TileManager>
             case "path_vertical":
                 return RoadType.VERTICAL;
             case "path_turn":
-                return RoadType.CURVE;
+                return RoadType.CURVE;           
+            case "bridge_horizontal":
+                return RoadType.BRIDGE;
             
             default:
                 return RoadType.HORIZONTAL;
@@ -180,7 +207,7 @@ public class TileManager : Singleton<TileManager>
         {
             return TileType.VILLAGE;
         }
-        if (spriteName.ToLowerInvariant().Contains("path"))
+        if (spriteName.ToLowerInvariant().Contains("path") || spriteName.ToLowerInvariant().Contains("bridge"))
         {
             return TileType.ROAD;
         }
@@ -240,8 +267,6 @@ public class TileManager : Singleton<TileManager>
     
     private void Update()
     {
-                
-                
         var input = Input.mousePosition;
         input.z = 10.0f;
         var mousePos = Camera.main.ScreenToWorldPoint(input);
@@ -251,7 +276,17 @@ public class TileManager : Singleton<TileManager>
         highLight.transform.position = floored - new Vector3(2,2);
         // highLight.transform.position = floored;
 
-        if (Input.GetMouseButtonDown(0))
+        // var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        // if (Physics.Raycast(ray, out var hit)) // UI CLiek, dondc work
+        // {
+        //     print(hit.transform.gameObject.name);
+        //     if (hit.transform.GetComponent<RectTransform>() != null)
+        //     {
+        //         return;
+        //     }
+        // }
+
+        if (Input.GetMouseButtonDown(0) && Time.timeScale > 0.0f)
         {
             modal.SetActive(!modal.activeInHierarchy);
         };
