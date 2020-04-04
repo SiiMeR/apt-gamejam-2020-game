@@ -23,7 +23,8 @@ public class TileManager : Singleton<TileManager>
     public TextMeshProUGUI foxesText;
     public TextMeshProUGUI rabbitsText;
     public TextMeshProUGUI typeText;
-        
+
+    public GameObject modal;
                 
     private List<Tile> _tiles;
 
@@ -41,20 +42,27 @@ public class TileManager : Singleton<TileManager>
             ourTile.SetData(false, true, 0.0f, 100, 10, 10, TileType.ROAD);
             ourTile.type = SpriteNameToEnum(GetTileFromTilemap(tile.Key).sprite);
 
+            ourTile.positionInTilemap = tile.Key;
                         
             roadTilemap.GetTile<Tile>(tile.Key).gameObject = road;
         }  
         foreach (var tile in riverTilemap.GetTiles<Tile>())
         {
             var road = Instantiate(ourTilePrefab, transform);
-            road.GetComponent<OurTile>().SetData(true, false, 0.0f, 0,0,0, TileType.RIVER);
+            var ourTile = road.GetComponent<OurTile>();
+            ourTile.SetData(true, false, 0.0f, 0,0,0, TileType.RIVER);
+            ourTile.positionInTilemap = tile.Key;
+
             riverTilemap.GetTile<Tile>(tile.Key).gameObject = road;
         }
                 
         foreach (var tile in bgTilemap.GetTiles<Tile>())
         {
             var road = Instantiate(ourTilePrefab, transform);
-            road.GetComponent<OurTile>().SetData(false, false, 0.0f, 100,10,10, TileType.GRASS);
+            var ourTile = road.GetComponent<OurTile>();
+            ourTile.SetData(false, false, 0.0f, 100,10,10, TileType.GRASS);
+            ourTile.positionInTilemap = tile.Key;
+
             bgTilemap.GetTile<Tile>(tile.Key).gameObject = road;
         }
                 
@@ -63,8 +71,8 @@ public class TileManager : Singleton<TileManager>
             var road = Instantiate(ourTilePrefab, transform);
             var ourTile = road.GetComponent<OurTile>();
             ourTile.SetData(false, false, 0.0f, 100,100,100, TileType.GRASS);
-                        
-                        
+            ourTile.positionInTilemap = tile.Key;
+       
             ourTile.type = SpriteNameToEnum(GetTileFromTilemap(tile.Key).sprite);
             landTilemap.GetTile<Tile>(tile.Key).gameObject = road;
         }
@@ -103,7 +111,7 @@ public class TileManager : Singleton<TileManager>
     {
         if (!tile)
         {
-            Debug.Log($"Tile not found at position {cellPos}" );
+            // Debug.Log($"Tile not found at position {cellPos}" );
             return;
         }
         
@@ -119,7 +127,6 @@ public class TileManager : Singleton<TileManager>
 
     private void Update()
     {
-        // if (!Input.GetButtonDown(0)) return;
                 
                 
         var input = Input.mousePosition;
@@ -129,10 +136,13 @@ public class TileManager : Singleton<TileManager>
         var cellPos = bgTilemap.WorldToCell(mousePos);
                 
         highLight.transform.position = bgTilemap.CellToWorld(cellPos) + new Vector3(2,2);
-        // nameField.text = GetTileFromTilemap(cellPos)?.sprite?.name;
-                
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            modal.SetActive(!modal.activeInHierarchy);
+        };
+
         OnTileClicked(GetTileAtPosition(cellPos), cellPos);
-        // nameField.text = GetTileAtPosition(cellPos).type.ToString();
     }
 
     public OurTile GetTileAtPosition(Vector3Int cellPos)
