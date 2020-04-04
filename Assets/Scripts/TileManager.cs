@@ -75,6 +75,24 @@ public class TileManager : Singleton<TileManager>
         }
         
         groundTile = Instantiate(GetPrefab(tile.sprite), transform).GetComponent<AbstractTile>();
+
+        switch (groundTile)
+        {
+            case RoadTile roadTile:
+            {
+                var roadNameToType = RoadNameToType(tile.sprite.name);
+                roadTile.roadType = roadNameToType;
+                roadTile.angle = (int) tilemap.GetTransformMatrix(pos).rotation.eulerAngles.z;
+                break;
+            }
+            case RiverTile riverTile:
+            {
+                var riverNameToType = RiverNameToType(tile.sprite.name);
+                riverTile.riverType = riverNameToType;
+                riverTile.angle = (int) tilemap.GetTransformMatrix(pos).rotation.eulerAngles.z;
+                break;
+            }
+        }
         // ourTile.SetData(false, false, 0.0f, 100, 100, 100, TileType.GRASS);
         // ourTile.type = NameToEnum(tile.sprite);
         groundTile.transform.position = bgTilemap.CellToWorld(pos) + new Vector3(2, 2, 0);
@@ -107,6 +125,43 @@ public class TileManager : Singleton<TileManager>
     }
 
 
+    private RoadType RoadNameToType(string roadName)
+    {
+        switch (roadName.ToLowerInvariant())
+        {
+            case "path_cross":
+                return RoadType.CROSS;
+            case "path_horizontal":
+                return RoadType.HORIZONTAL;
+            case "path_t":
+                return RoadType.TJUNCTION;
+            case "path_vertical":
+                return RoadType.VERTICAL;
+            case "path_turn":
+                return RoadType.CURVE;
+            
+            default:
+                return RoadType.HORIZONTAL;
+        }    
+    }
+    
+    private RiverType RiverNameToType(string riverName)
+    {
+        switch (riverName.ToLowerInvariant())
+        {
+            case "river_horizontal_0":
+                return RiverType.HORIZONTAL;
+            case "river_t_0":
+                return RiverType.TJUNCTION;
+            case "river_turn_0":
+                return RiverType.CURVE;
+            case "river_vertical_0":
+                return RiverType.VERTICAL;
+            default:
+                return RiverType.VERTICAL;
+        }    
+    }
+    
     private TileType NameToEnum(string spriteName)
     {
         if (spriteName.ToLowerInvariant().Contains("field"))
@@ -125,7 +180,7 @@ public class TileManager : Singleton<TileManager>
         {
             return TileType.VILLAGE;
         }
-        if (spriteName.ToLowerInvariant().Contains("road"))
+        if (spriteName.ToLowerInvariant().Contains("path"))
         {
             return TileType.ROAD;
         }
@@ -155,9 +210,34 @@ public class TileManager : Singleton<TileManager>
         grassText.text = tile.grass.ToString();
         foxesText.text = tile.foxes.ToString();
         rabbitsText.text = tile.rabbits.ToString();
-        typeText.text = tile.TypeOfTile.ToString();
+        typeText.text = EstonianTranslationType(tile.TypeOfTile);
     }
 
+    public string EstonianTranslationType(TileType type)
+    {
+        switch (type)
+        {
+            case TileType.UNKNOWN:
+                return "Teadmata";
+            case TileType.GRASS:
+                return "Muru";
+            case TileType.FARMLAND:
+                return "Põld";
+            case TileType.RIVER:
+                return "Jõgi";
+            case TileType.FOREST:
+                return "Mets";
+            case TileType.VILLAGE:
+                return "Küla";
+            case TileType.MOUNTAIN:
+                return "Mägi";
+            case TileType.ROAD:
+                return "Tee";
+            default:
+                throw new ArgumentOutOfRangeException(nameof(type), type, null);
+        }    
+    }
+    
     private void Update()
     {
                 
@@ -207,7 +287,7 @@ public class TileManager : Singleton<TileManager>
     public GameObject GetTileByPosition(Vector3Int position)
     {
         return _tiles.TryGetValue(position, out var tile) 
-            ? tile.Last() 
+            ? tile.LastOrDefault() 
             : null;
     }
     
