@@ -16,12 +16,30 @@ public class EventCreator : MonoBehaviour
     {
         DayChangeEvent.dayChangeEvent += OnDayEvent;
         
-        events.Add(null);
-        eventWeights.Add(10);
+        AddEventToList(null,10);
         events.Add(TekstiiliTehas());
         eventWeights.Add(1);
         events.Add(Ikaldus());
         eventWeights.Add(1);
+    }
+
+    private void AddEventToList(EventDTO eventDto, int weight)
+    {
+        events.Add(eventDto);
+        eventWeights.Add(weight);
+    }
+
+    private void RemoveEvent(EventDTO eventDto)
+    {
+        int index = events.FindIndex(e => e.Equals(eventDto));
+        events.RemoveAt(index);
+        eventWeights.RemoveAt(index);
+    }
+    
+    private void ChangeEventWeight(EventDTO eventDto, int weight)
+    {
+        int index = events.FindIndex(e => e.Equals(eventDto));
+        eventWeights[index] = weight;
     }
 
     private void OnDayEvent(int currentDay)
