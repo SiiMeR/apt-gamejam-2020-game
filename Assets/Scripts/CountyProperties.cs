@@ -4,7 +4,7 @@ using DTO;
 using TMPro;
 using UnityEngine;
 
-public class CountyProperties : MonoBehaviour
+public class CountyProperties : Singleton<CountyProperties>
 {
     public TextMeshProUGUI countyNameMesh;
     public TextMeshProUGUI populationMesh;
@@ -13,11 +13,11 @@ public class CountyProperties : MonoBehaviour
     public TextMeshProUGUI woodMesh;
     public TextMeshProUGUI coalMesh;
 
-    private int population = 420;
-    private int wellness = 69;
-    private int food = 1337;
-    private int wood = 2000;
-    private int coal = 101; 
+    public int population = 420;
+    public int wellness = 69;
+    public int food = 1337;
+    public int wood = 2000;
+    public int coal = 101; 
     private void Awake()
     {
         SetInitialTexts();
@@ -59,8 +59,7 @@ public class CountyProperties : MonoBehaviour
                     "nupp mida näeb modalis", 
                     () => Debug.Log("Nõustun ja muudan mingeid parameetreid"),
                     () => Debug.Log("Keeldun ja muudan mingeid parameetreid"),
-                    new Vector3Int(0, 0, 0)
-                ));   
+                    new Vector3Int(0, 0, 0)));   
             }
         }
     }
