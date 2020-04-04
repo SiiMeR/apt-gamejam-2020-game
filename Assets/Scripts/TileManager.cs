@@ -317,4 +317,10 @@ public class TileManager : Singleton<TileManager>
             ? tile.LastOrDefault() 
             : null;
     }
+    
+    public GameObject GetTileByPosition2(Vector3Int position)
+    {
+        Vector3Int pos = _tiles.Keys.FirstOrDefault(k => k.Equals(position));
+        return pos == default ? null : _tiles[pos].Last();
+    }
 }
