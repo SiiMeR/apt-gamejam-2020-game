@@ -11,7 +11,6 @@ public class TileManager : Singleton<TileManager>
 
         private void Start()
         {
-                
         }
         
 }
