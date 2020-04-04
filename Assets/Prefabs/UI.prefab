@@ -60,13 +60,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8773585, g: 0.850679, b: 0.5090335, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b6f1220ced8c82248b7622336a775e81, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: -5993112012373322873, guid: 9ad4cfcd8504d0e4ab60f120b21195e7,
+    type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -74,7 +75,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 8
 --- !u!1 &7591722756142148544
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,6 +416,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3078225479633610591, guid: 3a39ff11259471d4099ba04f65526dde,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 2530564911472380330, guid: 296f268d91dae8c4c9746b7c46c75812,
+        type: 3}
+    - target: {fileID: 3078225479633610591, guid: 3a39ff11259471d4099ba04f65526dde,
+        type: 3}
+      propertyPath: m_PixelsPerUnitMultiplier
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a39ff11259471d4099ba04f65526dde, type: 3}
