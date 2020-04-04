@@ -95,5 +95,4 @@ public class EventManager : Singleton<EventManager>
     {
         this.eventModal.SetActive(false);
     }
-        
 }
