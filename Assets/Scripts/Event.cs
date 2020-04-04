@@ -39,6 +39,11 @@ public class Event : MonoBehaviour
         if (slider.value <= 0f && exists)
         {
             exists = false;
+            if (EventModal.Instance.GetEventDTO() == this.EventDto)
+            {
+                EventModal.Instance.SetEventDTO(null);
+                EventModal.Instance.gameObject.SetActive(false);
+            }
             EventManager.Instance.RemoveEvent(EventDto);
         }
     }

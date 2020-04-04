@@ -9,8 +9,6 @@ public class EventManager : Singleton<EventManager>
     public GameObject eventModal;
 
     public List<EventDTO> events = new List<EventDTO>{
-        new EventDTO("Event 1"), 
-        new EventDTO("Event 222")
     };
     
     private Dictionary<EventDTO, GameObject> eventToGameObject = new Dictionary<EventDTO, GameObject>();
@@ -82,7 +80,10 @@ public class EventManager : Singleton<EventManager>
         var eventScript = eventObject.GetComponent<Event>();
         eventScript.EventDto = eventDto;
         eventScript.SetOnClickListener(this.OpenEventModal);
-        eventToGameObject.Add(eventDto, eventObject);
+        if (!eventToGameObject[eventDto])
+        {
+            eventToGameObject.Add(eventDto, eventObject);
+        }
     }
 
     private void OpenEventModal(EventDTO dto)

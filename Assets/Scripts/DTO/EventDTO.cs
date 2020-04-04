@@ -29,6 +29,16 @@ namespace DTO
             this.location = location;
         }
         
+        public EventDTO(string name, string text, string acceptText, string declineText, Action acceptAction, Action declineAction)
+        {
+            this.name = name;
+            this.text = text;
+            this.acceptText = acceptText;
+            this.declineText = declineText;
+            this.acceptAction = acceptAction;
+            this.declineAction = declineAction;
+        }
+        
         
         
     }
