@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Threading;
+﻿using System.Collections.Generic;
 using DTO;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class EventManager : Singleton<EventManager>
 {
@@ -88,11 +84,15 @@ public class EventManager : Singleton<EventManager>
 
     private void OpenEventModal(EventDTO dto)
     {
+        var eventModelScript = this.eventModal.GetComponent<EventModal>();
+        eventModelScript.SetEventDTO(dto);
         this.eventModal.SetActive(true);
     }
 
     private void CloseEventModal()
     {
+        var eventModelScript = this.eventModal.GetComponent<EventModal>();
+        eventModelScript.SetEventDTO(null);
         this.eventModal.SetActive(false);
     }
         
