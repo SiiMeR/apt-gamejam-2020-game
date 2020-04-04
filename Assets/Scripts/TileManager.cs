@@ -210,9 +210,34 @@ public class TileManager : Singleton<TileManager>
         grassText.text = tile.grass.ToString();
         foxesText.text = tile.foxes.ToString();
         rabbitsText.text = tile.rabbits.ToString();
-        typeText.text = tile.TypeOfTile.ToString();
+        typeText.text = EstonianTranslationType(tile.TypeOfTile);
     }
 
+    public string EstonianTranslationType(TileType type)
+    {
+        switch (type)
+        {
+            case TileType.UNKNOWN:
+                return "Teadmata";
+            case TileType.GRASS:
+                return "Muru";
+            case TileType.FARMLAND:
+                return "Põld";
+            case TileType.RIVER:
+                return "Jõgi";
+            case TileType.FOREST:
+                return "Mets";
+            case TileType.VILLAGE:
+                return "Küla";
+            case TileType.MOUNTAIN:
+                return "Mägi";
+            case TileType.ROAD:
+                return "Tee";
+            default:
+                throw new ArgumentOutOfRangeException(nameof(type), type, null);
+        }    
+    }
+    
     private void Update()
     {
                 
