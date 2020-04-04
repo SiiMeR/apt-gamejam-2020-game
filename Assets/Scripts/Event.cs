@@ -28,10 +28,7 @@ public class Event : MonoBehaviour
         var buttonComponent = this.GetComponent<Button>();
         buttonComponent.onClick.AddListener(this.OpenEventModal);
 
-        this.dialog = this.transform.Find("Dialog").gameObject;
-        this.dialog.SetActive(false);
-        
-        slider.value = 0f;
+        slider.value = 100f;
     }
 
     // Update is called once per frame
@@ -39,9 +36,9 @@ public class Event : MonoBehaviour
     {
         if (slider.value <= 100f)
         {
-            slider.value += 0.1f;
+            slider.value -= 0.1f;
         }
-        if (slider.value >= 100f && exists)
+        if (slider.value <= 0f && exists)
         {
             exists = false;
             EventManager.Instance.RemoveEvent(EventDto);
@@ -51,6 +48,5 @@ public class Event : MonoBehaviour
     public void OpenEventModal()
     {
         Debug.Log(EventDto.name);
-        this.dialog.SetActive(true);
     }
 }
