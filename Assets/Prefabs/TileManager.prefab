@@ -552,6 +552,8 @@ MonoBehaviour:
   riverTilemap: {fileID: 5644739033419020847}
   roadTilemap: {fileID: 5644739033789375307}
   highLight: {fileID: 163311666}
+  ourTilePrefab: {fileID: 8715494724871515660, guid: c7639190b71b6d44895b0a5abb18e154,
+    type: 3}
   nameField: {fileID: 1295785631537263150}
 --- !u!1 &5644739032312803930
 GameObject:
