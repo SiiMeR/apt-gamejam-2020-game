@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using DTO;
 using UnityEngine;
 
@@ -8,19 +9,14 @@ public class EventCreator : MonoBehaviour
     private List<EventDTO> events = new List<EventDTO>();
     private List<int> eventWeights = new List<int>();
 
-
     public Sprite pold;
-    
-    // TODO: Variant luua list numbridest, ja need randomilt eventile määrata et mis päevadel event tuleb
     private void Awake()
     {
         DayChangeEvent.dayChangeEvent += OnDayEvent;
         
         AddEventToList(null,10);
-        events.Add(TekstiiliTehas());
-        eventWeights.Add(1);
-        events.Add(Ikaldus());
-        eventWeights.Add(1);
+        AddEventToList(TekstiiliTehas(), 1);
+        AddEventToList(Ikaldus(), 1);
     }
 
     private void AddEventToList(EventDTO eventDto, int weight)
@@ -44,27 +40,17 @@ public class EventCreator : MonoBehaviour
 
     private void OnDayEvent(int currentDay)
     {
-        // TODO: add randomness for event creation
-
-        
-        
         if (currentDay % 1 == 0)
         {
+            int seek = UnityEngine.Random.Range(1, eventWeights.Sum() + 1);
+
             int sum = 0;
-            foreach (int weight in eventWeights)
-            {
-                sum += weight;
-            }
-
-            int seek = UnityEngine.Random.Range(1, sum+1);
-
-            sum = 0;
             for (int i = 0; i < eventWeights.Count; i++)
             {
                 sum += eventWeights[i];
-                if (sum >= seek)
+                if (sum >= seek && events[i] != null)
                 {
-                    if (events[i] != null) EventManager.Instance.AddEvent(events[i]);
+                    EventManager.Instance.AddEvent(events[i]);
                     break;
                 }
             }
