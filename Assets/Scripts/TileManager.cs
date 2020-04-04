@@ -160,6 +160,7 @@ public class TileManager : Singleton<TileManager>
     {
         return GetAllTilesFromTileMap()
             .Select(t => t.gameObject.GetComponent<OurTile>())
+            .Select(t => GetTileAtPosition(t.positionInTilemap))
             .Where(tile => tileTypes.Contains(tile.type))
             .ToList();
     }

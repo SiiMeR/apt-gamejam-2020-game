@@ -95,5 +95,4 @@ public class EventManager : Singleton<EventManager>
         eventModelScript.SetEventDTO(null);
         this.eventModal.SetActive(false);
     }
-        
 }
