@@ -27,40 +27,40 @@ public class Ecology : Singleton<Ecology>
         }
     }
 
-    void TilePassing(Tile tile)
+    void TilePassing(OurTile ourTile)
     {
-        GrassChange(tile, logicalTurnLength / length);
+        GrassChange(ourTile, logicalTurnLength / length);
     }
 
-    void GrassChange(Tile tile, float dt)
+    void GrassChange(OurTile ourTile, float dt)
     {
-        float grassDelta = World.Instance.GetSunlight() * (dt * grassGain) * (1 - tile.groundPollution);
+        float grassDelta = World.Instance.GetSunlight() * (dt * grassGain) * (1 - ourTile.groundPollution);
 
-        tile.grass += (int) grassDelta;
+        ourTile.grass += (int) grassDelta;
     }
 
-    void RabbitChange(Tile tile, float dt)
+    void RabbitChange(OurTile ourTile, float dt)
     {
         float r = rabbitR; // Kui palju jänes soovib paljuneda
-        float K = tile.grass*rabbitK; // Kui palju jänes saab paljuneda
-        float rabbitsDelta = r*tile.rabbits * (1 - tile.rabbits / K) * dt; // Kui palju jäneste arv muutub
+        float K = ourTile.grass*rabbitK; // Kui palju jänes saab paljuneda
+        float rabbitsDelta = r*ourTile.rabbits * (1 - ourTile.rabbits / K) * dt; // Kui palju jäneste arv muutub
         
         float grassDelta = - Math.Max(rabbitsDelta * rabbitK,0); // Kui palju nad rohtu söövad
 
-        tile.rabbits += (int) rabbitsDelta;
-        tile.grass += (int) grassDelta;
+        ourTile.rabbits += (int) rabbitsDelta;
+        ourTile.grass += (int) grassDelta;
     }
 
-    void FoxChange(Tile tile, float dt)
+    void FoxChange(OurTile ourTile, float dt)
     {
         float r = foxesR; // Kui palju jänes soovib paljuneda
-        float K = tile.rabbits*foxesK; // Kui palju jänes saab paljuneda
-        float foxesDelta = r*tile.foxes * (1 - tile.foxes / K) * dt; // Kui palju jäneste arv muutub
+        float K = ourTile.rabbits*foxesK; // Kui palju jänes saab paljuneda
+        float foxesDelta = r*ourTile.foxes * (1 - ourTile.foxes / K) * dt; // Kui palju jäneste arv muutub
         
         float rabbitsDelta = - Math.Max(foxesDelta * foxesK,0); // Kui palju nad rohtu söövad
 
-        tile.foxes += (int) foxesDelta;
-        tile.rabbits += (int) rabbitsDelta;
+        ourTile.foxes += (int) foxesDelta;
+        ourTile.rabbits += (int) rabbitsDelta;
     }
         
 }

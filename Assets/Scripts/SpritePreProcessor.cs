@@ -24,6 +24,8 @@ public class UiSpritePreProcessor : AssetPostprocessor
         {
             Debug.Log($"Imported new texture at path {textureImporter.assetPath} and set it to type Sprite.");
             textureImporter.textureType = TextureImporterType.Sprite;
+            textureImporter.filterMode = FilterMode.Point;
+            textureImporter.textureCompression = TextureImporterCompression.Uncompressed;
         }
     }
 
