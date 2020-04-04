@@ -25,7 +25,6 @@ public class TileManager : Singleton<TileManager>
 
         private void Start()
         {
-                
         }
 
         private void Update()
