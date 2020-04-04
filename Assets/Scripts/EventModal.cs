@@ -54,7 +54,11 @@ public class EventModal : MonoBehaviour
     {
         var listeners = this.acceptButton.GetComponent<Button>()?.onClick;
         listeners?.RemoveAllListeners();
-        listeners?.AddListener(() => { call(); });
+        listeners?.AddListener(() =>
+        {
+            call();
+            this.gameObject.SetActive(false);
+        });
     }
 
     private void SetAcceptText(string text)
@@ -67,7 +71,11 @@ public class EventModal : MonoBehaviour
     {
         var listeners = this.declineButton.GetComponent<Button>()?.onClick;
         listeners?.RemoveAllListeners();
-        listeners?.AddListener(() => { call(); });
+        listeners?.AddListener(() =>
+        {
+            call();
+            this.gameObject.SetActive(false);
+        });
     }
 
     private void SetDeclineText(string text)
