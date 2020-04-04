@@ -50,7 +50,6 @@ public class TileManager : Singleton<TileManager>
         
         foreach (var pos in positions)
         {
-            print(pos);
             var tilesForPos = new List<GameObject>();
             
             if (CreateGroundTile(bgTilemap, pos, out var ourBg)) 
