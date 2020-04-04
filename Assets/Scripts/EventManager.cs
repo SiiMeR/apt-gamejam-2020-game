@@ -62,8 +62,7 @@ public class EventManager : Singleton<EventManager>
 
     public void RemoveEvent(EventDTO eventDto)
     {
-        Debug.Log(eventDto.name);
-        if (eventToGameObject[eventDto])
+        if (eventToGameObject.ContainsKey(eventDto))
         {
             Debug.Log("RemoveEvent");
             eventDto.declineAction?.Invoke();
