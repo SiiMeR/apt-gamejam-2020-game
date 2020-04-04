@@ -1,6 +1,8 @@
+using System;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
+
+[Obsolete("FUCK OFF")]
 public class OurTile : MonoBehaviour
 {
     public bool isRiver;

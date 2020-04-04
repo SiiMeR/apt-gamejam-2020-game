@@ -33,7 +33,6 @@ public class EventCreator : MonoBehaviour
         // TODO: get random river tile
         // Add its coordinates to EventDTO
         // get river tiles nearby
-        OurTile ourTile = TileManager.Instance.GetRandomTileByType(TileType.GRASS);
         
         return new EventDTO(
             "Teksiilitehas", 
@@ -48,15 +47,8 @@ public class EventCreator : MonoBehaviour
             () => {
                 CountyProperties.Instance.SetPopulation((int) (CountyProperties.Instance.population * 0.9));
                 // TODO remove pollution to nearby river
-
-                var tile = TileManager.Instance.GetTileFromTilemap(ourTile.positionInTilemap);
-                tile.sprite = pold;
-                print(ourTile.positionInTilemap);
-                TileManager.Instance.roadTilemap.SetTile(ourTile.positionInTilemap, tile);
-                TileManager.Instance.roadTilemap.RefreshTile(ourTile.positionInTilemap);
-                
             },
-            ourTile.positionInTilemap);
+            new Vector3Int());
     }
     
     private EventDTO LinnadevahelineTee()
@@ -64,7 +56,7 @@ public class EventCreator : MonoBehaviour
         // TODO: get random town tile
         // Add its coordinates to EventDTO
         // get route to another town
-        OurTile tile = TileManager.Instance.GetRandomTileByType(TileType.RIVER);
+        var tile = TileManager.Instance.GetRandomTileByType(TileType.RIVER);
         
         return new EventDTO(
             "Linnadevaheline tee", 
@@ -79,7 +71,7 @@ public class EventCreator : MonoBehaviour
             {
                // CountyProperties.Instance.wellness -= 5;
             },
-            tile.positionInTilemap);
+            Vector3Int.down);
     }
     
 }
