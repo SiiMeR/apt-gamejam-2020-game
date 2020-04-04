@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public abstract class AbstractTile : MonoBehaviour, IGroundTile
+public abstract class AbstractTile : MonoBehaviour
 {
     public float groundPollution = 0.2f;
     public float airPollution = 0.1f;

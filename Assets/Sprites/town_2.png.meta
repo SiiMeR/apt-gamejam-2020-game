@@ -26,6 +26,18 @@ TextureImporter:
   - first:
       213: 8873500373850027054
     second: town_2_7
+  - first:
+      213: 8846035890091920529
+    second: town_2_0
+  - first:
+      213: 5445019226963033188
+    second: town_2_1
+  - first:
+      213: 5578556140821698403
+    second: town_2_2
+  - first:
+      213: 244498194827277111
+    second: town_2_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -127,9 +139,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 16
+        y: 0
         width: 32
-        height: 16
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,8 +149,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0bc7f2d467a875590800000000000000
-      internalID: -7685521998378730320
+      spriteID: 19c094316ce63ca70800000000000000
+      internalID: 8846035890091920529
       vertices: []
       indices: 
       edges: []
@@ -148,9 +160,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 16
+        y: 0
         width: 32
-        height: 16
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,8 +170,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ffb3ece7f54c0bdc0800000000000000
-      internalID: -3625181785604867073
+      spriteID: 46cbd425328909b40800000000000000
+      internalID: 5445019226963033188
       vertices: []
       indices: 
       edges: []
@@ -169,9 +181,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 16
+        y: 0
         width: 32
-        height: 16
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,8 +191,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fbe86c7171896f740800000000000000
-      internalID: 5185499245914263231
+      spriteID: 367504de0430b6d40800000000000000
+      internalID: 5578556140821698403
       vertices: []
       indices: 
       edges: []
@@ -190,30 +202,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 16
-        width: 32
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a0978c0ef381b3c00800000000000000
-      internalID: 881324814714304778
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: town_2_4
-      rect:
-        serializedVersion: 2
-        x: 0
         y: 0
         width: 32
-        height: 16
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -221,71 +212,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 731f8c57877e49930800000000000000
-      internalID: 4149195661273264439
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: town_2_5
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 32
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ae01c5eddf5cf3c70800000000000000
-      internalID: 8953092278383808746
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: town_2_6
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 32
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c1a09d3ea505b5650800000000000000
-      internalID: 6222655661442402844
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: town_2_7
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 32
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e2470a18391052b70800000000000000
-      internalID: 8873500373850027054
+      spriteID: 73377e210d1a46300800000000000000
+      internalID: 244498194827277111
       vertices: []
       indices: 
       edges: []
