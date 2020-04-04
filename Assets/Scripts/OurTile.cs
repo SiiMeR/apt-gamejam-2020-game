@@ -3,12 +3,11 @@ using UnityEngine.Tilemaps;
 
 public class OurTile : MonoBehaviour
 {
-    public const int monthLength = 30;
-    
     public bool isRiver;
     public bool isRoad;
 
     public float groundPollution = 0.05f;
+    public float airPollution = 0.05f;
 
     public int grass = 1000;
     public int rabbits = 100;

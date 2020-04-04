@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEditor.UIElements;
 
 public class Ecology : Singleton<Ecology>
@@ -23,13 +24,20 @@ public class Ecology : Singleton<Ecology>
     {
         if (currentDay % logicalTurnLength == 0)
         {
-            //tilePassing(tile);
+            List<OurTile> tiles = TileManager.Instance.GetTilesByType(TileType.GRASS, TileType.FOREST, TileType.FARMLAND);
+            foreach (OurTile tile in tiles)
+            {
+                TilePassing(tile);
+            }
         }
     }
 
     void TilePassing(OurTile ourTile)
     {
-        GrassChange(ourTile, logicalTurnLength / length);
+        float dt = logicalTurnLength / length;
+        GrassChange(ourTile, dt);
+        RabbitChange(ourTile, dt);
+        FoxChange(ourTile, dt);
     }
 
     void GrassChange(OurTile ourTile, float dt)
