@@ -9,6 +9,8 @@ using UnityEngine.UI;
 public class Event : MonoBehaviour
 {
     public EventDTO EventDto;
+    public Slider slider;
+    private bool exists = true;
     
     // Start is called before the first frame update
     void Start()
@@ -22,12 +24,21 @@ public class Event : MonoBehaviour
 
         var buttonComponent = this.GetComponent<Button>();
         buttonComponent.onClick.AddListener(this.OpenEventModal);
+        slider.value = 0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (slider.value <= 100f)
+        {
+            slider.value += 0.1f;
+        }
+        if (slider.value >= 100f && exists)
+        {
+            exists = false;
+            EventManager.Instance.RemoveEvent(EventDto);
+        }
     }
 
     public void OpenEventModal()

@@ -39,11 +39,21 @@ public class CountyProperties : MonoBehaviour
         if (currentDay % 14 == 0)
         {
             // do smth
-            return;
+            // return;
         }
         if (currentDay % 7 == 0)
         {
-            
+            if (currentDay < 36)
+            {
+                // EventManager.Instance.AddEvent(EventManager.CreateEventDto($"Event {currentDay}"));   
+            }
+        }
+        if (currentDay % 3 == 0)
+        {
+            if (currentDay < 13)
+            {
+                EventManager.Instance.AddEvent(EventManager.CreateEventDto($"Event {currentDay}"));   
+            }
         }
     }
     
