@@ -31,7 +31,10 @@ public class EventManager : MonoBehaviour
     {
         foreach (Transform child in this.transform)
         {
-            Destroy(child.gameObject);
+            if (child.name == "Event")
+            {
+                Destroy(child.gameObject);
+            }
         }
     }
 
@@ -40,6 +43,7 @@ public class EventManager : MonoBehaviour
         foreach (var eventDto in this.events)
         {
             var eventObject = Instantiate(eventPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            eventObject.name = "Event";
             eventObject.transform.SetParent(this.transform);
             eventObject.transform.localScale = new Vector3(1, 1, 1);
             var eventScript = eventObject.GetComponent<Event>();
