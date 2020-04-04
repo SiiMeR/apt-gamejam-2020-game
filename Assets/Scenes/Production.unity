@@ -2304,10 +2304,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e5cbcf3ccff47fb9cf18335e16a569c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgTilemap: {fileID: 0}
-  landTilemap: {fileID: 0}
-  riverTilemap: {fileID: 0}
-  roadTilemap: {fileID: 0}
+  bgTilemap: {fileID: 1345831439}
+  landTilemap: {fileID: 20277393}
+  riverTilemap: {fileID: 1788962771}
+  roadTilemap: {fileID: 2094382775}
 --- !u!1 &617672614
 GameObject:
   m_ObjectHideFlags: 0
