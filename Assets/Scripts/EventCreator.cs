@@ -63,7 +63,7 @@ public class EventCreator : MonoBehaviour
         var riverTile = TileManager.Instance.GetRandomTileByType(TileType.RIVER);
 
         return new EventDTO(
-            "Teksiilitehas", 
+            "Tekstiilitehas", 
             "Ärimees tahab jõele ehitada tekstiilitehast. Kuidas toimid?",
             "Luba ehitus",
             "Keela ehitus",

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DG.Tweening;
 using DTO;
 using UnityEditor;
 using UnityEngine;
@@ -69,8 +70,16 @@ public class EventManager : Singleton<EventManager>
             {
                 eventDto.declineAction?.Invoke();   
             }
-            Destroy(eventToGameObject[eventDto]);
-            eventToGameObject.Remove(eventDto);
+
+            DOTween.Sequence()
+                .Append(eventToGameObject[eventDto].GetComponent<CanvasGroup>().DOFade(0.0f, 0.4f).SetEase(Ease.OutQuart))
+                .AppendInterval(0.15f)
+                .AppendCallback(() =>
+                {
+                    Destroy(eventToGameObject[eventDto]);
+                    eventToGameObject.Remove(eventDto);
+                });
+
         }
     }
     
