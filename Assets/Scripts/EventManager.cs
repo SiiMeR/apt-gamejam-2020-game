@@ -66,13 +66,14 @@ public class EventManager : Singleton<EventManager>
     {
         if (eventToGameObject[eventDto])
         {
+            eventDto.declineAction?.Invoke();
             Destroy(eventToGameObject[eventDto]);
         }
     }
 
-    public static EventDTO CreateEventDto(string name)
+    public static EventDTO CreateEventDto(string name, string text, string acceptText, string declineText, Action acceptFunction, Action declineFunction)
     {
-        return new EventDTO(name);
+        return new EventDTO(name, text, acceptText, declineText, acceptFunction, declineFunction);
     }
 
     private void InsertEvent(EventDTO eventDto)
