@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DTO;
 using UnityEngine;
 
@@ -18,6 +19,8 @@ public class EventCreator : MonoBehaviour
         events.Add(null);
         eventWeights.Add(10);
         events.Add(TekstiiliTehas());
+        eventWeights.Add(1);
+        events.Add(Ikaldus());
         eventWeights.Add(1);
     }
 
@@ -82,12 +85,35 @@ public class EventCreator : MonoBehaviour
             ourTile.positionInTilemap);
     }
     
+    private EventDTO Ikaldus()
+    {
+        // TODO: get random town tile
+        // Add its coordinates to EventDTO
+        // get route to another town
+        
+        return new EventDTO(
+            "Ikaldus", 
+            "Külaelanike põlde tabab ikaldus ja inimesed on näljas.",
+            "Las nälgivad",
+            "Söögu jäneseid",
+            () =>
+            {
+                CountyProperties.Instance.SetFood(Math.Max(CountyProperties.Instance.food - 200, 0));
+                // TODO: Alternatiivselt, lõhu põllud.
+            },
+            () =>
+            {
+                CountyProperties.Instance.SetFood(Math.Max(CountyProperties.Instance.food + 100, 0));
+                // TODO: Tapa jäneseid lähedastes alades.
+            });
+    }
+    
     private EventDTO LinnadevahelineTee()
     {
         // TODO: get random town tile
         // Add its coordinates to EventDTO
         // get route to another town
-        OurTile tile = TileManager.Instance.GetRandomTileByType(TileType.RIVER);
+        OurTile ourTile = TileManager.Instance.GetRandomTileByType(TileType.RIVER);
         
         return new EventDTO(
             "Linnadevaheline tee", 
@@ -100,9 +126,8 @@ public class EventCreator : MonoBehaviour
             },
             () =>
             {
-                CountyProperties.Instance.SetWellness(CountyProperties.Instance.wellness - 5);
-            },
-            tile.positionInTilemap);
+                CountyProperties.Instance.SetWellness(CountyProperties.Instance.wellness - 5); },
+            ourTile.positionInTilemap);
     }
     
 }

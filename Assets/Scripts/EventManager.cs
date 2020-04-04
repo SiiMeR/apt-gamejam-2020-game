@@ -9,8 +9,6 @@ public class EventManager : Singleton<EventManager>
     public GameObject eventModal;
 
     public List<EventDTO> events = new List<EventDTO>{
-        new EventDTO("Event 1"), 
-        new EventDTO("Event 222")
     };
     
     private Dictionary<EventDTO, GameObject> eventToGameObject = new Dictionary<EventDTO, GameObject>();
