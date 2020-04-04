@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class EventModal : MonoBehaviour
+public class EventModal : Singleton<EventModal>
 {
     public GameObject nameObject;
     public GameObject descriptionObject;
@@ -40,6 +40,11 @@ public class EventModal : MonoBehaviour
         SetDeclineListener(this._eventDto?.declineAction);
     }
 
+    public EventDTO GetEventDTO()
+    {
+        return this._eventDto;
+    }
+    
     private void SetNameText(string text)
     {
         this.nameObject.GetComponent<TextMeshProUGUI>()?.SetText(text);
@@ -58,6 +63,7 @@ public class EventModal : MonoBehaviour
         {
             call();
             this.gameObject.SetActive(false);
+            EventManager.Instance.RemoveEvent(this._eventDto);
         });
     }
 
@@ -75,6 +81,7 @@ public class EventModal : MonoBehaviour
         {
             call();
             this.gameObject.SetActive(false);
+            EventManager.Instance.RemoveEvent(this._eventDto);
         });
     }
 
