@@ -15,10 +15,24 @@ public static class TilemapExtensions
             {
                 var vector3Int = new Vector3Int(x, y, 0);
                 var tile = tilemap.GetTile<T>(vector3Int);
-                if (tile != null)
-                {
-                    tiles.Add(vector3Int, tile);
-                }
+                tiles.Add(vector3Int, tile);
+            }
+        }
+
+        return tiles;
+    }   
+    
+    public static List<Vector3Int> GetTilePositions(this Tilemap tilemap)
+    {
+        var tiles = new List<Vector3Int>();
+
+        var y = tilemap.origin.y;
+        for (; y < (tilemap.origin.y + tilemap.size.y); y++)
+        {
+            for (var x = tilemap.origin.x; x < (tilemap.origin.x + tilemap.size.x); x++)
+            {
+                var vector3Int = new Vector3Int(x, y, 0);
+                tiles.Add(vector3Int);
             }
         }
 

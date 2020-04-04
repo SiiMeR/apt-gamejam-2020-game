@@ -24,15 +24,15 @@ public class Ecology : Singleton<Ecology>
     {
         if (currentDay % logicalTurnLength == 0)
         {
-            List<OurTile> tiles = TileManager.Instance.GetTilesByType(TileType.GRASS, TileType.FOREST, TileType.FARMLAND);
-            foreach (OurTile tile in tiles)
+            var tiles = TileManager.Instance.GetTilesByType(TileType.GRASS, TileType.FOREST, TileType.FARMLAND);
+            foreach (var tile in tiles)
             {
                 TilePassing(tile);
             }
         }
     }
 
-    void TilePassing(OurTile ourTile)
+    void TilePassing(AbstractTile ourTile)
     {
         float dt = logicalTurnLength / length;
         GrassChange(ourTile, dt);
@@ -40,14 +40,14 @@ public class Ecology : Singleton<Ecology>
         FoxChange(ourTile, dt);
     }
 
-    void GrassChange(OurTile ourTile, float dt)
+    void GrassChange(AbstractTile ourTile, float dt)
     {
         float grassDelta = World.Instance.GetSunlight() * (dt * grassGain) * (1 - ourTile.groundPollution);
 
         ourTile.grass += (int) grassDelta;
     }
 
-    void RabbitChange(OurTile ourTile, float dt)
+    void RabbitChange(AbstractTile ourTile, float dt)
     {
         float r = rabbitR; // Kui palju jänes soovib paljuneda
         float K = ourTile.grass*rabbitK; // Kui palju jänes saab paljuneda
@@ -59,7 +59,7 @@ public class Ecology : Singleton<Ecology>
         ourTile.grass += (int) grassDelta;
     }
 
-    void FoxChange(OurTile ourTile, float dt)
+    void FoxChange(AbstractTile ourTile, float dt)
     {
         float r = foxesR; // Kui palju jänes soovib paljuneda
         float K = ourTile.rabbits*foxesK; // Kui palju jänes saab paljuneda

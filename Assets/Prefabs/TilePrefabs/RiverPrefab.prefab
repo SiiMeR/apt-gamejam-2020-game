@@ -9,10 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7255862371928987748}
-  - component: {fileID: 3758108223984648834}
   - component: {fileID: 6883175182734918916}
+  - component: {fileID: 2320482570877697589}
+  - component: {fileID: 718027401793481334}
   m_Layer: 0
-  m_Name: OurTile
+  m_Name: RiverPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,33 +27,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8715494724871515660}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.928072, y: 32.587505, z: -384.45312}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3758108223984648834
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8715494724871515660}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d47da4ec5d5f438ea5e11f8365552328, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isRiver: 0
-  isRoad: 0
-  groundPollution: 0.05
-  airPollution: 0.05
-  grass: 1000
-  rabbits: 100
-  foxes: 10
-  positionInTilemap: {x: 0, y: 0, z: 0}
-  type: 0
 --- !u!212 &6883175182734918916
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -91,8 +71,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e6698833a77838942ab0c8b01b7fcaa9, type: 3}
+  m_SortingOrder: 5
+  m_Sprite: {fileID: 7683209485996359164, guid: c0bcaaf1f14fa7540949ae1800b3d5d4,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -103,3 +84,39 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2320482570877697589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8715494724871515660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5940f94b37c746d48d300d4e547e87aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundPollution: 0.2
+  airPollution: 0.1
+  grass: 100
+  rabbits: 100
+  foxes: 100
+--- !u!95 &718027401793481334
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8715494724871515660}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 79c390dce9d8c614ea125170225af176, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

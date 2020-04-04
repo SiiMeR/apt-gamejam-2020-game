@@ -3,6 +3,7 @@ using System;
 [Flags]
 public enum TileType
 {
+    UNKNOWN,
     GRASS,
     FARMLAND,
     RIVER,

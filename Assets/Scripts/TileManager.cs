@@ -1,19 +1,32 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Random = UnityEngine.Random;
 
 public class TileManager : Singleton<TileManager>
 {
     public Tilemap bgTilemap;
     public Tilemap landTilemap;
-    public  Tilemap riverTilemap;
+    public Tilemap riverTilemap;
     public Tilemap roadTilemap;
 
-    [SerializeField] private GameObject highLight;
-    [SerializeField] private GameObject ourTilePrefab;
+    private Dictionary<Vector3Int, List<GameObject>> _tiles = new Dictionary<Vector3Int, List<GameObject>>();
 
+    [SerializeField] private GameObject highLight;
+    
+    [SerializeField] private GameObject grassPrefab;
+    [SerializeField] private GameObject forestPrefab;
+    [SerializeField] private GameObject riverPrefab;
+    [SerializeField] private GameObject roadPrefab;
+    [SerializeField] private GameObject villagePrefab;
+    [SerializeField] private GameObject farmPrefab;
+    [SerializeField] private GameObject mountainPrefab;
+    [SerializeField] private GameObject factoryPrefab;
+
+    
     [SerializeField] private TextMeshProUGUI nameField;
         
     public TextMeshProUGUI YText;
@@ -25,11 +38,7 @@ public class TileManager : Singleton<TileManager>
     public TextMeshProUGUI typeText;
 
     public GameObject modal;
-                
-    private List<Tile> _tiles;
-
-    public List<Sprite> riverSprites;
-
+   
     private void Awake()
     { 
         FillTilemap();
@@ -37,73 +46,93 @@ public class TileManager : Singleton<TileManager>
 
     private void FillTilemap()
     {
-        foreach (var tile in roadTilemap.GetTiles<Tile>())
+        var positions = bgTilemap.GetTilePositions();
+        
+        foreach (var pos in positions)
         {
-            // bgTilemap.GetTile<Tile>(tile.Key).GetTileData();
-            var road = Instantiate(ourTilePrefab, transform);
-            var ourTile = road.GetComponent<OurTile>();
-            ourTile.SetData(false, true, 0.0f, 100, 10, 10, TileType.ROAD);
-            ourTile.type = SpriteNameToEnum(GetTileFromTilemap(tile.Key).sprite);
-
-            ourTile.positionInTilemap = tile.Key;
-            tile.Value.gameObject = road;
-            roadTilemap.SetTile(tile.Key, tile.Value);
-            // roadTilemap.GetTile<Tile>(tile.Key).gameObject = road;
-        }  
-        foreach (var tile in riverTilemap.GetTiles<Tile>())
-        {
-            var road = Instantiate(ourTilePrefab, transform);
-            var ourTile = road.GetComponent<OurTile>();
-            ourTile.SetData(true, false, 0.0f, 0,0,0, TileType.RIVER);
-            ourTile.positionInTilemap = tile.Key;
-            tile.Value.gameObject = road;
-            riverTilemap.SetTile(tile.Key, tile.Value);
-        }
+            print(pos);
+            var tilesForPos = new List<GameObject>();
+            
+            if (CreateGroundTile(bgTilemap, pos, out var ourBg)) 
+                tilesForPos.Add(ourBg.gameObject);
+            if (CreateGroundTile(landTilemap, pos, out var ourLand)) 
+                tilesForPos.Add(ourLand.gameObject);
+            if (CreateGroundTile(riverTilemap, pos, out var ourRiver)) 
+                tilesForPos.Add(ourRiver.gameObject);
+            if (CreateGroundTile(roadTilemap, pos, out var ourRoad)) 
+                tilesForPos.Add(ourRoad.gameObject);
                 
-        foreach (var tile in bgTilemap.GetTiles<Tile>())
-        {
-            var road = Instantiate(ourTilePrefab, transform);
-            var ourTile = road.GetComponent<OurTile>();
-            ourTile.transform.position = bgTilemap.CellToWorld(tile.Key) + new Vector3(2,2,0);
-            ourTile.SetData(false, false, 0.0f, 100,10,10, TileType.GRASS);
-            ourTile.positionInTilemap = tile.Key;
-            tile.Value.gameObject = road;
-            bgTilemap.SetTile(tile.Key, tile.Value);
-        }
-                
-        foreach (var tile in landTilemap.GetTiles<Tile>())
-        {
-            var road = Instantiate(ourTilePrefab, transform);
-            var ourTile = road.GetComponent<OurTile>();
-            ourTile.SetData(false, false, 0.0f, 100,100,100, TileType.GRASS);
-            ourTile.positionInTilemap = tile.Key;
-            ourTile.type = SpriteNameToEnum(GetTileFromTilemap(tile.Key).sprite);
-            tile.Value.gameObject = road;
-            landTilemap.SetTile(tile.Key, tile.Value);
+            _tiles.Add(pos * 4, tilesForPos);
         }
     }
 
-    private TileType SpriteNameToEnum(Sprite tile)
+    private bool CreateGroundTile(Tilemap tilemap, Vector3Int pos, out AbstractTile groundTile)
     {
-        if (tile.name.Contains("Field"))
+        var tile = tilemap.GetTile<Tile>(pos);
+        if (!tile)
+        {
+            groundTile = null;
+            return false;
+        }
+        
+        groundTile = Instantiate(GetPrefab(tile.sprite), transform).GetComponent<AbstractTile>();
+        // ourTile.SetData(false, false, 0.0f, 100, 100, 100, TileType.GRASS);
+        // ourTile.type = NameToEnum(tile.sprite);
+        groundTile.transform.position = bgTilemap.CellToWorld(pos) + new Vector3(2, 2, 0);
+        
+        tilemap.gameObject.SetActive(false);
+        return true;
+    }
+
+    private GameObject GetPrefab(Sprite sprite)
+    {
+        switch (NameToEnum(sprite.name))
+        {
+            case TileType.GRASS:
+                return grassPrefab;
+            case TileType.FARMLAND:
+                return farmPrefab;
+            case TileType.RIVER:
+                return riverPrefab;
+            case TileType.FOREST:
+                return forestPrefab;
+            case TileType.VILLAGE:
+                return villagePrefab;
+            case TileType.MOUNTAIN:
+                return mountainPrefab;
+            case TileType.ROAD:
+                return roadPrefab; 
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
+
+
+    private TileType NameToEnum(string spriteName)
+    {
+        if (spriteName.ToLowerInvariant().Contains("field"))
         {
             return TileType.FARMLAND;
         }
-        if (tile.name.Contains("Forest"))
+        if (spriteName.ToLowerInvariant().Contains("forest"))
         {
             return TileType.FOREST;
         }
-        if (tile.name.Contains("Mountain"))
+        if (spriteName.ToLowerInvariant().Contains("mountain"))
         {
             return TileType.MOUNTAIN;
         }
-        if (tile.name.Contains("Town"))
+        if (spriteName.ToLowerInvariant().Contains("town"))
         {
             return TileType.VILLAGE;
         }
-        if (tile.name.Contains("Road"))
+        if (spriteName.ToLowerInvariant().Contains("road"))
         {
             return TileType.ROAD;
+        }
+        if (spriteName.ToLowerInvariant().Contains("river"))
+        {
+            return TileType.RIVER;
         }
 
         return TileType.GRASS;
@@ -112,7 +141,7 @@ public class TileManager : Singleton<TileManager>
 
 
 
-    public void OnTileClicked(OurTile tile, Vector3Int cellPos)
+    public void OnTileClicked(AbstractTile tile, Vector3Int cellPos)
     {
         if (!tile)
         {
@@ -127,7 +156,7 @@ public class TileManager : Singleton<TileManager>
         grassText.text = tile.grass.ToString();
         foxesText.text = tile.foxes.ToString();
         rabbitsText.text = tile.rabbits.ToString();
-        typeText.text = tile.type.ToString();
+        typeText.text = tile.TypeOfTile.ToString();
     }
 
     private void Update()
@@ -138,95 +167,48 @@ public class TileManager : Singleton<TileManager>
         input.z = 10.0f;
         var mousePos = Camera.main.ScreenToWorldPoint(input);
 
-        var cellPos = bgTilemap.WorldToCell(mousePos);
-                
-        highLight.transform.position = bgTilemap.CellToWorld(cellPos) + new Vector3(2,2);
+
+        var floored = new Vector3Int((int) (mousePos.x - mousePos.x % 4), (int) (mousePos.y - mousePos.y % 4), (int) mousePos.z);
+        highLight.transform.position = floored - new Vector3(2,2);
+        // highLight.transform.position = floored;
 
         if (Input.GetMouseButtonDown(0))
         {
             modal.SetActive(!modal.activeInHierarchy);
         };
 
-        OnTileClicked(GetTileAtPosition(cellPos), cellPos);
+        OnTileClicked(GetTileAtPosition(floored), floored);
     }
 
-    public OurTile GetTileAtPosition(Vector3Int cellPos)
+    public AbstractTile GetTileAtPosition(Vector3Int cellPos)
     {
-        return GetTileFromTilemap(cellPos)?.gameObject.GetComponent<OurTile>();
+        return GetTileByPosition(cellPos)?.gameObject.GetComponent<AbstractTile>();
     }
 
-    public OurTile GetRandomTileByType(params TileType[] tileTypes)
+    public AbstractTile GetRandomTileByType(params TileType[] tileTypes)
     {
         var tilesByType = GetTilesByType(tileTypes);
         return tilesByType.ElementAt(Random.Range(0, tilesByType.Count));
     }
         
-    public List<OurTile> GetTilesByType(params TileType[] tileTypes)
+    public List<AbstractTile> GetTilesByType(params TileType[] tileTypes)
     {
-        return GetAllTilesFromTileMap()
-            .Select(t => t.gameObject.GetComponent<OurTile>())
-            .Select(t => GetTileAtPosition(t.positionInTilemap))
-            .Where(tile => tileTypes.Contains(tile.type))
+        return _tiles.Values.SelectMany(go => go)
+            .Select(go => go.GetComponent<AbstractTile>())
+            .Where(tile => tileTypes.Contains(tile.TypeOfTile))
             .ToList();
     }
 
-    public List<Tile> GetAllTilesFromTileMap()
+    // public List<GameObject> GetAllTilesFromTileMap()
+    // {
+    //     
+    //     return bgTilemap.GetTiles<Tile>().Select(p => p.Value).ToList();
+    // }
+    
+    public GameObject GetTileByPosition(Vector3Int position)
     {
-        return bgTilemap.GetTiles<Tile>().Select(p => p.Value).ToList();
-    }
-        
-    public Tilemap GetBGTilemap()
-    {
-        return bgTilemap;
-    }
-
-    public Tilemap GetLandTilemap()
-    {
-        return landTilemap;
-    }
-
-    public Tilemap GetRoadTilemap()
-    {
-        return roadTilemap;
-    }
-
-    public Tilemap GetRiverTilemap()
-    {
-        return riverTilemap;
-    }
-        
-    public Tile GetTileFromTilemap(Vector3Int cellPos)
-    {
-        var roadTile = roadTilemap.GetTile<Tile>(cellPos);
-        if (roadTile)
-        {
-            return roadTile;
-        }
-
-        var riverTile = riverTilemap.GetTile<Tile>(cellPos);
-        if (riverTile)
-        {
-            return riverTile;
-        }
-                
-        var landTile = landTilemap.GetTile<Tile>(cellPos);
-        if (landTile)
-        {
-            return landTile;
-        }
-                
-        var grassTile = bgTilemap.GetTile<Tile>(cellPos);
-        if (grassTile)
-        {
-            return grassTile;
-        }
-                
-        return null;
-    }
-
-    public void fff(Vector3Int pos, Tile tile)
-    {
-        roadTilemap.SetTile(pos, tile);
-        roadTilemap.RefreshTile(pos);
+        return _tiles.TryGetValue(position, out var tile) 
+            ? tile.Last() 
+            : null;
     }
 }

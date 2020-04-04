@@ -62,9 +62,8 @@ public class EventCreator : MonoBehaviour
         // TODO: get random river tile
         // Add its coordinates to EventDTO
         // get river tiles nearby
-        OurTile ourTile = TileManager.Instance.GetRandomTileByType(TileType.GRASS);
-        Debug.Log(ourTile.positionInTilemap);
-        
+        var ourTile = TileManager.Instance.GetRandomTileByType(TileType.GRASS);
+
         return new EventDTO(
             "Teksiilitehas", 
             "Ärimees tahab jõele ehitada tekstiilitehast. Kuidas toimid?",
@@ -78,15 +77,8 @@ public class EventCreator : MonoBehaviour
             () => {
                 CountyProperties.Instance.SetPopulation((int)(CountyProperties.Instance.population * 0.9));
                 // TODO remove pollution to nearby river
-
-                var tile = TileManager.Instance.GetTileFromTilemap(ourTile.positionInTilemap);
-                tile.sprite = pold;
-                print(ourTile.positionInTilemap);
-                TileManager.Instance.roadTilemap.SetTile(ourTile.positionInTilemap, tile);
-                TileManager.Instance.roadTilemap.RefreshTile(ourTile.positionInTilemap);
-                
             },
-            ourTile.positionInTilemap);
+            new Vector3Int());
     }
     
     private EventDTO Ikaldus()
@@ -117,7 +109,7 @@ public class EventCreator : MonoBehaviour
         // TODO: get random town tile
         // Add its coordinates to EventDTO
         // get route to another town
-        OurTile ourTile = TileManager.Instance.GetRandomTileByType(TileType.RIVER);
+        var tile = TileManager.Instance.GetRandomTileByType(TileType.RIVER);
         
         return new EventDTO(
             "Linnadevaheline tee", 
@@ -130,8 +122,10 @@ public class EventCreator : MonoBehaviour
             },
             () =>
             {
-                CountyProperties.Instance.SetWellness(CountyProperties.Instance.wellness - 5); },
-            ourTile.positionInTilemap);
+                CountyProperties.Instance.SetWellness(CountyProperties.Instance.wellness - 5);
+               // CountyProperties.Instance.wellness -= 5;
+            },
+            Vector3Int.down);
     }
     
 }
