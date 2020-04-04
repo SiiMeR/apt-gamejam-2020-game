@@ -7,7 +7,7 @@ public class DayChangeEvent : MonoBehaviour
 
     private int _currentDay = 0;
     private float _currentTime = 0.0f;
-    public float loopTime = 5.0f;
+    public float loopTime = 2.0f;
 
     void Start()
     {
