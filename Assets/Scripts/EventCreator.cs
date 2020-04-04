@@ -21,7 +21,6 @@ public class EventCreator : MonoBehaviour
         {
             // do smth
             // return;
-            Debug.Log(TekstiiliTehas());
             EventManager.Instance.AddEvent(TekstiiliTehas());
         }
     }
@@ -31,7 +30,7 @@ public class EventCreator : MonoBehaviour
         // TODO: get random river tile
         // Add its coordinates to EventDTO
         // get river tiles nearby
-        OurTile ourTile = TileManager.Instance.GetRandomTileByType(TileType.RIVER);
+        OurTile ourTile = TileManager.Instance.GetRandomTileByType(TileType.GRASS);
         Debug.Log(ourTile.positionInTilemap);
         
         return new EventDTO(
@@ -42,12 +41,10 @@ public class EventCreator : MonoBehaviour
             () =>
             {
                 CountyProperties.Instance.population += (int) (CountyProperties.Instance.population * 0.1);
-                ourTile.tile.sprite = Sprite.Create(null, new Rect(), new Vector2());
                 // TODO add pollution to nearby river
             },
             () => {
                 CountyProperties.Instance.population -= (int) (CountyProperties.Instance.population * 0.1);
-                ourTile.tile.sprite = Sprite.Create(null, new Rect(), new Vector2());
                 // TODO remove pollution to nearby river
             },
             ourTile.positionInTilemap);
