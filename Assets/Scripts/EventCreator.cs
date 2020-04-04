@@ -67,17 +67,13 @@ public class EventCreator : MonoBehaviour
             "Keela ehitus",
             () =>
             {
-                var grassTile = TileManager.Instance.GetRandomTileSidingWithGrassByType(TileType.RIVER);
+                var grassTile = TileManager.Instance.GetRandomTileSidingWithGrassByType(SpriteFactory.Instance.factory, TileType.RIVER);
                 CountyProperties.Instance.SetPopulation((int)(CountyProperties.Instance.population * 1.1));
-                // TODO add pollution to nearby river
-                //print( riverTile.transform.localPosition);
-                //print(TileManager.Instance.GetTileByGameObjectPosition(riverTile.transform.position.ToVector3Int()));
-                print("Grasstile:");
-                print(grassTile);
-                if (grassTile != null)
+                if (grassTile != null && grassTile.GetComponent<SpriteRenderer>() != null)
                 {
                     grassTile.GetComponent<Animator>().enabled = false;  
-                    grassTile.GetComponent<SpriteRenderer>().sprite = SpriteFactory.Instance.factory.GetComponent<SpriteRenderer>().sprite;
+                    
+                   // grassTile.GetComponent<SpriteRenderer>().sprite = SpriteFactory.Instance.factory.GetComponent<SpriteRenderer>().sprite;
                 }
                 //print(riverTile.GetComponent<SpriteRenderer>().sprite.name);
                 // TileManager.Instance.GetTileByPosition(riverTile.transform.position.ToVector3Int()).gameObject.GetComponent<SpriteRenderer>(); 

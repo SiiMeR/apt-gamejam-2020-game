@@ -40,29 +40,8 @@ public class TileManager : Singleton<TileManager>
     public GameObject modal;
    
     private void Awake()
-    {
+    { 
         FillTilemap();
-
-        foreach (var animator in FindObjectsOfType<Animator>())
-        {
-            if (animator.GetComponent<RiverTile>())
-            {
-                animator.speed = 0.85f;
-                continue;
-            }
-            
-            if (animator.GetComponent<FarmTile>())
-            {
-                animator.speed = 0.1f;
-                var farmState = animator.GetCurrentAnimatorStateInfo(0);//could replace 0 by any other animation layer index
-                animator.Play(farmState.fullPathHash, -1, Random.Range(0f, 0.5f));
-                continue;
-            }
-            
-            animator.speed = Random.Range(0.15f, .25f);
-            var state = animator.GetCurrentAnimatorStateInfo(0);//could replace 0 by any other animation layer index
-            animator.Play(state.fullPathHash, -1, Random.Range(0f, 0.1f));
-        }
     }
 
     private void FillTilemap()
@@ -81,8 +60,11 @@ public class TileManager : Singleton<TileManager>
                 tilesForPos.Add(ourRiver.gameObject);
             if (CreateGroundTile(roadTilemap, pos, out var ourRoad)) 
                 tilesForPos.Add(ourRoad.gameObject);
-                
-            _tiles.Add(pos * 4, tilesForPos);
+
+            if (ourBg != null)
+            {
+                _tiles.Add(ourBg.transform.position.ToVector3Int(), tilesForPos);
+            }
         }
     }
 
@@ -113,10 +95,6 @@ public class TileManager : Singleton<TileManager>
                 riverTile.angle = (int) tilemap.GetTransformMatrix(pos).rotation.eulerAngles.z;
                 break;
             }
-            
-            case MountainTile mountainTile:
-                mountainTile.originalSpriteName = tile.sprite.name;
-                break;
         }
         // ourTile.SetData(false, false, 0.0f, 100, 100, 100, TileType.GRASS);
         // ourTile.type = NameToEnum(tile.sprite);
@@ -163,9 +141,7 @@ public class TileManager : Singleton<TileManager>
             case "path_vertical":
                 return RoadType.VERTICAL;
             case "path_turn":
-                return RoadType.CURVE;           
-            case "bridge_horizontal":
-                return RoadType.BRIDGE;
+                return RoadType.CURVE;
             
             default:
                 return RoadType.HORIZONTAL;
@@ -207,7 +183,7 @@ public class TileManager : Singleton<TileManager>
         {
             return TileType.VILLAGE;
         }
-        if (spriteName.ToLowerInvariant().Contains("path") || spriteName.ToLowerInvariant().Contains("bridge"))
+        if (spriteName.ToLowerInvariant().Contains("path"))
         {
             return TileType.ROAD;
         }
@@ -267,6 +243,8 @@ public class TileManager : Singleton<TileManager>
     
     private void Update()
     {
+                
+                
         var input = Input.mousePosition;
         input.z = 10.0f;
         var mousePos = Camera.main.ScreenToWorldPoint(input);
@@ -276,17 +254,7 @@ public class TileManager : Singleton<TileManager>
         highLight.transform.position = floored - new Vector3(2,2);
         // highLight.transform.position = floored;
 
-        // var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        // if (Physics.Raycast(ray, out var hit)) // UI CLiek, dondc work
-        // {
-        //     print(hit.transform.gameObject.name);
-        //     if (hit.transform.GetComponent<RectTransform>() != null)
-        //     {
-        //         return;
-        //     }
-        // }
-
-        if (Input.GetMouseButtonDown(0) && Time.timeScale > 0.0f)
+        if (Input.GetMouseButtonDown(0))
         {
             modal.SetActive(!modal.activeInHierarchy);
         };
@@ -335,52 +303,42 @@ public class TileManager : Singleton<TileManager>
                   && values.Last().transform.position.y.Equals(position.y) 
             select values.Last()).FirstOrDefault();
     }
-    
-    public AbstractTile GetGameObjectByPosition(Vector3Int position, List<AbstractTile> values)
-    {
-        return values.FirstOrDefault(v =>
-            transform.position.x.Equals(position.x) && v.transform.position.y.Equals(position.y));
-    }
-    
-    public AbstractTile GetRandomTileSidingWithGrassByType(params TileType[] tileTypes)
+
+    public AbstractTile GetRandomTileSidingWithGrassByType(GameObject goPrefab, params TileType[] tileTypes)
     {
         var shuffledByType = GetTilesByType(tileTypes).OrderBy( x => Random.value).ToList();
-        var grass = GetTilesByType(TileType.GRASS);
-
-        foreach (var g in grass)
-        {
-            //print(g.transform.position.ToVector3Int());
-        }
-        
         foreach (var tile in shuffledByType)
         {
-            var pos = tile.transform.position.ToVector3Int() * 4;
-            pos.x -= 1;
-            var at = GetGameObjectByPosition(pos, grass);
-            
-            if (at != null && at.TypeOfTile.Equals(TileType.GRASS))
+            var pos = tile.transform.position.ToVector3Int();
+            pos.x -= 4;
+            var at = GetGameObjectByPosition(pos);
+            if (at != null && at.GetComponent<AbstractTile>() != null && at.GetComponent<AbstractTile>().TypeOfTile.Equals(TileType.GRASS))
             {
+                _tiles[pos].Add(Instantiate(goPrefab, pos, Quaternion.identity));
                 return at.GetComponent<AbstractTile>();
             }
 
-            pos.x += 2;
-            at = GetGameObjectByPosition(pos, grass);
-            if (at != null && at.TypeOfTile.Equals(TileType.GRASS))
+            pos.x += 8;
+            at = GetGameObjectByPosition(pos);
+            if (at != null && at.GetComponent<AbstractTile>() != null && at.GetComponent<AbstractTile>().TypeOfTile.Equals(TileType.GRASS))
             {
+                _tiles[pos].Add(Instantiate(goPrefab, pos, Quaternion.identity));
                 return at.GetComponent<AbstractTile>();
             }
 
-            pos.x -= 1;
-            pos.y += 1;
-            at = GetGameObjectByPosition(pos, grass);
-            if (at != null && at.TypeOfTile.Equals(TileType.GRASS))
+            pos.x -= 4;
+            pos.y += 4;
+            at = GetGameObjectByPosition(pos);
+            if (at != null && at.GetComponent<AbstractTile>() != null && at.GetComponent<AbstractTile>().TypeOfTile.Equals(TileType.GRASS))
             {
+                _tiles[pos].Add(Instantiate(goPrefab, pos, Quaternion.identity));
                 return at.GetComponent<AbstractTile>();
             }
-            pos.y -= 2;
-            at = GetGameObjectByPosition(pos, grass);
-            if (at != null && at.TypeOfTile.Equals(TileType.GRASS))
+            pos.y -= 4;
+            at = GetGameObjectByPosition(pos);
+            if (at != null && at.GetComponent<AbstractTile>() != null && at.GetComponent<AbstractTile>().TypeOfTile.Equals(TileType.GRASS))
             {
+                _tiles[pos].Add(Instantiate(goPrefab, pos, Quaternion.identity));
                 return at.GetComponent<AbstractTile>();
             }
         }
