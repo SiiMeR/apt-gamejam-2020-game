@@ -8,6 +8,6 @@ public abstract class AbstractTile : MonoBehaviour
     public int grass = 100;
     public int rabbits = 100;
     public int foxes = 100;
-    
-    public virtual TileType TypeOfTile { get; set; }
+
+    public virtual TileType TypeOfTile { get; set; } = TileType.UNKNOWN;
 }

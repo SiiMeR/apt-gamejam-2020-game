@@ -101,6 +101,20 @@ MonoBehaviour:
   grass: 100
   rabbits: 100
   foxes: 100
+  horizontalSprite: {fileID: -1716379815802706236, guid: 6ed19a1fa84a36d44a8444b490635730,
+    type: 3}
+  verticalSprite: {fileID: 3381497911007915542, guid: c0bcaaf1f14fa7540949ae1800b3d5d4,
+    type: 3}
+  tJunctionSprite: {fileID: -2797253973600387085, guid: 0039f21f49883d34e9a8ee9b25560a0d,
+    type: 3}
+  curveSprite: {fileID: -5373829336615163905, guid: 07f4eb40bf72aff419501b89d5828181,
+    type: 3}
+  horizontalAnimator: {fileID: 9100000, guid: 6c785a473c36bb344916e85cb9509b80, type: 2}
+  verticalAnimator: {fileID: 9100000, guid: 79c390dce9d8c614ea125170225af176, type: 2}
+  tJunctionAnimator: {fileID: 9100000, guid: e4eb33c954894cd4d8802c57e91d6c98, type: 2}
+  curveAnimator: {fileID: 9100000, guid: 766f575e11f25d84b95db56c9b70a7cf, type: 2}
+  riverType: 0
+  angle: 0
 --- !u!95 &718027401793481334
 Animator:
   serializedVersion: 3
