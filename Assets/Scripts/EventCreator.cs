@@ -22,6 +22,7 @@ public class EventCreator : MonoBehaviour
         AddEventToList(MetsaIstutamine(), 1);
         AddEventToList(ViljaKoristus(), 1);
         AddEventToList(ViljaIstutamine(), 1);
+        AddEventToList(Vaetis(), 1);
     }
 
     private void AddEventToList(Func<EventDTO> createEvent, int weight)
@@ -293,6 +294,33 @@ public class EventCreator : MonoBehaviour
             });
     }
 
+    private Func<EventDTO> Vaetis()
+    {
+        return () => new EventDTO(
+            "Uus väetis", 
+            "Kaval teadlane leiutas uue väetise, mida ta korralikult kontrollida pole jõudnud, aga mis annaks külale palju suurema saagi ja heaolu",
+            "Kasuta uut väetist",
+            "Keela väetise kasutamine",
+            () =>
+            {
+                AbstractTile riverTile = TileManager.Instance.GetRandomTileByType(TileType.RIVER);
+                var surroundingTileLayers = TileManager.Instance.getTilesInRadius(riverTile, 2, true);
+                foreach (List<GameObject> layers in surroundingTileLayers.Values.ToList())
+                {
+                    foreach (var tile in layers)
+                    {
+                        tile.GetComponent<AbstractTile>().groundPollution += 0.2f;
+                    }                
+                }
+                CountyProperties.Instance.SetWellness(CountyProperties.Instance.wellness + 10); 
+                CountyProperties.Instance.SetFood(CountyProperties.Instance.food + 1000); 
+            },
+            () =>
+            {
+                CountyProperties.Instance.SetWellness(CountyProperties.Instance.wellness - 10); 
+                CountyProperties.Instance.SetFood(CountyProperties.Instance.food - 300); 
+            });
+    }
 
     private bool IsPopulationTooLow()
     {
