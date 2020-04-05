@@ -13,18 +13,27 @@ public class CountyProperties : Singleton<CountyProperties>
     public TextMeshProUGUI foodMesh;
     public TextMeshProUGUI woodMesh;
     public TextMeshProUGUI coalMesh;
+    public TextMeshProUGUI globalAirpollution;
 
     public int population { get; private set; } = 50;
     public int wellness { get; private set; } = 100;
     public int food { get; private set; } = 5000;
     public int wood { get; private set; } = 2000;
     public int coal { get; private set; } = 100;
+    public int globalAirpoll { get; private set; } = 50;
 
     private int foodUse = 1;
     private float[] foodUses = {0.5f,0.67f,1f,1.33f,2f};
     
     private void Awake()
     {
+        SetPopulation(GlobalStartingVariables.StartingPopulation);
+        SetWellness(GlobalStartingVariables.StartingWellnessPercent);
+        SetFood(GlobalStartingVariables.StartingFood);
+        SetWood(GlobalStartingVariables.StartingWood);
+        SetCoal(GlobalStartingVariables.StartingCoal);
+        globalAirpoll = GlobalStartingVariables.AirPollutionPercent;
+
         SetInitialTexts();
         DayChangeEvent.dayChangeEvent += OnDayEvent;
     }
@@ -35,13 +44,14 @@ public class CountyProperties : Singleton<CountyProperties>
         wellnessMesh.text = $"Heaolu: {wellness}%";
         foodMesh.text = $"Söök: {food}";
         woodMesh.text = $"Puit: {wood}";
-        coalMesh.text = $"Süsi: {coal}";
+        coalMesh.text = $"Kivisüsi: {coal}";
+        globalAirpollution.text = $"Õhu saastatus: {globalAirpoll}%";
     }
     
     private void OnDayEvent(int currentDay)
     {
         // TODO: Kas küla nime saab kasutaja ise määrata? Kui jah, siis lugeda see kuskilt sisse.
-        countyNameMesh.text = $"Texas | Päev: {currentDay}";
+        countyNameMesh.text = $"Texas\nPäev: {currentDay}";
         if (currentDay % 14 == 0)
         {
             
@@ -115,7 +125,7 @@ public class CountyProperties : Singleton<CountyProperties>
     public void SetCoal(int value)
     {
         this.coal = value;
-        coalMesh.text = $"Süsi: {coal}";
+        coalMesh.text = $"Kivisüsi: {coal}";
     }
     
 }

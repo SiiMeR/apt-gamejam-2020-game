@@ -134,7 +134,8 @@ public class QuestionAsker : MonoBehaviour
             DOTween.Sequence()
                 .Append(GlobalFade.Instance.FadeOut())
                 .AppendCallback(() => SceneManager.LoadScene("Scenes/Production"))
-                .Append(GlobalFade.Instance.FadeIn());
+                .Append(GlobalFade.Instance.FadeIn())
+                .SetUpdate(true);
             return;
         }
         

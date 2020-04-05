@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -10,22 +11,21 @@ public class TutorialCOntroller : Singleton<TutorialCOntroller>
     public GameObject tileinfo;
     public GameObject üldinfo;
 
-    private bool isTutorial;
+    private bool isTutorial = true;
     
     private void Start()
     {
-        print("starto");
-        Time.timeScale = 0.0f;
         sündmus.SetActive(true);
+        Time.timeScale = 0.0f;
     }
 
-    private void Update()
-    {
-        if (isTutorial)
-        {
-            Time.timeScale = 0.0f;
-        }
-    }
+    // private void Update()
+    // {
+    //     if (isTutorial)
+    //     {
+    //         Time.timeScale = 0.0f;
+    //     }
+    // }
 
     public void ValdOk()
     {
