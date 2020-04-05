@@ -69,6 +69,11 @@ public class EventCreator : MonoBehaviour
             WellnessTooLow();
         }
 
+        if (IsGroundPollutionTooHigh())
+        {
+            GroundPollutionTooHigh();
+        }
+
         if (CountyProperties.Instance.food < 100)
         {
             EventDTO va = Ikaldus()();
@@ -322,7 +327,7 @@ public class EventCreator : MonoBehaviour
                 {
                     foreach (var tile in layers)
                     {
-                        tile.GetComponent<AbstractTile>().groundPollution += 0.2f;
+                        tile.GetComponent<AbstractTile>().groundPollution += 0.3f;
                     }                
                 }
                 CountyProperties.Instance.SetWellness(CountyProperties.Instance.wellness + 10); 
@@ -373,6 +378,17 @@ public class EventCreator : MonoBehaviour
     private void WellnessTooLow()
     {
         EndModal("Heaolu vallas langes liiga madalale");
+    }
+
+    private bool IsGroundPollutionTooHigh()
+    {
+        List<AbstractTile> tiles = TileManager.Instance.GetTilesByType(TileType.RIVER, TileType.FOREST, TileType.GRASS);
+        return tiles.Count(t => t.groundPollution >= 0.40f) > 75;
+    }
+    
+    private void GroundPollutionTooHigh()
+    {
+        EndModal("Maareostus liiga paljudes kohtades ületas elamiskõlblikkuse piiri");
     }
 
     private void EndModal(string text)
