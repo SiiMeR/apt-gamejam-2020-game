@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
@@ -38,6 +39,20 @@ public class TileManager : Singleton<TileManager>
     public TextMeshProUGUI typeText;
 
     public GameObject modal;
+
+    private bool _shouldShowModal = true;
+    public bool ShouldShowModal
+    {
+        get => _shouldShowModal;
+        set
+        {
+            if (!value)
+            {
+                modal.SetActive(false);
+            }
+            _shouldShowModal = value;
+        }
+    }
    
     private void Awake()
     {
@@ -272,6 +287,12 @@ public class TileManager : Singleton<TileManager>
     
     private void Update()
     {
+        // Don't interact with map when time has been stopped
+        if (Math.Abs(Time.timeScale) <= 0.0f)
+        {
+            modal.SetActive(false);
+            return;
+        }
         var input = Input.mousePosition;
         input.z = 10.0f;
         var mousePos = Camera.main.ScreenToWorldPoint(input);
@@ -297,17 +318,32 @@ public class TileManager : Singleton<TileManager>
         int y = tileY;
         int z = intZ;
         
-        Debug.Log($"raw: ({rawX}, {rawY}); int: ({intX}, {intY}); modulo: ({moduloX}, {moduloY}); tile: ({tileX}, {tileY}); final: ({x}, {y})");
+//        Debug.Log($"raw: ({rawX}, {rawY}); int: ({intX}, {intY}); modulo: ({moduloX}, {moduloY}); tile: ({tileX}, {tileY}); final: ({x}, {y})");
         
         var floored = new Vector3Int(x, y, z);
-        highLight.transform.position = floored + new Vector3(2,-2);
+        floored += new Vector3Int(2, -2, 0);
+        
+        highLight.transform.position = floored;
 
-        if (Input.GetMouseButtonDown(0))
+        var tileAtPosition = GetTileAtPosition(floored);
+        OnTileClicked(tileAtPosition, floored);
+        
+        if (!tileAtPosition)
         {
-            modal.SetActive(!modal.activeInHierarchy);
-        };
+            modal.SetActive(false);
+        }
+        else
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                ShouldShowModal = !ShouldShowModal;
+            }
 
-        OnTileClicked(GetTileAtPosition(floored), floored);
+            if (ShouldShowModal && !modal.active)
+            {
+                modal.SetActive(true);
+            }
+        }
     }
 
     public AbstractTile GetTileAtPosition(Vector3Int cellPos)
@@ -342,6 +378,15 @@ public class TileManager : Singleton<TileManager>
             : null;
     }
     
+    public void RemoveTileByPosition(Vector3Int position)
+    {
+        // this no work but why
+        if (_tiles.ContainsKey(position) && _tiles[position].Any())
+        {
+            _tiles[position].RemoveAt(_tiles[position].Count - 1);
+        }
+    }
+    
     public GameObject GetGameObjectByPosition(Vector3Int position)
     {
         return (from values in _tiles.Values 
@@ -352,7 +397,7 @@ public class TileManager : Singleton<TileManager>
             select values.Last()).FirstOrDefault();
     }
 
-    public AbstractTile GetRandomTileSidingWithGrassByType(GameObject goPrefab, params TileType[] tileTypes)
+    public void UpdateRandomTileSidingWithGrassByType(GameObject goPrefab, params TileType[] tileTypes)
     {
         var shuffledByType = GetTilesByType(tileTypes).OrderBy( x => Random.value).ToList();
         foreach (var tile in shuffledByType)
@@ -365,7 +410,6 @@ public class TileManager : Singleton<TileManager>
                 if (_tiles.ContainsKey(pos))
                 {
                     _tiles[pos].Add(Instantiate(goPrefab, pos, Quaternion.identity));
-                    return at.GetComponent<AbstractTile>();   
                 }
             }
 
@@ -376,7 +420,6 @@ public class TileManager : Singleton<TileManager>
                 if (_tiles.ContainsKey(pos))
                 {
                     _tiles[pos].Add(Instantiate(goPrefab, pos, Quaternion.identity));
-                    return at.GetComponent<AbstractTile>();
                 }
             }
 
@@ -388,7 +431,6 @@ public class TileManager : Singleton<TileManager>
                 if (_tiles.ContainsKey(pos))
                 {
                     _tiles[pos].Add(Instantiate(goPrefab, pos, Quaternion.identity));
-                    return at.GetComponent<AbstractTile>();
                 }
             }
             pos.y -= 4;
@@ -398,11 +440,10 @@ public class TileManager : Singleton<TileManager>
                 if (_tiles.ContainsKey(pos))
                 {
                     _tiles[pos].Add(Instantiate(goPrefab, pos, Quaternion.identity));
-                    return at.GetComponent<AbstractTile>();
                 }
             }
         }
-
-        return null;
     }
+    
+    
 }
