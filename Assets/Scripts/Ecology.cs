@@ -25,7 +25,6 @@ public class Ecology : Singleton<Ecology>
         if (currentDay % logicalTurnLength == 0)
         {
             var tiles = TileManager.Instance.GetTilesByType(TileType.ROAD,TileType.GRASS,TileType.RIVER,TileType.FOREST,TileType.UNKNOWN,TileType.VILLAGE,TileType.FARMLAND,TileType.MOUNTAIN);
-            print("teha: " + tiles);
             foreach (var tile in tiles)
             {
                 TilePassing(tile);
