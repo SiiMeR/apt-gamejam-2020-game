@@ -113,6 +113,10 @@ public class EventCreator : MonoBehaviour
     
     private Func<EventDTO> TekstiiliTehas()
     {
+        // if (true)
+        // {
+        //     return () => null;
+        // }
         return () => new EventDTO(
             "Tekstiilitehas", 
             "Ärimees tahab jõe kõrvale ehitada tekstiilitehast. Kuidas toimid?",

@@ -25,7 +25,7 @@ public class QuestionAsker : MonoBehaviour
             "Kas oled nõus väitega, et inimeste heaolu on alati tähtsam kui looduse hoidmine?",
             (() =>
             {
-                GlobalStartingVariables.AirPollutionPercent += 30;
+                GlobalStartingVariables.AirPollutionPercent += 10;
                 GlobalStartingVariables.StartingWellnessPercent += 30;
                 GlobalStartingVariables.StartingWood += 1000;
                 GlobalStartingVariables.StartingPopulation += 1000;
@@ -43,7 +43,7 @@ public class QuestionAsker : MonoBehaviour
             "Kas sinu arvates kivisöe kaevandamine on vajalik?",
             (() =>
             {
-                GlobalStartingVariables.AirPollutionPercent += 10;
+                GlobalStartingVariables.AirPollutionPercent += 5;
                 GlobalStartingVariables.StartingWellnessPercent += 10;
                 GlobalStartingVariables.StartingPopulation += 200;
                 GlobalStartingVariables.StartingFood -= 10;
@@ -51,7 +51,7 @@ public class QuestionAsker : MonoBehaviour
             }),
             (() =>
             {
-                GlobalStartingVariables.AirPollutionPercent -= 10;
+                GlobalStartingVariables.AirPollutionPercent -= 5;
                 GlobalStartingVariables.StartingWellnessPercent -= 5;
                 GlobalStartingVariables.StartingPopulation -= 300;
                 GlobalStartingVariables.StartingCoal -= 1000;
@@ -61,12 +61,12 @@ public class QuestionAsker : MonoBehaviour
             "Tahetakse allkirjastada leping, millega keelatakse ära freoonide kasutamine külmkappides, et säästa loodust. Kas oled nõus allkirjastama lepingut?",
             (() =>
             {
-                GlobalStartingVariables.AirPollutionPercent -= 10;
+                GlobalStartingVariables.AirPollutionPercent -= 5;
                 GlobalStartingVariables.StartingWellnessPercent += 10;
             }),
             (() =>
             {
-                GlobalStartingVariables.AirPollutionPercent += 20;
+                GlobalStartingVariables.AirPollutionPercent += 10;
                 GlobalStartingVariables.StartingWellnessPercent -= 10;
                 GlobalStartingVariables.StartingWood -= 100;
             })
@@ -76,7 +76,7 @@ public class QuestionAsker : MonoBehaviour
             "Riigikogus tahetakse vastu võtta seadus, millega lubatakse korporatsioonidel maha raiuda 80% riigimetsadest. Selle tulemusel suureneks riigieelarve. Kas võtad seaduse vastu?",
             (() =>
             {
-                GlobalStartingVariables.AirPollutionPercent += 30;
+                GlobalStartingVariables.AirPollutionPercent += 10;
                 GlobalStartingVariables.StartingWellnessPercent += 10;
                 GlobalStartingVariables.StartingWood = (int) (GlobalStartingVariables.StartingWood * 0.2);
                 GlobalStartingVariables.StartingPopulation += 100;

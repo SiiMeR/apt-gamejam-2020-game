@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using UnityEngine;
 
 public class EndingController : Singleton<EndingController>
@@ -14,10 +17,17 @@ public class EndingController : Singleton<EndingController>
     {
         ending.SetActive(false);
         Application.Quit();
+        
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#endif
+
     }
 
     public void SetEndText(string text)
     {
         endMesh.text = text;
+        
+
     }
 }
