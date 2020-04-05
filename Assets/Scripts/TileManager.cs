@@ -14,6 +14,9 @@ public class TileManager : Singleton<TileManager>
     public Tilemap riverTilemap;
     public Tilemap roadTilemap;
 
+    // Contains all tiles.
+    // Key represents tile left-top anchor as a real-world location
+    // Value is a list of tile layers. Each layer has a Grass tile as first layer.
     private Dictionary<Vector3Int, List<GameObject>> _tiles = new Dictionary<Vector3Int, List<GameObject>>();
 
     [SerializeField] private GameObject highLight;
@@ -397,7 +400,7 @@ public class TileManager : Singleton<TileManager>
             select values.Last()).FirstOrDefault();
     }
 
-    public void UpdateRandomTileSidingWithGrassByType(GameObject goPrefab, params TileType[] tileTypes)
+    public AbstractTile UpdateRandomTileSidingWithGrassByType(GameObject goPrefab, params TileType[] tileTypes)
     {
         var shuffledByType = GetTilesByType(tileTypes).OrderBy( x => Random.value).ToList();
         foreach (var tile in shuffledByType)
@@ -410,6 +413,7 @@ public class TileManager : Singleton<TileManager>
                 if (_tiles.ContainsKey(pos))
                 {
                     _tiles[pos].Add(Instantiate(goPrefab, pos, Quaternion.identity));
+                    return at.GetComponent<AbstractTile>();   
                 }
             }
 
@@ -420,6 +424,7 @@ public class TileManager : Singleton<TileManager>
                 if (_tiles.ContainsKey(pos))
                 {
                     _tiles[pos].Add(Instantiate(goPrefab, pos, Quaternion.identity));
+                    return at.GetComponent<AbstractTile>();
                 }
             }
 
@@ -431,6 +436,7 @@ public class TileManager : Singleton<TileManager>
                 if (_tiles.ContainsKey(pos))
                 {
                     _tiles[pos].Add(Instantiate(goPrefab, pos, Quaternion.identity));
+                    return at.GetComponent<AbstractTile>();
                 }
             }
             pos.y -= 4;
@@ -440,10 +446,32 @@ public class TileManager : Singleton<TileManager>
                 if (_tiles.ContainsKey(pos))
                 {
                     _tiles[pos].Add(Instantiate(goPrefab, pos, Quaternion.identity));
+                    return at.GetComponent<AbstractTile>();
                 }
             }
         }
+
+        return null;
     }
-    
-    
+
+    // Returns all tile layers in some radius to current location
+    public Dictionary<Vector3Int, List<GameObject>> getTilesInRadius(AbstractTile tile, int radius, bool includeSelf = false)
+    {
+        var tilePosition = tile.transform.position;
+        var realRadius = radius * 4;
+        return _tiles
+            .Where(elem =>
+            {
+                var xPred = (tilePosition.x - realRadius) <= elem.Key.x && elem.Key.x <= (tilePosition.x + realRadius);
+                var yPred = (tilePosition.y - realRadius) <= elem.Key.y && elem.Key.y <= (tilePosition.y + realRadius);
+                var isSelf = elem.Key.x == tilePosition.x && elem.Key.y == tilePosition.y;
+
+                if (xPred && yPred)
+                {
+                    Debug.Log($"x: {xPred}; y: {yPred}; isSelf: {isSelf};");
+                }
+                return xPred && yPred && (includeSelf || !isSelf);
+
+            }).ToDictionary(pair => pair.Key, pair => pair.Value);
+    }
 }
