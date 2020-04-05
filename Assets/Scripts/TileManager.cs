@@ -277,20 +277,32 @@ public class TileManager : Singleton<TileManager>
         var input = Input.mousePosition;
         input.z = 10.0f;
         var mousePos = Camera.main.ScreenToWorldPoint(input);
-        
-        int x = (int) mousePos.x;
-        int y = (int) mousePos.y;
-        int z = (int) mousePos.z;
 
-        x = x - x % 4;
-        y = y - y % 4;
+        var rawX = mousePos.x;
+        var rawY = mousePos.y;
+        var rawZ = mousePos.z;
+
+        int intX = (int) rawX;
+        int intY = (int) rawY;
+        int intZ = (int) rawZ;
+
+        if (intX < 0) intX -= 4;
+        // if (intY < 0) intY -= 4;
+
+        int moduloX = intX % 4;
+        int moduloY = intY % 4;
+
+        int tileX = intX - moduloX;
+        int tileY = intY - moduloY;
+
+        int x = tileX;
+        int y = tileY;
+        int z = intZ;
         
-        if (x <= 0) x += -4;
-        if (y <= 0) y += -4;
+//        Debug.Log($"raw: ({rawX}, {rawY}); int: ({intX}, {intY}); modulo: ({moduloX}, {moduloY}); tile: ({tileX}, {tileY}); final: ({x}, {y})");
         
         var floored = new Vector3Int(x, y, z);
-        highLight.transform.position = floored + new Vector3(2,2);
-        //highLight.transform.position = floored;
+        highLight.transform.position = floored + new Vector3(2,-2);
 
         if (Input.GetMouseButtonDown(0))
         {
