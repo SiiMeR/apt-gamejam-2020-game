@@ -64,6 +64,13 @@ public class EventCreator : MonoBehaviour
             return;
         }
 
+        if (CountyProperties.Instance.food < 100)
+        {
+            EventDTO va = Ikaldus()();
+            EventManager.Instance.AddEvent(va);
+            return;
+        }
+        
         if (CountyProperties.Instance.food < 250)
         {
             EventDTO va = ViljaKoristus()();
