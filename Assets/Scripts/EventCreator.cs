@@ -42,7 +42,7 @@ public class EventCreator : MonoBehaviour
 
     private void OnDayEvent(int currentDay)
     {
-        //EventManager.Instance.AddEvent(Metsaraie().Invoke());
+        EventManager.Instance.AddEvent(Metsaraie().Invoke());
         
         if (currentDay == 1)
         {
@@ -54,7 +54,7 @@ public class EventCreator : MonoBehaviour
         var eventChance = UnityEngine.Random.Range(currentDay - 1, currentDay + 2); //33% chance
         if (isVallavanemAnswered && currentDay == eventChance)
         {
-            int randomEvent = UnityEngine.Random.Range(1, events.Count + 1);
+            int randomEvent = UnityEngine.Random.Range(1, events.Count);
             if (events[randomEvent] != null)
             {
                 EventManager.Instance.AddEvent(events[randomEvent].Invoke());
@@ -164,7 +164,6 @@ public class EventCreator : MonoBehaviour
             () =>
             {
                 AbstractTile tile = TileManager.Instance.GetRandomTileByType(TileType.FOREST);
-                print(tile.transform.position.ToVector3Int());
                 CountyProperties.Instance.SetWood(CountyProperties.Instance.wood + 50);
                 if (tile != null)
                 {
