@@ -838,6 +838,21 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 5721908662648065856, guid: f41d65c518b142747bd9ec4661497124,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721908662648065856, guid: f41d65c518b142747bd9ec4661497124,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721908662648065856, guid: f41d65c518b142747bd9ec4661497124,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0.73
+      objectReference: {fileID: 0}
     - target: {fileID: 7563005672998984947, guid: f41d65c518b142747bd9ec4661497124,
         type: 3}
       propertyPath: m_Name
@@ -1219,6 +1234,21 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 5721908662648065856, guid: f41d65c518b142747bd9ec4661497124,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721908662648065856, guid: f41d65c518b142747bd9ec4661497124,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721908662648065856, guid: f41d65c518b142747bd9ec4661497124,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0.73
+      objectReference: {fileID: 0}
     - target: {fileID: 7563005672998984947, guid: f41d65c518b142747bd9ec4661497124,
         type: 3}
       propertyPath: m_Name
@@ -1238,6 +1268,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 742031573}
     m_Modifications:
+    - target: {fileID: 1570882732523721075, guid: f41d65c518b142747bd9ec4661497124,
+        type: 3}
+      propertyPath: m_text
+      value: "Iga natukese aja tagant juhtuvad s\xFCndmused, millele saad reageerida,
+        vajutades s\xFCndmuse peale vasakul men\xFC\xFCs. Otsustamisaeg on piiratud."
+      objectReference: {fileID: 0}
     - target: {fileID: 3374236082017714808, guid: f41d65c518b142747bd9ec4661497124,
         type: 3}
       propertyPath: m_fontSize
@@ -1403,6 +1439,21 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 5721908662648065856, guid: f41d65c518b142747bd9ec4661497124,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721908662648065856, guid: f41d65c518b142747bd9ec4661497124,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721908662648065856, guid: f41d65c518b142747bd9ec4661497124,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0.73
+      objectReference: {fileID: 0}
     - target: {fileID: 7563005672998984947, guid: f41d65c518b142747bd9ec4661497124,
         type: 3}
       propertyPath: m_Name
@@ -1546,6 +1597,31 @@ PrefabInstance:
     - target: {fileID: 3675974878716839868, guid: fa9829bec7f6f704f9a673851c3370a4,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4388915621727932166, guid: fa9829bec7f6f704f9a673851c3370a4,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4388915621727932166, guid: fa9829bec7f6f704f9a673851c3370a4,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4388915621727932166, guid: fa9829bec7f6f704f9a673851c3370a4,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4388915621727932166, guid: fa9829bec7f6f704f9a673851c3370a4,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4388915621727932166, guid: fa9829bec7f6f704f9a673851c3370a4,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5856700678511635608, guid: fa9829bec7f6f704f9a673851c3370a4,

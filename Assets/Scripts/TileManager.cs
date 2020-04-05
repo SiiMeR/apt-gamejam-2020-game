@@ -283,6 +283,8 @@ public class TileManager : Singleton<TileManager>
                 return "Mägi";
             case TileType.ROAD:
                 return "Tee";
+            case TileType.FACTORY:
+                return "Tehas";
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }    
@@ -405,58 +407,29 @@ public class TileManager : Singleton<TileManager>
     public AbstractTile UpdateRandomTileSidingWithGrassByType(GameObject goPrefab, params TileType[] tileTypes)
     {
         var shuffledByType = GetTilesByType(tileTypes).OrderBy( x => Random.value).ToList();
+
         foreach (var tile in shuffledByType)
         {
             var pos = tile.transform.position.ToVector3Int();
-            pos.x -= 4;
-            var at = GetGameObjectByPosition(pos);
-            if (at != null && at.GetComponent<AbstractTile>() != null && at.GetComponent<AbstractTile>().TypeOfTile.Equals(TileType.GRASS))
-            {
-                if (_tiles.ContainsKey(pos))
-                {
-                    GameObject go = Instantiate(goPrefab, pos, Quaternion.identity);
-                    _tiles[pos].Add(go);
-                    return go.GetComponent<AbstractTile>();   
-                }
-            }
+            var xList = new List<int>() {pos.x - 4, pos.x + 4};
+            var yList = new List<int>() {pos.y - 4, pos.y + 4};
 
-            pos.x += 8;
-            at = GetGameObjectByPosition(pos);
-            if (at != null && at.GetComponent<AbstractTile>() != null && at.GetComponent<AbstractTile>().TypeOfTile.Equals(TileType.GRASS))
+            foreach (var xPos in xList)
             {
-                if (_tiles.ContainsKey(pos))
+                foreach (var yPos in yList)
                 {
-                    GameObject go = Instantiate(goPrefab, pos, Quaternion.identity);
-                    _tiles[pos].Add(go);
-                    return go.GetComponent<AbstractTile>();
-                }
-            }
-
-            pos.x -= 4;
-            pos.y += 4;
-            at = GetGameObjectByPosition(pos);
-            if (at != null && at.GetComponent<AbstractTile>() != null && at.GetComponent<AbstractTile>().TypeOfTile.Equals(TileType.GRASS))
-            {
-                if (_tiles.ContainsKey(pos))
-                {
-                    GameObject go = Instantiate(goPrefab, pos, Quaternion.identity);
-                    _tiles[pos].Add(go);
-                    return go.GetComponent<AbstractTile>();
-                }
-            }
-            pos.y -= 4;
-            at = GetGameObjectByPosition(pos);
-            if (at != null && at.GetComponent<AbstractTile>() != null && at.GetComponent<AbstractTile>().TypeOfTile.Equals(TileType.GRASS))
-            {
-                if (_tiles.ContainsKey(pos))
-                {
-                    GameObject go = Instantiate(goPrefab, pos, Quaternion.identity);
-                    _tiles[pos].Add(go);
+                    var tilePos = new Vector3Int(xPos, yPos, pos.z);
+                    var at = GetGameObjectByPosition(tilePos);
+                    
+                    if (at == null || at.GetComponent<AbstractTile>() == null || !at.GetComponent<AbstractTile>().TypeOfTile.Equals(TileType.GRASS)) continue;
+                    if (!_tiles.ContainsKey(tilePos)) continue;
+                    
+                    var go = Instantiate(goPrefab, tilePos, Quaternion.identity);
+                    _tiles[tilePos].Add(go);
                     return go.GetComponent<AbstractTile>();
                 }
             }
         }
-
         return null;
     }
 

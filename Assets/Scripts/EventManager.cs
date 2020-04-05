@@ -18,7 +18,7 @@ public class EventManager : Singleton<EventManager>
     void Start()
     {
         UpdateEvents();
-        Time.timeScale = 1.0f;
+        // Time.timeScale = 1.0f;
     }
 
     // Update is called once per frame
