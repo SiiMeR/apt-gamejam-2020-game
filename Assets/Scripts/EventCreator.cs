@@ -44,7 +44,13 @@ public class EventCreator : MonoBehaviour
     {
         if (IsPopulationTooLow())
         {
-            EventManager.Instance.OpenEventModal(PopulationTooLow());
+            PopulationTooLow();
+            return;
+        }
+
+        if (IsAirPollutionTooHigh())
+        {
+            AirPollutionTooHigh();
             return;
         }
         
@@ -186,21 +192,9 @@ public class EventCreator : MonoBehaviour
         return CountyProperties.Instance.population < 100;
     }
 
-    private EventDTO PopulationTooLow()
+    private void PopulationTooLow()
     {
-        return new EventDTO(
-            "Mäng läbi",
-            "Sinu valla populatsioon langes liiga madalale.",
-            "Sulge mäng",
-            "Sulge mäng",
-            () =>
-            {
-                // TODO 
-            },
-            () =>
-            {
-               // TODO
-            });
+        EndModal("Sinu valla populatsioon langes liiga madalale.");
     }
     
     private bool IsAirPollutionTooHigh()
@@ -208,20 +202,15 @@ public class EventCreator : MonoBehaviour
         return CountyProperties.Instance.globalAirpoll > 75;
     }
 
-    private EventDTO AirPollutionTooHigh()
+    private void AirPollutionTooHigh()
     {
-        return new EventDTO(
-            "Mäng läbi",
-            "Sinu valla õhusaastatus tõusis liiga kõrgele",
-            "Sulge mäng",
-            "Sulge mäng",
-            () =>
-            {
-                // TODO 
-            },
-            () =>
-            {
-                // TODO
-            });
+        EndModal("Sinu valla õhusaastatus tõusis liiga kõrgele");
+    }
+
+    private void EndModal(string text)
+    {
+        Time.timeScale = 0.0f;
+        EndingController.Instance.SetEndText(text);
+        EndingController.Instance.ending.SetActive(true);
     }
 }
