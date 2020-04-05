@@ -41,6 +41,11 @@ public class EventCreator : MonoBehaviour
 
     private void OnDayEvent(int currentDay)
     {
+        if (currentDay == 1)
+        {
+            EventManager.Instance.AddEvent(OledVallavanem());
+            return;
+        }
         if (currentDay % 1 == 0)
         {
             int seek = UnityEngine.Random.Range(1, eventWeights.Sum() + 1);
@@ -58,6 +63,38 @@ public class EventCreator : MonoBehaviour
         }
     }
 
+    // Esimene event, ainult korra
+    private EventDTO OledVallavanem()
+    {
+        return new EventDTO(
+            "Vallavanem", 
+            "Sinu ülesanne on hallata oma valda ja siinset loodust. Selleks pead hoidma tasakaalus inimeste tegevuse ja looduse elukäigu.",
+            "Olen inimeste poolt",
+            "Olen looduse poolt",
+            () =>
+            {
+                CountyProperties.Instance.SetPopulation((int)(CountyProperties.Instance.population * 1.05));
+                CountyProperties.Instance.SetPopulation((int)(CountyProperties.Instance.wellness * 1.05));
+                foreach (var tile in OledVallavanemTiles())
+                {
+                    tile.groundPollution += 0.05f;
+                }
+            },
+            () => {
+                CountyProperties.Instance.SetPopulation((int)(CountyProperties.Instance.population * 0.95));
+                CountyProperties.Instance.SetPopulation((int)(CountyProperties.Instance.wellness * 0.95));
+                foreach (var tile in OledVallavanemTiles())
+                {
+                    tile.groundPollution -= 0.05f;
+                }
+            });
+    }
+
+    private List<AbstractTile> OledVallavanemTiles()
+    {
+        return TileManager.Instance.GetTilesByType(TileType.GRASS, TileType.FOREST, TileType.RIVER);
+    }
+    
     private Func<EventDTO> TekstiiliTehas()
     {
         return () => new EventDTO(
