@@ -23,7 +23,7 @@ public static class GlobalStartingVariables
         set => _startingWellnessPercentPercent = Mathf.Clamp(value, 0, 100);
     }
 
-    private static int _startingFood = 5000;
+    private static int _startingFood = 2000;
     public static int StartingFood
     {
         get => _startingFood;
