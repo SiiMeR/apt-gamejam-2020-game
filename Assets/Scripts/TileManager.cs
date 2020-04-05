@@ -290,6 +290,7 @@ public class TileManager : Singleton<TileManager>
         // Don't interact with map when time has been stopped
         if (Math.Abs(Time.timeScale) <= 0.0f)
         {
+            modal.SetActive(false);
             return;
         }
         var input = Input.mousePosition;
