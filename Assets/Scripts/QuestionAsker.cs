@@ -5,6 +5,7 @@ using DG.Tweening;
 using DTO;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -114,6 +115,8 @@ public class QuestionAsker : MonoBehaviour
         description.text = dto.text;
         yesButton.onClick.RemoveAllListeners();
         noButton.onClick.RemoveAllListeners();
+        
+        EventSystem.current.SetSelectedGameObject(null);
 
         yesButton.onClick.AddListener(() => dto.acceptAction());
         yesButton.onClick.AddListener(NextQuestion);
