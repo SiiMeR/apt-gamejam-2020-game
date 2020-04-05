@@ -108,12 +108,25 @@ public class EventCreator : MonoBehaviour
             "Keela ehitus",
             () =>
             {
+                Debug.Log("accept tekstiil");
                 var grassTile = TileManager.Instance.GetRandomTileSidingWithGrassByType(SpriteFactory.Instance.factory, TileType.RIVER);
                 CountyProperties.Instance.SetPopulation((int)(CountyProperties.Instance.population * 1.1));
                 if (grassTile != null && grassTile.GetComponent<SpriteRenderer>() != null)
                 {
                     grassTile.GetComponent<Animator>().enabled = false;  
                 }
+
+                var surroundingTileLayers = TileManager.Instance.getTilesInRadius(grassTile, 1);
+                foreach (List<GameObject> layers in surroundingTileLayers.Values.ToList())
+                {
+                    foreach (var tile in layers)
+                    {
+                        // Surrounding tiles pollution
+                        tile.GetComponent<AbstractTile>().groundPollution += 0.2f;
+                    }                
+                }
+                // Factory tile pollution
+                grassTile.GetComponent<AbstractTile>().groundPollution += 0.25f;
             },
             () => {
                 CountyProperties.Instance.SetPopulation((int)(CountyProperties.Instance.population * 0.9));
