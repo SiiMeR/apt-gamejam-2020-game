@@ -297,10 +297,12 @@ public class TileManager : Singleton<TileManager>
         int y = tileY;
         int z = intZ;
         
-        Debug.Log($"raw: ({rawX}, {rawY}); int: ({intX}, {intY}); modulo: ({moduloX}, {moduloY}); tile: ({tileX}, {tileY}); final: ({x}, {y})");
+//        Debug.Log($"raw: ({rawX}, {rawY}); int: ({intX}, {intY}); modulo: ({moduloX}, {moduloY}); tile: ({tileX}, {tileY}); final: ({x}, {y})");
         
         var floored = new Vector3Int(x, y, z);
-        highLight.transform.position = floored + new Vector3(2,-2);
+        floored += new Vector3Int(2, -2, 0);
+        
+        highLight.transform.position = floored;
 
         if (Input.GetMouseButtonDown(0))
         {
