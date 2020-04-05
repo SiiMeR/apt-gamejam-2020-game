@@ -412,8 +412,9 @@ public class TileManager : Singleton<TileManager>
             {
                 if (_tiles.ContainsKey(pos))
                 {
-                    _tiles[pos].Add(Instantiate(goPrefab, pos, Quaternion.identity));
-                    return at.GetComponent<AbstractTile>();   
+                    GameObject go = Instantiate(goPrefab, pos, Quaternion.identity);
+                    _tiles[pos].Add(go);
+                    return go.GetComponent<AbstractTile>();   
                 }
             }
 
@@ -423,8 +424,9 @@ public class TileManager : Singleton<TileManager>
             {
                 if (_tiles.ContainsKey(pos))
                 {
-                    _tiles[pos].Add(Instantiate(goPrefab, pos, Quaternion.identity));
-                    return at.GetComponent<AbstractTile>();
+                    GameObject go = Instantiate(goPrefab, pos, Quaternion.identity);
+                    _tiles[pos].Add(go);
+                    return go.GetComponent<AbstractTile>();
                 }
             }
 
@@ -435,8 +437,9 @@ public class TileManager : Singleton<TileManager>
             {
                 if (_tiles.ContainsKey(pos))
                 {
-                    _tiles[pos].Add(Instantiate(goPrefab, pos, Quaternion.identity));
-                    return at.GetComponent<AbstractTile>();
+                    GameObject go = Instantiate(goPrefab, pos, Quaternion.identity);
+                    _tiles[pos].Add(go);
+                    return go.GetComponent<AbstractTile>();
                 }
             }
             pos.y -= 4;
@@ -445,8 +448,9 @@ public class TileManager : Singleton<TileManager>
             {
                 if (_tiles.ContainsKey(pos))
                 {
-                    _tiles[pos].Add(Instantiate(goPrefab, pos, Quaternion.identity));
-                    return at.GetComponent<AbstractTile>();
+                    GameObject go = Instantiate(goPrefab, pos, Quaternion.identity);
+                    _tiles[pos].Add(go);
+                    return go.GetComponent<AbstractTile>();
                 }
             }
         }
