@@ -51,19 +51,13 @@ public class EventCreator : MonoBehaviour
             EventManager.Instance.AddEvent(vallavanem);
             return;
         }
-        if (isVallavanemAnswered && currentDay % 1 == 0)
+        var eventChance = UnityEngine.Random.Range(currentDay - 1, currentDay + 2); //33% chance
+        if (isVallavanemAnswered && currentDay == eventChance)
         {
-            int seek = UnityEngine.Random.Range(1, eventWeights.Sum() + 1);
-
-            int sum = 0;
-            for (int i = 0; i < eventWeights.Count; i++)
+            int randomEvent = UnityEngine.Random.Range(1, events.Count + 1);
+            if (events[randomEvent] != null)
             {
-                sum += eventWeights[i];
-                if (sum >= seek && events[i] != null)
-                {
-                    EventManager.Instance.AddEvent(events[i].Invoke());
-                    break;
-                }
+                EventManager.Instance.AddEvent(events[randomEvent].Invoke());
             }
         }
     }
@@ -111,8 +105,26 @@ public class EventCreator : MonoBehaviour
             "Keela ehitus",
             () =>
             {
+                Debug.Log("accept tekstiil");
+                var grassTile = TileManager.Instance.UpdateRandomTileSidingWithGrassByType(SpriteFactory.Instance.factory, TileType.RIVER);
                 TileManager.Instance.UpdateRandomTileSidingWithGrassByType(SpriteFactory.Instance.factory, TileType.RIVER);
                 CountyProperties.Instance.SetPopulation((int)(CountyProperties.Instance.population * 1.1));
+                if (grassTile != null && grassTile.GetComponent<SpriteRenderer>() != null)
+                {
+                    grassTile.GetComponent<Animator>().enabled = false;  
+                }
+
+                var surroundingTileLayers = TileManager.Instance.getTilesInRadius(grassTile, 1);
+                foreach (List<GameObject> layers in surroundingTileLayers.Values.ToList())
+                {
+                    foreach (var tile in layers)
+                    {
+                        // Surrounding tiles pollution
+                        tile.GetComponent<AbstractTile>().groundPollution += 0.2f;
+                    }                
+                }
+                // Factory tile pollution
+                grassTile.GetComponent<AbstractTile>().groundPollution += 0.25f;
             },
             () => {
                 CountyProperties.Instance.SetPopulation((int)(CountyProperties.Instance.population * 0.9));
@@ -122,6 +134,10 @@ public class EventCreator : MonoBehaviour
     
     private Func<EventDTO> Ikaldus()
     {
+        // TODO: get random town tile
+        // Add its coordinates to EventDTO
+        // get route to another town
+        
         return () => new EventDTO(
             "Ikaldus", 
             "Külaelanike põlde tabab ikaldus ja inimesed on näljas.",
@@ -130,6 +146,7 @@ public class EventCreator : MonoBehaviour
             () =>
             {
                 CountyProperties.Instance.SetFood(Math.Max(CountyProperties.Instance.food - 200, 0));
+                // TODO: Alternatiivselt, lõhu põllud.
             },
             () =>
             {

@@ -10,5 +10,6 @@ public enum TileType
     FOREST,
     VILLAGE,
     MOUNTAIN,
-    ROAD
+    ROAD,
+    FACTORY
 }
