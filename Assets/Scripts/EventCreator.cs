@@ -53,6 +53,12 @@ public class EventCreator : MonoBehaviour
             AirPollutionTooHigh();
             return;
         }
+
+        if (IsDeforestationTooHigh())
+        {
+            DeforestationTooHigh();
+            return;
+        }
         
         if (currentDay == 1)
         {
@@ -61,8 +67,7 @@ public class EventCreator : MonoBehaviour
             EventManager.Instance.AddEvent(vallavanem);
             return;
         }
-        var eventChance = UnityEngine.Random.Range(currentDay - 1, currentDay + 2); //33% chance
-        if (isVallavanemAnswered && currentDay.Equals(eventChance))
+        if (isVallavanemAnswered && currentDay % 3 == 0)
         {
             int randomEvent = UnityEngine.Random.Range(1, events.Count);
             if (events[randomEvent] != null)
@@ -179,6 +184,8 @@ public class EventCreator : MonoBehaviour
                 {
                     TileManager.Instance.RemoveTileByPosition(tile.transform.position.ToVector3Int());
                 }
+
+                TileManager.Instance.amountOfForests -= 1;
             },
             () =>
             {
@@ -205,6 +212,16 @@ public class EventCreator : MonoBehaviour
     private void AirPollutionTooHigh()
     {
         EndModal("Sinu valla õhusaastatus tõusis liiga kõrgele");
+    }
+    
+    private bool IsDeforestationTooHigh()
+    {
+        return TileManager.Instance.amountOfForests < 50;
+    }
+
+    private void DeforestationTooHigh()
+    {
+        EndModal("Metsastus langes liiga madalale");
     }
 
     private void EndModal(string text)

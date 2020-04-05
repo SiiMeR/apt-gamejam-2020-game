@@ -24,6 +24,8 @@ public class CountyProperties : Singleton<CountyProperties>
 
     private int foodUse = 1;
     private float[] foodUses = {0.5f,0.67f,1f,1.33f,2f};
+
+    public int amountOfForests = 0;
     
     private void Awake()
     {

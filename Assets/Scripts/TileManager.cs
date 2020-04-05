@@ -56,7 +56,9 @@ public class TileManager : Singleton<TileManager>
             _shouldShowModal = value;
         }
     }
-   
+
+    public int amountOfForests = 0;
+    
     private void Awake()
     {
         FillTilemap();
@@ -85,11 +87,6 @@ public class TileManager : Singleton<TileManager>
 
     private void FillTilemap()
     {
-        /**
-         * MUUTA MAP VÄIKSEMAKS, SEST OSA JÄÄB KAAMERAST VÄLJA!!!
-         * TODO:
-         * TODO:
-         */
         var positions = bgTilemap.GetTilePositions();
         
         foreach (var pos in positions)
@@ -123,6 +120,11 @@ public class TileManager : Singleton<TileManager>
         
         groundTile = Instantiate(GetPrefab(tile.sprite), transform).GetComponent<AbstractTile>();
 
+        if (groundTile != null && groundTile.GetComponent<AbstractTile>().TypeOfTile.Equals(TileType.FOREST))
+        {
+            amountOfForests++;
+        }
+        
         switch (groundTile)
         {
             case RoadTile roadTile:
