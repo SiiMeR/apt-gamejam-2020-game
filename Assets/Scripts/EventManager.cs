@@ -99,15 +99,15 @@ public class EventManager : Singleton<EventManager>
         }
     }
 
-    private void OpenEventModal(EventDTO dto)
+    public void OpenEventModal(EventDTO dto)
     {
+        Time.timeScale = 0.0f;
         var eventModelScript = this.eventModal.GetComponent<EventModal>();
         eventModelScript.SetEventDTO(dto);
         this.eventModal.SetActive(true);
-        Time.timeScale = 0.0f;
     }
 
-    private void CloseEventModal()
+    public void CloseEventModal()
     {
         var eventModelScript = this.eventModal.GetComponent<EventModal>();
         eventModelScript.SetEventDTO(null);

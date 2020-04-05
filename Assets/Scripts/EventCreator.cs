@@ -42,7 +42,11 @@ public class EventCreator : MonoBehaviour
 
     private void OnDayEvent(int currentDay)
     {
-        EventManager.Instance.AddEvent(Metsaraie().Invoke());
+        if (IsPopulationTooLow())
+        {
+            EventManager.Instance.OpenEventModal(PopulationTooLow());
+            return;
+        }
         
         if (currentDay == 1)
         {
@@ -52,7 +56,7 @@ public class EventCreator : MonoBehaviour
             return;
         }
         var eventChance = UnityEngine.Random.Range(currentDay - 1, currentDay + 2); //33% chance
-        if (isVallavanemAnswered && currentDay == eventChance)
+        if (isVallavanemAnswered && currentDay.Equals(eventChance))
         {
             int randomEvent = UnityEngine.Random.Range(1, events.Count);
             if (events[randomEvent] != null)
@@ -73,7 +77,7 @@ public class EventCreator : MonoBehaviour
             () =>
             {
                 CountyProperties.Instance.SetPopulation((int)(CountyProperties.Instance.population * 1.05));
-                CountyProperties.Instance.SetPopulation((int)(CountyProperties.Instance.wellness * 1.05));
+                CountyProperties.Instance.SetWellness((int)(CountyProperties.Instance.wellness * 1.05));
                 foreach (var tile in OledVallavanemTiles())
                 {
                     tile.groundPollution += 0.05f;
@@ -82,7 +86,7 @@ public class EventCreator : MonoBehaviour
             },
             () => {
                 CountyProperties.Instance.SetPopulation((int)(CountyProperties.Instance.population * 0.95));
-                CountyProperties.Instance.SetPopulation((int)(CountyProperties.Instance.wellness * 0.95));
+                CountyProperties.Instance.SetWellness((int)(CountyProperties.Instance.wellness * 0.95));
                 foreach (var tile in OledVallavanemTiles())
                 {
                     tile.groundPollution -= 0.05f;
@@ -176,4 +180,26 @@ public class EventCreator : MonoBehaviour
             });
     }
 
+
+    private bool IsPopulationTooLow()
+    {
+        return CountyProperties.Instance.population < 100;
+    }
+
+    private EventDTO PopulationTooLow()
+    {
+        return new EventDTO(
+            "Mäng läbi",
+            "Sinu valla populatsioon langes liiga madalale.",
+            "Sulge mäng",
+            "Sulge mäng",
+            () =>
+            {
+                // TODO 
+            },
+            () =>
+            {
+               // TODO
+            });
+    }
 }
