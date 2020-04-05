@@ -272,8 +272,6 @@ public class TileManager : Singleton<TileManager>
     
     private void Update()
     {
-                
-                
         var input = Input.mousePosition;
         input.z = 10.0f;
         var mousePos = Camera.main.ScreenToWorldPoint(input);
@@ -282,12 +280,12 @@ public class TileManager : Singleton<TileManager>
         var rawY = mousePos.y;
         var rawZ = mousePos.z;
 
+        if (rawX < 0) rawX -= 4;
+        // if (intY < 0) intY -= 4;
+        
         int intX = (int) rawX;
         int intY = (int) rawY;
         int intZ = (int) rawZ;
-
-        if (intX < 0) intX -= 4;
-        // if (intY < 0) intY -= 4;
 
         int moduloX = intX % 4;
         int moduloY = intY % 4;
@@ -302,7 +300,9 @@ public class TileManager : Singleton<TileManager>
 //        Debug.Log($"raw: ({rawX}, {rawY}); int: ({intX}, {intY}); modulo: ({moduloX}, {moduloY}); tile: ({tileX}, {tileY}); final: ({x}, {y})");
         
         var floored = new Vector3Int(x, y, z);
-        highLight.transform.position = floored + new Vector3(2,-2);
+        floored += new Vector3Int(2, -2, 0);
+        
+        highLight.transform.position = floored;
 
         if (Input.GetMouseButtonDown(0))
         {
