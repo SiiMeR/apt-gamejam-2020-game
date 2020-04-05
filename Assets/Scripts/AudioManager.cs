@@ -27,7 +27,7 @@ public class AudioManager : Singleton<AudioManager>
 
     private void CreateAudioMap()
     {
-        var audioClips = GetAssetsFromResources("Sounds").Concat(GetAssetsFromResources("Music"));
+        var audioClips = GetAssetsFromResources("Sounds");
 
         AudioMap = new Dictionary<string, AudioClip>();
 
@@ -47,8 +47,8 @@ public class AudioManager : Singleton<AudioManager>
             sourcePool.Add(audioSource);
         }
 
-        SetMusicVolume(PlayerPrefs.GetInt("MusicVolume") / 10f);
-        SetSoundVolume(PlayerPrefs.GetInt("SoundVolume") / 10f);
+        SetMusicVolume(100/10f);
+        SetSoundVolume(100/ 10f);
     }
 
     public AudioClip[] GetAssetsFromResources(string path) => Resources.LoadAll<AudioClip>(path);
