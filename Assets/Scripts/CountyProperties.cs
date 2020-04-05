@@ -35,6 +35,7 @@ public class CountyProperties : Singleton<CountyProperties>
         SetGlobalAirPoll(GlobalStartingVariables.AirPollutionPercent);
 
         SetInitialTexts();
+        AudioManager.Instance.Play("ambience_10", 0.01f, true);
         DayChangeEvent.dayChangeEvent += OnDayEvent;
     }
     
