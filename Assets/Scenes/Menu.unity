@@ -1400,7 +1400,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Surm ja Texas
+  m_text: Vallavanem
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bb96da606f1ac694e8ac0a94ceec46ec, type: 2}
   m_sharedMaterial: {fileID: -7394987076336056022, guid: bb96da606f1ac694e8ac0a94ceec46ec,
@@ -1470,10 +1470,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1311613342}
-    characterCount: 13
+    characterCount: 10
     spriteCount: 0
-    spaceCount: 2
-    wordCount: 3
+    spaceCount: 0
+    wordCount: 1
     linkCount: 0
     lineCount: 1
     pageCount: 1
