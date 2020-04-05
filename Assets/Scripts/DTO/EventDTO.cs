@@ -12,6 +12,7 @@ namespace DTO
         public Action acceptAction;
         public Action declineAction;
         public Vector3Int location;
+        public bool expires = true;
         
         public EventDTO(string name)
         {
