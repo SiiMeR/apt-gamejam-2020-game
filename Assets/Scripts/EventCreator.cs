@@ -18,6 +18,7 @@ public class EventCreator : MonoBehaviour
         AddEventToList(null,10);
         AddEventToList(TekstiiliTehas(), 1);
         AddEventToList(Ikaldus(), 1);
+        AddEventToList(Metsaraie(), 1);
     }
 
     private void AddEventToList(Func<EventDTO> createEvent, int weight)
@@ -41,6 +42,8 @@ public class EventCreator : MonoBehaviour
 
     private void OnDayEvent(int currentDay)
     {
+        //EventManager.Instance.AddEvent(Metsaraie().Invoke());
+        
         if (currentDay == 1)
         {
             EventDTO vallavanem = OledVallavanem();
@@ -103,13 +106,14 @@ public class EventCreator : MonoBehaviour
     {
         return () => new EventDTO(
             "Tekstiilitehas", 
-            "Ärimees tahab jõele ehitada tekstiilitehast. Kuidas toimid?",
+            "Ärimees tahab jõe kõrvale ehitada tekstiilitehast. Kuidas toimid?",
             "Luba ehitus",
             "Keela ehitus",
             () =>
             {
                 Debug.Log("accept tekstiil");
-                var grassTile = TileManager.Instance.GetRandomTileSidingWithGrassByType(SpriteFactory.Instance.factory, TileType.RIVER);
+                var grassTile = TileManager.Instance.UpdateRandomTileSidingWithGrassByType(SpriteFactory.Instance.factory, TileType.RIVER);
+                TileManager.Instance.UpdateRandomTileSidingWithGrassByType(SpriteFactory.Instance.factory, TileType.RIVER);
                 CountyProperties.Instance.SetPopulation((int)(CountyProperties.Instance.population * 1.1));
                 if (grassTile != null && grassTile.GetComponent<SpriteRenderer>() != null)
                 {
@@ -130,9 +134,8 @@ public class EventCreator : MonoBehaviour
             },
             () => {
                 CountyProperties.Instance.SetPopulation((int)(CountyProperties.Instance.population * 0.9));
-                // TODO remove pollution to nearby river
-            },
-            new Vector3Int());
+                CountyProperties.Instance.SetPopulation((int)(CountyProperties.Instance.wellness * 0.95));
+            });
     }
     
     private Func<EventDTO> Ikaldus()
@@ -153,33 +156,31 @@ public class EventCreator : MonoBehaviour
             },
             () =>
             {
-                CountyProperties.Instance.SetFood(Math.Max(CountyProperties.Instance.food + 100, 0));
-                // TODO: Tapa jäneseid lähedastes alades.
+                CountyProperties.Instance.SetFood(Math.Max(CountyProperties.Instance.food + 100, 0)); 
             });
     }
     
-    private EventDTO LinnadevahelineTee()
+    private Func<EventDTO> Metsaraie()
     {
-        // TODO: get random town tile
-        // Add its coordinates to EventDTO
-        // get route to another town
-        var tile = TileManager.Instance.GetRandomTileByType(TileType.RIVER);
-        
-        return new EventDTO(
-            "Linnadevaheline tee", 
-            "Asulate vahele on vaja otsemat teed, vana tee on liiga pikk. Selleks on vaja maha võtta ka veidi metsa. Kuidas toimid?",
-            "Luba tee-ehitus",
-            "Keela tee-ehitus",
+        return () => new EventDTO(
+            "Metsaraie", 
+            "Külaelanikel on vaja talve jaoks koguda küttepuid. Kas lubad neil raiuda metsa?",
+            "Jah",
+            "Ei",
             () =>
             {
-                CountyProperties.Instance.SetWellness(CountyProperties.Instance.wellness + 5);
+                AbstractTile tile = TileManager.Instance.GetRandomTileByType(TileType.FOREST);
+                print(tile.transform.position.ToVector3Int());
+                CountyProperties.Instance.SetWood(CountyProperties.Instance.wood + 50);
+                if (tile != null)
+                {
+                    TileManager.Instance.RemoveTileByPosition(tile.transform.position.ToVector3Int());
+                }
             },
             () =>
             {
-                CountyProperties.Instance.SetWellness(CountyProperties.Instance.wellness - 5);
-               // CountyProperties.Instance.wellness -= 5;
-            },
-            Vector3Int.down);
+                CountyProperties.Instance.SetWellness(CountyProperties.Instance.wellness - 10); 
+            });
     }
-    
+
 }
