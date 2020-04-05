@@ -32,7 +32,7 @@ public class Event : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (slider.value <= 100f)
+        if (EventDto.expires && slider.value <= 100f)
         {
             slider.value -= 10f * Time.deltaTime;
         }

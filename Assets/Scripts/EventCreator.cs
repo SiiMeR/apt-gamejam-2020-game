@@ -9,7 +9,7 @@ public class EventCreator : MonoBehaviour
 {
     private List<Func<EventDTO>> events = new List<Func<EventDTO>>();
     private List<int> eventWeights = new List<int>();
-
+    private bool isVallavanemAnswered = false;
     public Sprite pold;
     private void Awake()
     {
@@ -43,10 +43,12 @@ public class EventCreator : MonoBehaviour
     {
         if (currentDay == 1)
         {
-            EventManager.Instance.AddEvent(OledVallavanem());
+            EventDTO vallavanem = OledVallavanem();
+            vallavanem.expires = false;
+            EventManager.Instance.AddEvent(vallavanem);
             return;
         }
-        if (currentDay % 1 == 0)
+        if (isVallavanemAnswered && currentDay % 1 == 0)
         {
             int seek = UnityEngine.Random.Range(1, eventWeights.Sum() + 1);
 
@@ -79,6 +81,7 @@ public class EventCreator : MonoBehaviour
                 {
                     tile.groundPollution += 0.05f;
                 }
+                isVallavanemAnswered = true;
             },
             () => {
                 CountyProperties.Instance.SetPopulation((int)(CountyProperties.Instance.population * 0.95));
@@ -87,6 +90,7 @@ public class EventCreator : MonoBehaviour
                 {
                     tile.groundPollution -= 0.05f;
                 }
+                isVallavanemAnswered = true;
             });
     }
 
