@@ -243,11 +243,14 @@ public class EventCreator : MonoBehaviour
                     foreach (var tile in layers)
                     {
                         // Surrounding tiles pollution
-                        tile.GetComponent<AbstractTile>().groundPollution += 0.2f;
+                        var abstractTile = tile.GetComponent<AbstractTile>();
+                        abstractTile.groundPollution += 0.2f;
                     }                
                 }
                 // Factory tile pollution
-                grassTile.GetComponent<AbstractTile>().groundPollution += 0.25f;
+                var component = grassTile.GetComponent<AbstractTile>();
+                component.groundPollution += 0.25f;
+
             },
             () => {
                 CountyProperties.Instance.SetPopulation((int)(CountyProperties.Instance.population * 0.9));

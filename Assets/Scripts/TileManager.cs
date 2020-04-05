@@ -393,7 +393,8 @@ public class TileManager : Singleton<TileManager>
         
     public List<AbstractTile> GetTilesByType(params TileType[] tileTypes)
     {
-        return _tiles.Values.Select(go => go.Last())
+        return _tiles.Values.Select(go => go.LastOrDefault())
+            .Where(gameObject => gameObject != null)
             .Select(go => go.GetComponent<AbstractTile>())
             .Where(tile => tileTypes.Contains(tile.TypeOfTile))
             .ToList();
