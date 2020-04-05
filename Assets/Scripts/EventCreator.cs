@@ -54,7 +54,7 @@ public class EventCreator : MonoBehaviour
         var eventChance = UnityEngine.Random.Range(currentDay - 1, currentDay + 2); //33% chance
         if (isVallavanemAnswered && currentDay == eventChance)
         {
-            int randomEvent = UnityEngine.Random.Range(1, events.Count + 1);
+            int randomEvent = UnityEngine.Random.Range(1, events.Count);
             if (events[randomEvent] != null)
             {
                 EventManager.Instance.AddEvent(events[randomEvent].Invoke());
