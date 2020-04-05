@@ -403,6 +403,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EventModal
       objectReference: {fileID: 0}
+    - target: {fileID: 6517153297304152482, guid: 9d1eaa7a838f5764aaa3b4d54b21f3a1,
+        type: 3}
+      propertyPath: m_PixelsPerUnitMultiplier
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8825957709828675920, guid: 9d1eaa7a838f5764aaa3b4d54b21f3a1,
         type: 3}
       propertyPath: m_LocalPosition.x
