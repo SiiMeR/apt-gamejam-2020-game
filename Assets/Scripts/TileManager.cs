@@ -388,8 +388,8 @@ public class TileManager : Singleton<TileManager>
         if (_tiles.ContainsKey(position) && _tiles[position].Any())
         {
             var values = _tiles[position];
-            _tiles[position][_tiles[position].Count - 1].GetComponent<SpriteRenderer>().enabled = false;
-            values.RemoveAt(_tiles[position].Count - 1);
+            _tiles[position][values.Count - 1].GetComponent<SpriteRenderer>().enabled = false;
+            values.RemoveAt(values.Count - 1);
             _tiles[position] = values;
         }
     }
