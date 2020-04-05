@@ -115,18 +115,26 @@ public class QuestionAsker : MonoBehaviour
         description.text = dto.text;
         yesButton.onClick.RemoveAllListeners();
         noButton.onClick.RemoveAllListeners();
-        
+
         EventSystem.current.SetSelectedGameObject(null);
 
         yesButton.onClick.AddListener(() => dto.acceptAction());
+        yesButton.onClick.AddListener(DisableInteract);
         yesButton.onClick.AddListener(NextQuestion);
+
         noButton.onClick.AddListener(() => dto.declineAction());
+        noButton.onClick.AddListener(DisableInteract);
         noButton.onClick.AddListener(NextQuestion);
 
         yesButton.GetComponentInChildren<TextMeshProUGUI>().text = dto.acceptText;
         noButton.GetComponentInChildren<TextMeshProUGUI>().text = dto.declineText;
     }
 
+    void DisableInteract()
+    {
+        yesButton.interactable = false;
+        noButton.interactable = false;
+    }
     void NextQuestion()
     {
         if (_questions.Count == 0)
@@ -138,6 +146,9 @@ public class QuestionAsker : MonoBehaviour
                 .SetUpdate(true);
             return;
         }
+        
+        yesButton.interactable = true;
+        noButton.interactable = true;
         
         SetQuestion(_questions.Dequeue());
     }
