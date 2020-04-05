@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
@@ -38,6 +39,20 @@ public class TileManager : Singleton<TileManager>
     public TextMeshProUGUI typeText;
 
     public GameObject modal;
+
+    private bool _shouldShowModal = true;
+    public bool ShouldShowModal
+    {
+        get => _shouldShowModal;
+        set
+        {
+            if (!value)
+            {
+                modal.SetActive(false);
+            }
+            _shouldShowModal = value;
+        }
+    }
    
     private void Awake()
     {
@@ -272,6 +287,12 @@ public class TileManager : Singleton<TileManager>
     
     private void Update()
     {
+        // Don't interact with map when time has been stopped
+        if (Math.Abs(Time.timeScale) <= 0.0f)
+        {
+            modal.SetActive(false);
+            return;
+        }
         var input = Input.mousePosition;
         input.z = 10.0f;
         var mousePos = Camera.main.ScreenToWorldPoint(input);
@@ -304,12 +325,25 @@ public class TileManager : Singleton<TileManager>
         
         highLight.transform.position = floored;
 
-        if (Input.GetMouseButtonDown(0))
+        var tileAtPosition = GetTileAtPosition(floored);
+        OnTileClicked(tileAtPosition, floored);
+        
+        if (!tileAtPosition)
         {
-            modal.SetActive(!modal.activeInHierarchy);
-        };
+            modal.SetActive(false);
+        }
+        else
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                ShouldShowModal = !ShouldShowModal;
+            }
 
-        OnTileClicked(GetTileAtPosition(floored), floored);
+            if (ShouldShowModal && !modal.active)
+            {
+                modal.SetActive(true);
+            }
+        }
     }
 
     public AbstractTile GetTileAtPosition(Vector3Int cellPos)
