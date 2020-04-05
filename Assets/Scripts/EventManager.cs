@@ -71,8 +71,10 @@ public class EventManager : Singleton<EventManager>
                 eventDto.declineAction?.Invoke();   
             }
 
+            var eventGo = eventToGameObject[eventDto];
             DOTween.Sequence()
-                .Append(eventToGameObject[eventDto].GetComponent<CanvasGroup>().DOFade(0.0f, 0.4f).SetEase(Ease.OutQuart))
+                .Append(eventGo.GetComponent<CanvasGroup>().DOFade(0.0f, 0.3f).SetEase(Ease.OutQuint))
+                .Join(eventGo.GetComponent<RectTransform>().DOSizeDelta(new Vector2(eventGo.GetComponent<RectTransform>().sizeDelta.x, 0.0f), 0.4f).SetEase(Ease.OutQuart))
                 .AppendInterval(0.15f)
                 .AppendCallback(() =>
                 {
