@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 
 public class EventCreator : MonoBehaviour
 {
-    private List<EventDTO> events = new List<EventDTO>();
+    private List<Func<EventDTO>> events = new List<Func<EventDTO>>();
     private List<int> eventWeights = new List<int>();
 
     public Sprite pold;
@@ -20,20 +20,20 @@ public class EventCreator : MonoBehaviour
         AddEventToList(Ikaldus(), 1);
     }
 
-    private void AddEventToList(EventDTO eventDto, int weight)
+    private void AddEventToList(Func<EventDTO> createEvent, int weight)
     {
-        events.Add(eventDto);
+        events.Add(createEvent);
         eventWeights.Add(weight);
     }
 
-    private void RemoveEvent(EventDTO eventDto)
+    private void RemoveEvent(Func<EventDTO> eventDto)
     {
         int index = events.FindIndex(e => e.Equals(eventDto));
         events.RemoveAt(index);
         eventWeights.RemoveAt(index);
     }
     
-    private void ChangeEventWeight(EventDTO eventDto, int weight)
+    private void ChangeEventWeight(Func<EventDTO> eventDto, int weight)
     {
         int index = events.FindIndex(e => e.Equals(eventDto));
         eventWeights[index] = weight;
@@ -51,16 +51,16 @@ public class EventCreator : MonoBehaviour
                 sum += eventWeights[i];
                 if (sum >= seek && events[i] != null)
                 {
-                    EventManager.Instance.AddEvent(TekstiiliTehas());
+                    EventManager.Instance.AddEvent(events[i].Invoke());
                     break;
                 }
             }
         }
     }
 
-    private EventDTO TekstiiliTehas()
+    private Func<EventDTO> TekstiiliTehas()
     {
-        return new EventDTO(
+        return () => new EventDTO(
             "Tekstiilitehas", 
             "Ärimees tahab jõele ehitada tekstiilitehast. Kuidas toimid?",
             "Luba ehitus",
@@ -72,12 +72,7 @@ public class EventCreator : MonoBehaviour
                 if (grassTile != null && grassTile.GetComponent<SpriteRenderer>() != null)
                 {
                     grassTile.GetComponent<Animator>().enabled = false;  
-                    
-                   // grassTile.GetComponent<SpriteRenderer>().sprite = SpriteFactory.Instance.factory.GetComponent<SpriteRenderer>().sprite;
                 }
-                //print(riverTile.GetComponent<SpriteRenderer>().sprite.name);
-                // TileManager.Instance.GetTileByPosition(riverTile.transform.position.ToVector3Int()).gameObject.GetComponent<SpriteRenderer>(); 
-
             },
             () => {
                 CountyProperties.Instance.SetPopulation((int)(CountyProperties.Instance.population * 0.9));
@@ -86,13 +81,13 @@ public class EventCreator : MonoBehaviour
             new Vector3Int());
     }
     
-    private EventDTO Ikaldus()
+    private Func<EventDTO> Ikaldus()
     {
         // TODO: get random town tile
         // Add its coordinates to EventDTO
         // get route to another town
         
-        return new EventDTO(
+        return () => new EventDTO(
             "Ikaldus", 
             "Külaelanike põlde tabab ikaldus ja inimesed on näljas.",
             "Las nälgivad",
