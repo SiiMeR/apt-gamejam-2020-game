@@ -385,10 +385,12 @@ public class TileManager : Singleton<TileManager>
     
     public void RemoveTileByPosition(Vector3Int position)
     {
-        // this no work but why
         if (_tiles.ContainsKey(position) && _tiles[position].Any())
         {
-            _tiles[position].RemoveAt(_tiles[position].Count - 1);
+            var values = _tiles[position];
+            _tiles[position][values.Count - 1].GetComponent<SpriteRenderer>().enabled = false;
+            values.RemoveAt(values.Count - 1);
+            _tiles[position] = values;
         }
     }
     
