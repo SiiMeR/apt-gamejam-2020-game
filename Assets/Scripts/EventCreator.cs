@@ -51,19 +51,13 @@ public class EventCreator : MonoBehaviour
             EventManager.Instance.AddEvent(vallavanem);
             return;
         }
-        if (isVallavanemAnswered && currentDay % 1 == 0)
+        var eventChance = UnityEngine.Random.Range(currentDay - 1, currentDay + 2); //33% chance
+        if (isVallavanemAnswered && currentDay == eventChance)
         {
-            int seek = UnityEngine.Random.Range(1, eventWeights.Sum() + 1);
-
-            int sum = 0;
-            for (int i = 0; i < eventWeights.Count; i++)
+            int randomEvent = UnityEngine.Random.Range(1, events.Count + 1);
+            if (events[randomEvent] != null)
             {
-                sum += eventWeights[i];
-                if (sum >= seek && events[i] != null)
-                {
-                    EventManager.Instance.AddEvent(events[i].Invoke());
-                    break;
-                }
+                EventManager.Instance.AddEvent(events[randomEvent].Invoke());
             }
         }
     }
