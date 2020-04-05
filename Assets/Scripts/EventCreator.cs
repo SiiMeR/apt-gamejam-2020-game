@@ -64,6 +64,11 @@ public class EventCreator : MonoBehaviour
             return;
         }
 
+        if (IsWellnessTooLow())
+        {
+            WellnessTooLow();
+        }
+
         if (CountyProperties.Instance.food < 100)
         {
             EventDTO va = Ikaldus()();
@@ -157,6 +162,7 @@ public class EventCreator : MonoBehaviour
             () =>
             {
                 CountyProperties.Instance.SetWellness(CountyProperties.Instance.wellness - 10); 
+                CountyProperties.Instance.SetFood(CountyProperties.Instance.food - 200); 
             });
     }   
     
@@ -360,6 +366,16 @@ public class EventCreator : MonoBehaviour
     private void DeforestationTooHigh()
     {
         EndModal("Metsastus langes liiga madalale");
+    }
+
+    private bool IsWellnessTooLow()
+    {
+        return CountyProperties.Instance.wellness < 15;
+    }
+    
+    private void WellnessTooLow()
+    {
+        EndModal("Heaolu vallas langes liiga madalale");
     }
 
     private void EndModal(string text)
