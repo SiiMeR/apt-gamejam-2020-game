@@ -238,7 +238,7 @@ public class TileManager : Singleton<TileManager>
         XText.text = "X: " + cellPos.x;
         YText.text = "Y: " + cellPos.y;
                 
-        pollutionText.text = tile.groundPollution + "%";
+        pollutionText.text = (int) (tile.groundPollution * 100) + "%";
         grassText.text = tile.grass.ToString();
         foxesText.text = tile.foxes.ToString();
         rabbitsText.text = tile.rabbits.ToString();
