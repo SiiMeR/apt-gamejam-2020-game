@@ -209,6 +209,11 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 28
       objectReference: {fileID: 0}
+    - target: {fileID: 3374236082017714808, guid: f41d65c518b142747bd9ec4661497124,
+        type: 3}
+      propertyPath: m_text
+      value: "Sulge m\xE4ng"
+      objectReference: {fileID: 0}
     - target: {fileID: 4723309522745167875, guid: f41d65c518b142747bd9ec4661497124,
         type: 3}
       propertyPath: m_AnchorMin.y
