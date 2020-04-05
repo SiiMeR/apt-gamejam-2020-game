@@ -177,6 +177,33 @@ public class TileManager : Singleton<TileManager>
         }
     }
 
+    private GameObject GetPrefabType(TileType sprite)
+    {
+        switch (sprite)
+        {
+            case TileType.GRASS:
+                return grassPrefab;
+            case TileType.FARMLAND:
+                return farmPrefab;
+            case TileType.RIVER:
+                return riverPrefab;
+            case TileType.FOREST:
+                return forestPrefab;
+            case TileType.VILLAGE:
+                return villagePrefab;
+            case TileType.MOUNTAIN:
+                return mountainPrefab;
+            case TileType.ROAD:
+                return roadPrefab;
+            case TileType.UNKNOWN:
+                return null;
+            case TileType.FACTORY:
+                return factoryPrefab;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
+    
 
     private RoadType RoadNameToType(string roadName)
     {
@@ -366,7 +393,7 @@ public class TileManager : Singleton<TileManager>
         
     public List<AbstractTile> GetTilesByType(params TileType[] tileTypes)
     {
-        return _tiles.Values.SelectMany(go => go)
+        return _tiles.Values.Select(go => go.Last())
             .Select(go => go.GetComponent<AbstractTile>())
             .Where(tile => tileTypes.Contains(tile.TypeOfTile))
             .ToList();
@@ -394,6 +421,14 @@ public class TileManager : Singleton<TileManager>
             values.RemoveAt(values.Count - 1);
             _tiles[position] = values;
         }
+    }
+
+    public GameObject AddTileByPos(Vector3Int pos, TileType type)
+    {
+        var p = GetPrefabType(type);
+        var tile = Instantiate(p,pos, Quaternion.identity, transform);
+        _tiles[pos].Add(tile);
+        return tile;
     }
     
     public GameObject GetGameObjectByPosition(Vector3Int position)
