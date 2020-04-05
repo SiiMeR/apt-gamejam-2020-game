@@ -42,7 +42,7 @@ public class EventCreator : MonoBehaviour
 
     private void OnDayEvent(int currentDay)
     {
-        //EventManager.Instance.AddEvent(Metsaraie().Invoke());
+        EventManager.Instance.AddEvent(Metsaraie().Invoke());
         
         if (currentDay == 1)
         {
@@ -164,7 +164,6 @@ public class EventCreator : MonoBehaviour
             () =>
             {
                 AbstractTile tile = TileManager.Instance.GetRandomTileByType(TileType.FOREST);
-                print(tile.transform.position.ToVector3Int());
                 CountyProperties.Instance.SetWood(CountyProperties.Instance.wood + 50);
                 if (tile != null)
                 {
