@@ -62,7 +62,7 @@ public class TileManager : Singleton<TileManager>
         {
             if (animator.GetComponent<RiverTile>())
             {
-                animator.speed = 0.85f;
+                animator.speed = 0.8f;
                 continue;
             }
             

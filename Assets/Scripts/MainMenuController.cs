@@ -24,7 +24,7 @@ public class MainMenuController : MonoBehaviour
 
     public void OnAlusta()
     {
-        SceneManager.LoadScene("Scenes/Production");
+        SceneManager.LoadScene("Questions");
     }
 
     public void OnVälja()
