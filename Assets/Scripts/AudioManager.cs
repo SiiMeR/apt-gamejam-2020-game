@@ -47,8 +47,8 @@ public class AudioManager : Singleton<AudioManager>
             sourcePool.Add(audioSource);
         }
 
-        SetMusicVolume(100/10f);
-        SetSoundVolume(100/ 10f);
+        SetMusicVolume(1f);
+        SetSoundVolume(1f);
     }
 
     public AudioClip[] GetAssetsFromResources(string path) => Resources.LoadAll<AudioClip>(path);
@@ -139,7 +139,7 @@ public class AudioManager : Singleton<AudioManager>
         if (succ)
         {
             foreach (var source in sourcePool)
-                if (!source.isPlaying)
+                if (source && !source.isPlaying)
                 {
                     source.clip = clip;
                     source.volume = vol * (isLooping ? musicVolume : soundVolume);
