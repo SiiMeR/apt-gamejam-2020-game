@@ -67,6 +67,11 @@ public class TileManager : Singleton<TileManager>
 
     private void FillTilemap()
     {
+        /**
+         * MUUTA MAP VÄIKSEMAKS, SEST OSA JÄÄB KAAMERAST VÄLJA!!!
+         * TODO:
+         * TODO:
+         */
         var positions = bgTilemap.GetTilePositions();
         
         foreach (var pos in positions)
@@ -81,8 +86,11 @@ public class TileManager : Singleton<TileManager>
                 tilesForPos.Add(ourRiver.gameObject);
             if (CreateGroundTile(roadTilemap, pos, out var ourRoad)) 
                 tilesForPos.Add(ourRoad.gameObject);
-                
-            _tiles.Add(pos * 4, tilesForPos);
+
+            if (ourBg != null)
+            {
+                _tiles.Add(ourBg.transform.position.ToVector3Int(), tilesForPos);
+            }
         }
     }
 
@@ -344,16 +352,22 @@ public class TileManager : Singleton<TileManager>
             var at = GetGameObjectByPosition(pos);
             if (at != null && at.GetComponent<AbstractTile>() != null && at.GetComponent<AbstractTile>().TypeOfTile.Equals(TileType.GRASS))
             {
-                _tiles[pos].Add(Instantiate(goPrefab, pos, Quaternion.identity));
-                return at.GetComponent<AbstractTile>();
+                if (_tiles.ContainsKey(pos))
+                {
+                    _tiles[pos].Add(Instantiate(goPrefab, pos, Quaternion.identity));
+                    return at.GetComponent<AbstractTile>();   
+                }
             }
 
             pos.x += 8;
             at = GetGameObjectByPosition(pos);
             if (at != null && at.GetComponent<AbstractTile>() != null && at.GetComponent<AbstractTile>().TypeOfTile.Equals(TileType.GRASS))
             {
-                _tiles[pos].Add(Instantiate(goPrefab, pos, Quaternion.identity));
-                return at.GetComponent<AbstractTile>();
+                if (_tiles.ContainsKey(pos))
+                {
+                    _tiles[pos].Add(Instantiate(goPrefab, pos, Quaternion.identity));
+                    return at.GetComponent<AbstractTile>();
+                }
             }
 
             pos.x -= 4;
@@ -361,15 +375,21 @@ public class TileManager : Singleton<TileManager>
             at = GetGameObjectByPosition(pos);
             if (at != null && at.GetComponent<AbstractTile>() != null && at.GetComponent<AbstractTile>().TypeOfTile.Equals(TileType.GRASS))
             {
-                _tiles[pos].Add(Instantiate(goPrefab, pos, Quaternion.identity));
-                return at.GetComponent<AbstractTile>();
+                if (_tiles.ContainsKey(pos))
+                {
+                    _tiles[pos].Add(Instantiate(goPrefab, pos, Quaternion.identity));
+                    return at.GetComponent<AbstractTile>();
+                }
             }
             pos.y -= 4;
             at = GetGameObjectByPosition(pos);
             if (at != null && at.GetComponent<AbstractTile>() != null && at.GetComponent<AbstractTile>().TypeOfTile.Equals(TileType.GRASS))
             {
-                _tiles[pos].Add(Instantiate(goPrefab, pos, Quaternion.identity));
-                return at.GetComponent<AbstractTile>();
+                if (_tiles.ContainsKey(pos))
+                {
+                    _tiles[pos].Add(Instantiate(goPrefab, pos, Quaternion.identity));
+                    return at.GetComponent<AbstractTile>();
+                }
             }
         }
 
