@@ -41,7 +41,7 @@ public class CountyProperties : Singleton<CountyProperties>
     private void OnDayEvent(int currentDay)
     {
         // TODO: Kas küla nime saab kasutaja ise määrata? Kui jah, siis lugeda see kuskilt sisse.
-        countyNameMesh.text = $"Vald 69 | Päev: {currentDay}";
+        countyNameMesh.text = $"Texas | Päev: {currentDay}";
         if (currentDay % 14 == 0)
         {
             

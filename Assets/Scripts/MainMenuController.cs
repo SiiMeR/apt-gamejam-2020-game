@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -24,7 +25,10 @@ public class MainMenuController : MonoBehaviour
 
     public void OnAlusta()
     {
-        SceneManager.LoadScene("Scenes/Production");
+        DOTween.Sequence()
+            .Append(GlobalFade.Instance.FadeOut())
+            .AppendCallback(() => SceneManager.LoadScene("Questions"))
+            .Append(GlobalFade.Instance.FadeIn());
     }
 
     public void OnVälja()
