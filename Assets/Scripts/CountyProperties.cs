@@ -32,7 +32,7 @@ public class CountyProperties : Singleton<CountyProperties>
         SetFood(GlobalStartingVariables.StartingFood);
         SetWood(GlobalStartingVariables.StartingWood);
         SetCoal(GlobalStartingVariables.StartingCoal);
-        globalAirpoll = GlobalStartingVariables.AirPollutionPercent;
+        SetGlobalAirPoll(GlobalStartingVariables.AirPollutionPercent);
 
         SetInitialTexts();
         DayChangeEvent.dayChangeEvent += OnDayEvent;
@@ -84,7 +84,7 @@ public class CountyProperties : Singleton<CountyProperties>
             SetPopulation(population + humanDelta);
             foodDelta = -food;
         }
-        SetFood(food + foodDelta);
+        SetFood(food + UnityEngine.Random.Range(-100, -10));
         SetWellness(Math.Max(Math.Min(wellness + wellnessDelta,100),0));
     }
 
@@ -128,4 +128,9 @@ public class CountyProperties : Singleton<CountyProperties>
         coalMesh.text = $"Kivisüsi: {coal}";
     }
     
+    public void SetGlobalAirPoll(int value)
+    {
+        this.globalAirpoll = value;
+        globalAirpollution.text = $"Õhu saastatus: {globalAirpoll}%";
+    }
 }

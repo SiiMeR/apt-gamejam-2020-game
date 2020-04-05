@@ -111,8 +111,8 @@ public class EventCreator : MonoBehaviour
             {
                 Debug.Log("accept tekstiil");
                 var grassTile = TileManager.Instance.UpdateRandomTileSidingWithGrassByType(SpriteFactory.Instance.factory, TileType.RIVER);
-                TileManager.Instance.UpdateRandomTileSidingWithGrassByType(SpriteFactory.Instance.factory, TileType.RIVER);
                 CountyProperties.Instance.SetPopulation((int)(CountyProperties.Instance.population * 1.1));
+                CountyProperties.Instance.SetGlobalAirPoll(CountyProperties.Instance.globalAirpoll + 3);
                 if (grassTile != null && grassTile.GetComponent<SpriteRenderer>() != null)
                 {
                     grassTile.GetComponent<Animator>().enabled = false;  
@@ -200,6 +200,28 @@ public class EventCreator : MonoBehaviour
             () =>
             {
                // TODO
+            });
+    }
+    
+    private bool IsAirPollutionTooHigh()
+    {
+        return CountyProperties.Instance.globalAirpoll > 75;
+    }
+
+    private EventDTO AirPollutionTooHigh()
+    {
+        return new EventDTO(
+            "Mäng läbi",
+            "Sinu valla õhusaastatus tõusis liiga kõrgele",
+            "Sulge mäng",
+            "Sulge mäng",
+            () =>
+            {
+                // TODO 
+            },
+            () =>
+            {
+                // TODO
             });
     }
 }
